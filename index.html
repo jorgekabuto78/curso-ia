@@ -336,8 +336,79 @@
             background-color: var(--text-color);
             color: white;
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px 30px;
             margin-top: 50px;
+        }
+
+        /* Footer Navigation */
+        footer .footer-nav,
+        .footer-nav {
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+            position: static !important;
+            top: auto !important;
+            z-index: auto !important;
+            padding: 0 0 25px 0 !important;
+            margin-bottom: 30px;
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-nav-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #93c5fd;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer-nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .footer-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+        }
+
+        .footer-nav-link:hover {
+            background: var(--primary-color);
+            color: #ffffff !important;
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            text-decoration: none !important;
+        }
+
+        @media (max-width: 600px) {
+            .footer-nav-links {
+                flex-direction: column;
+                align-items: stretch;
+                max-width: 320px;
+                margin: 0 auto;
+            }
+
+            .footer-nav-link {
+                justify-content: center;
+            }
         }
 
         /* Responsive */
@@ -3109,6 +3180,14 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
     </div>
 
     <footer>
+        <div class="footer-nav" role="navigation" aria-label="Navegación entre documentos">
+            <div class="footer-nav-title">Navegación del Proyecto</div>
+            <div class="footer-nav-links">
+                <a href="./modelos.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🤖 Catálogo de Modelos</a>
+                <a href="./herramientas.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🛠️ Directorio de Herramientas</a>
+                <a href="./glosario.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🧠 Glosario de IA</a>
+            </div>
+        </div>
         <p><strong>Instituto Superior Tecnológico Liceo Cristiano</strong></p>
         <p>Proyecto: "Inteligencia Artificial para el Trabajo: Herramientas Digitales para la Comunidad"</p>
         <p>Carrera: Desarrollo de Software</p>

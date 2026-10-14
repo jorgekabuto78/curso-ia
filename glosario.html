@@ -410,6 +410,69 @@
             opacity: 0.9;
         }
 
+        /* Footer Navigation */
+        .footer-nav {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-nav-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer-nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .footer-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+        }
+
+        .footer-nav-link:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: #ffffff !important;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            text-decoration: none !important;
+        }
+
+        @media (max-width: 600px) {
+            .footer-nav-links {
+                flex-direction: column;
+                align-items: stretch;
+                max-width: 320px;
+                margin: 0 auto;
+            }
+
+            .footer-nav-link {
+                justify-content: center;
+            }
+        }
+
         /* Scroll Top Button */
         .scroll-top {
             position: fixed;
@@ -549,7 +612,7 @@
             <div>
                 <p style="font-size: 0.9rem; color: #718096; margin-bottom: 15px; font-weight: 500;">Filtrar por categoría:</p>
                 <div class="categories" id="categoriesContainer">
-                    <button class="category-tag active" data-category="all">Todas</button>
+                    <button class="category-tag" data-category="all">Todas</button>
                 </div>
             </div>
         </div>
@@ -594,6 +657,14 @@
     </div>
 
     <footer>
+        <nav class="footer-nav" aria-label="Navegación entre documentos">
+            <div class="footer-nav-title">Navegación del Proyecto</div>
+            <div class="footer-nav-links">
+                <a href="./index.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">📚 Curso Principal</a>
+                <a href="./modelos.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🤖 Catálogo de Modelos</a>
+                <a href="./herramientas.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🛠️ Directorio de Herramientas</a>
+            </div>
+        </nav>
         <p><strong>Glosario de Inteligencia Artificial - Octubre 2026</strong></p>
         <p>150+ términos | 8 categorías | Referencia técnica integral</p>
         <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
@@ -1749,7 +1820,7 @@
             // Create category buttons
             categories.forEach(cat => {
                 const btn = document.createElement('button');
-                btn.className = 'category-tag';
+                btn.className = cat === 'fundamentals' ? 'category-tag active' : 'category-tag';
                 btn.dataset.category = cat;
                 btn.textContent = capitalizeCategory(cat);
                 
@@ -1762,8 +1833,8 @@
                 categoriesContainer.appendChild(btn);
             });
             
-            // Render all items initially
-            renderItems(glossaryData);
+            // Render default category items initially (Fundamentos)
+            filterByCategory('fundamentals');
             
             // Update stats
             document.querySelector('.stat-card:nth-child(1) .number').textContent = glossaryData.length + '+';
@@ -1838,7 +1909,9 @@
             const searchTerm = this.value.toLowerCase();
             
             if (searchTerm.trim() === '') {
-                renderItems(glossaryData);
+                const activeTag = document.querySelector('.category-tag.active');
+                const activeCategory = activeTag ? activeTag.dataset.category : 'fundamentals';
+                filterByCategory(activeCategory);
             } else {
                 const filtered = glossaryData.filter(item => 
                     item.term.toLowerCase().includes(searchTerm) ||
