@@ -1,0 +1,3190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inteligencia Artificial para el Trabajo - ISTLC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-color: #1f2937;
+            --bg-color: #f9fafb;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            background-color: var(--card-bg);
+            margin: 30px 0;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+        }
+
+        section h3 {
+            color: var(--secondary-color);
+            margin: 25px 0 15px 0;
+            font-size: 1.5rem;
+        }
+
+        section h4 {
+            color: var(--accent-color);
+            margin: 20px 0 10px 0;
+            font-size: 1.2rem;
+        }
+
+        /* Cards */
+        .module-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .module-card h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        /* Practice boxes */
+        .practice-box {
+            background-color: #fef3c7;
+            border-left: 5px solid var(--warning-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .practice-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 10px;
+        }
+
+        /* Theory boxes */
+        .theory-box {
+            background-color: #dbeafe;
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .theory-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* Alert boxes */
+        .alert-success {
+            background-color: #d1fae5;
+            border-left: 5px solid var(--success-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .alert-warning {
+            background-color: #fef3c7;
+            border-left: 5px solid var(--warning-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .alert-danger {
+            background-color: #fee2e2;
+            border-left: 5px solid var(--danger-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Links */
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        /* Tools section */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .tool-card {
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+
+        .tool-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .tool-card a:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Steps */
+        .steps {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 30px;
+        }
+
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Code blocks */
+        code {
+            background-color: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #dc2626;
+        }
+
+        pre {
+            background-color: #1f2937;
+            color: #f9fafb;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: #f9fafb;
+            padding: 0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: var(--bg-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step {
+                padding-left: 50px;
+            }
+
+            .step::before {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            nav {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        .badge-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .badge-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        /* Highlight boxes */
+        .highlight {
+            background-color: #fef3c7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .highlight strong {
+            color: var(--warning-color);
+        }
+
+        /* Interactive elements */
+        .accordion {
+            background-color: var(--bg-color);
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .accordion:hover {
+            background-color: var(--border-color);
+        }
+
+        .accordion.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🤖 Inteligencia Artificial para el Trabajo</h1>
+        <p>Herramientas Digitales para la Comunidad</p>
+        <p><strong>Instituto Superior Tecnológico Liceo Cristiano</strong></p>
+        <p>Carrera: Desarrollo de Software</p>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#introduccion">Introducción</a></li>
+                <li><a href="#modulo1">Módulo 1</a></li>
+                <li><a href="#modulo2">Módulo 2</a></li>
+                <li><a href="#modulo3">Módulo 3</a></li>
+                <li><a href="#modulo4">Módulo 4</a></li>
+                <li><a href="#modulo5">Módulo 5</a></li>
+                <li><a href="#modulo6">Módulo 6</a></li>
+                <li><a href="#herramientas">Herramientas</a></li>
+                <li><a href="#recursos">Recursos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- INTRODUCCIÓN -->
+        <section id="introduccion">
+            <h2>📚 Introducción al Curso</h2>
+            
+            <div class="theory-box">
+                <h4>Bienvenida</h4>
+                <p>¡Bienvenido/a al curso <strong>"Inteligencia Artificial para el Trabajo"</strong>! Este programa está diseñado para que profesionales, emprendedores y trabajadores de cualquier sector puedan aprovechar el poder de la Inteligencia Artificial en sus actividades diarias.</p>
+            </div>
+
+            <h3>🎯 Objetivos del Curso</h3>
+            <ul>
+                <li><strong>Desmitificar la IA:</strong> Comprender qué es la Inteligencia Artificial y cómo puede beneficiar tu trabajo.</li>
+                <li><strong>Aplicar herramientas prácticas:</strong> Aprender a usar asistentes de IA para tareas cotidianas.</li>
+                <li><strong>Aumentar la productividad:</strong> Automatizar y optimizar procesos de trabajo.</li>
+                <li><strong>Crear contenido profesional:</strong> Generar textos, presentaciones e imágenes de calidad.</li>
+                <li><strong>Tomar mejores decisiones:</strong> Analizar información con ayuda de la IA.</li>
+                <li><strong>Uso responsable:</strong> Conocer los límites éticos y las buenas prácticas.</li>
+            </ul>
+
+            <h3>📋 Estructura del Curso</h3>
+            <p>El curso consta de <strong>6 módulos</strong> distribuidos en 6 sesiones de sábado, con un total de <strong>24 horas</strong>:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Módulo</th>
+                        <th>Tema</th>
+                        <th>Duración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Módulo 1</td>
+                        <td>IA sin miedo: Fundamentos</td>
+                        <td>4 horas</td>
+                    </tr>
+                    <tr>
+                        <td>Módulo 2</td>
+                        <td>IA para escribir y comunicar</td>
+                        <td>4 horas</td>
+                    </tr>
+                    <tr>
+                        <td>Módulo 3</td>
+                        <td>IA para organizar el trabajo</td>
+                        <td>4 horas</td>
+                    </tr>
+                    <tr>
+                        <td>Módulo 4</td>
+                        <td>IA para presentaciones y contenido visual</td>
+                        <td>4 horas</td>
+                    </tr>
+                    <tr>
+                        <td>Módulo 5</td>
+                        <td>IA para analizar información</td>
+                        <td>4 horas</td>
+                    </tr>
+                    <tr>
+                        <td>Módulo 6</td>
+                        <td>Uso responsable de la IA + Cierre</td>
+                        <td>4 horas</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight">
+                <strong>💡 Metodología:</strong> Cada sesión combina teoría y práctica. Aprenderás conceptos clave y los aplicarás inmediatamente en ejercicios reales relacionados con tu trabajo o negocio.
+            </div>
+
+            <h3>👥 ¿A quién está dirigido?</h3>
+            <ul>
+                <li>Profesionales de cualquier área que deseen incorporar IA en su trabajo</li>
+                <li>Emprendedores que buscan optimizar sus negocios</li>
+                <li>Trabajadores independientes que quieren aumentar su productividad</li>
+                <li>Personas sin conocimientos técnicos previos (¡no se requiere programación!)</li>
+            </ul>
+
+            <div class="alert-success">
+                <strong>✅ Requisitos previos:</strong> No necesitas conocimientos técnicos. Solo requieres:
+                <ul>
+                    <li>Computadora o dispositivo con acceso a internet</li>
+                    <li>Cuenta de correo electrónico</li>
+                    <li>Disposición para aprender y experimentar</li>
+                    <li>Casos reales de tu trabajo para practicar</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- MÓDULO 1 -->
+        <section id="modulo1">
+            <div class="module-card">
+                <h2>📘 Módulo 1: IA sin miedo - Fundamentos</h2>
+                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span></p>
+            </div>
+
+            <h3>🎓 Contenido Teórico</h3>
+
+            <div class="theory-box">
+                <h4>¿Qué es la Inteligencia Artificial?</h4>
+                <p>La <strong>Inteligencia Artificial (IA)</strong> es una rama de la informática que busca crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana, como:</p>
+                <ul>
+                    <li>Comprender lenguaje natural</li>
+                    <li>Reconocer patrones e imágenes</li>
+                    <li>Tomar decisiones</li>
+                    <li>Aprender de la experiencia</li>
+                    <li>Resolver problemas complejos</li>
+                </ul>
+            </div>
+
+            <h4>📊 Tipos de IA relevantes para el trabajo</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo de IA</th>
+                        <th>Descripción</th>
+                        <th>Ejemplos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>IA Generativa</strong></td>
+                        <td>Crea contenido nuevo (texto, imágenes, código)</td>
+                        <td>ChatGPT, DALL-E, Gemini</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IA Conversacional</strong></td>
+                        <td>Mantiene diálogos y responde preguntas</td>
+                        <td>Asistentes virtuales, chatbots</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IA de Análisis</strong></td>
+                        <td>Procesa y analiza grandes cantidades de datos</td>
+                        <td>Herramientas de análisis predictivo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IA de Automatización</strong></td>
+                        <td>Automatiza tareas repetitivas</td>
+                        <td>Herramientas de automatización de procesos</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="theory-box">
+                <h4>Diferencia clave: IA Generativa vs Automatización Simple</h4>
+                <p><strong>Automatización simple:</strong> Sigue reglas predefinidas. Ejemplo: "Si recibo un email con X palabra, moverlo a Y carpeta".</p>
+                <p><strong>IA Generativa:</strong> Aprende patrones y puede crear contenido nuevo. Ejemplo: "Escribe un email profesional respondiendo a esta consulta de un cliente".</p>
+            </div>
+
+            <h4>💼 ¿Cómo puede la IA ayudarte en tu trabajo?</h4>
+            <ul>
+                <li><strong>Ahorro de tiempo:</strong> Automatiza tareas repetitivas</li>
+                <li><strong>Mejora de calidad:</strong> Ayuda a redactar textos más claros y profesionales</li>
+                <li><strong>Creatividad aumentada:</strong> Genera ideas y soluciones innovadoras</li>
+                <li><strong>Análisis profundo:</strong> Procesa información compleja rápidamente</li>
+                <li><strong>Disponibilidad 24/7:</strong> Asistencia constante sin limitaciones de horario</li>
+                <li><strong>Aprendizaje continuo:</strong> Acceso a información actualizada</li>
+            </ul>
+
+            <div class="alert-warning">
+                <strong>⚠️ Mitos comunes sobre la IA:</strong>
+                <ul>
+                    <li>❌ "La IA reemplazará mi trabajo" → ✅ La IA es una herramienta que potencia tu trabajo</li>
+                    <li>❌ "Necesito ser experto en tecnología" → ✅ Las herramientas modernas son muy intuitivas</li>
+                    <li>❌ "La IA siempre tiene razón" → ✅ Debes verificar y supervisar los resultados</li>
+                    <li>❌ "Es muy costoso" → ✅ Existen muchas herramientas gratuitas y accesibles</li>
+                </ul>
+            </div>
+
+            <h3>🔧 Práctica Guiada 1: Primeros Pasos con ChatGPT</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Familiarizarte con tu primer asistente de IA y realizar tareas básicas.</p>
+
+                <h4>Tiempo estimado: 45 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Crear tu cuenta en ChatGPT</h4>
+                        <ul>
+                            <li>Ingresa a <a href="https://chatgpt.com/" target="_blank">https://chatgpt.com/</a></li>
+                            <li>Haz clic en "Sign up" (Registrarse)</li>
+                            <li>Puedes registrarte con:
+                                <ul>
+                                    <li>Correo electrónico y contraseña</li>
+                                    <li>Cuenta de Google</li>
+                                    <li>Cuenta de Microsoft</li>
+                                </ul>
+                            </li>
+                            <li>Confirma tu correo electrónico si es necesario</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Explorar la interfaz</h4>
+                        <ul>
+                            <li><strong>Cuadro de chat:</strong> Donde escribes tus preguntas o solicitudes</li>
+                            <li><strong>Historial:</strong> Panel lateral con conversaciones anteriores</li>
+                            <li><strong>Nueva conversación:</strong> Botón para iniciar un chat nuevo</li>
+                            <li><strong>Configuración:</strong> Opciones de personalización</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Tu primera interacción: Presentación</h4>
+                        <p>Escribe en el chat:</p>
+                        <pre><code>Hola, soy [tu nombre] y trabajo en [tu sector/profesión]. 
+Estoy aprendiendo a usar IA para mejorar mi trabajo. 
+¿Podrías explicarme brevemente cómo puedes ayudarme?</code></pre>
+                        <p><strong>Observa:</strong> Cómo ChatGPT responde de manera personalizada y conversacional.</p>
+                    </div>
+
+                    <div class="step">
+                        <h4>Ejercicio: Resolver una tarea real</h4>
+                        <p>Piensa en una tarea común de tu trabajo. Ejemplos:</p>
+                        <ul>
+                            <li>Escribir un correo de seguimiento a un cliente</li>
+                            <li>Generar ideas para mejorar un proceso</li>
+                            <li>Resumir información de un documento</li>
+                            <li>Crear una lista de tareas para un proyecto</li>
+                        </ul>
+                        <p>Solicita ayuda a ChatGPT con un mensaje claro:</p>
+                        <pre><code>Necesito escribir un correo profesional para [propósito].
+El contexto es: [explica la situación brevemente].
+¿Puedes ayudarme a redactarlo?</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Aprender a mejorar las respuestas</h4>
+                        <p>Si la primera respuesta no es perfecta, puedes:</p>
+                        <ul>
+                            <li><strong>Ser más específico:</strong> "Haz el tono más formal"</li>
+                            <li><strong>Pedir variaciones:</strong> "Dame 3 opciones diferentes"</li>
+                            <li><strong>Solicitar ajustes:</strong> "Hazlo más breve" o "Amplía la explicación"</li>
+                            <li><strong>Iterar:</strong> Continúa la conversación refinando el resultado</li>
+                        </ul>
+                        <p><strong>Practica esto mejorando tu email anterior.</strong></p>
+                    </div>
+
+                    <div class="step">
+                        <h4>Guardar y organizar</h4>
+                        <ul>
+                            <li>Copia los resultados útiles a un documento</li>
+                            <li>Renombra la conversación en el historial (clic en el título)</li>
+                            <li>Guarda las conversaciones importantes para referencia futura</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 2: Explorando Otros Asistentes</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Conocer alternativas a ChatGPT y entender sus diferencias.</p>
+
+                <h4>Tiempo estimado: 30 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Probar Microsoft Copilot</h4>
+                        <ul>
+                            <li>Ingresa a <a href="https://www.bing.com/chat" target="_blank">Bing Chat / Copilot</a></li>
+                            <li>Inicia sesión con tu cuenta de Microsoft (o crea una)</li>
+                            <li>Realiza la misma consulta que hiciste en ChatGPT</li>
+                            <li><strong>Observa:</strong> Copilot puede buscar en internet y citar fuentes</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Probar Google Gemini</h4>
+                        <ul>
+                            <li>Ingresa a <a href="https://gemini.google.com/" target="_blank">Google Gemini</a></li>
+                            <li>Inicia sesión con tu cuenta de Google</li>
+                            <li>Haz la misma consulta</li>
+                            <li><strong>Observa:</strong> La integración con servicios de Google</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Comparar resultados</h4>
+                        <p>Crea una tabla en tu documento comparando:</p>
+                        <ul>
+                            <li>Claridad de la respuesta</li>
+                            <li>Tono y estilo</li>
+                            <li>Características únicas de cada herramienta</li>
+                            <li>Cuál prefieres para diferentes tipos de tareas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-success">
+                <strong>✅ Al finalizar este módulo habrás:</strong>
+                <ul>
+                    <li>✓ Comprendido qué es la IA y cómo funciona</li>
+                    <li>✓ Creado cuentas en diferentes asistentes de IA</li>
+                    <li>✓ Realizado tus primeras consultas y tareas</li>
+                    <li>✓ Aprendido a mejorar los resultados iterando</li>
+                    <li>✓ Identificado cuál herramienta se adapta mejor a tus necesidades</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <strong>📝 Tarea para casa:</strong> Durante la semana, usa el asistente de IA al menos una vez al día para una tarea real de tu trabajo. Anota qué funcionó bien y qué podrías mejorar.
+            </div>
+        </section>
+
+        <!-- MÓDULO 2 -->
+        <section id="modulo2">
+            <div class="module-card">
+                <h2>✍️ Módulo 2: IA para Escribir y Comunicar</h2>
+                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span></p>
+            </div>
+
+            <h3>🎓 Contenido Teórico</h3>
+
+            <div class="theory-box">
+                <h4>El poder de la comunicación asistida por IA</h4>
+                <p>La redacción profesional es una habilidad crítica en el mundo laboral. La IA puede ayudarte a:</p>
+                <ul>
+                    <li>Superar el "bloqueo del escritor"</li>
+                    <li>Mejorar la claridad y estructura de tus textos</li>
+                    <li>Adaptar el tono según el contexto (formal, casual, persuasivo)</li>
+                    <li>Corregir gramática y ortografía</li>
+                    <li>Traducir y adaptar contenido a diferentes idiomas</li>
+                    <li>Generar múltiples versiones de un mismo mensaje</li>
+                </ul>
+            </div>
+
+            <h4>📧 Tipos de comunicación que puedes mejorar</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo de documento</th>
+                        <th>Uso de IA</th>
+                        <th>Beneficio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Correos electrónicos</td>
+                        <td>Redacción, respuestas, seguimientos</td>
+                        <td>Ahorro de tiempo, tono apropiado</td>
+                    </tr>
+                    <tr>
+                        <td>Informes</td>
+                        <td>Estructura, resumen, análisis</td>
+                        <td>Profesionalismo, claridad</td>
+                    </tr>
+                    <tr>
+                        <td>Propuestas</td>
+                        <td>Contenido persuasivo, argumentos</td>
+                        <td>Mayor impacto, mejor estructura</td>
+                    </tr>
+                    <tr>
+                        <td>Redes sociales</td>
+                        <td>Posts, captions, hashtags</td>
+                        <td>Engagement, creatividad</td>
+                    </tr>
+                    <tr>
+                        <td>Documentos técnicos</td>
+                        <td>Simplificación, clarificación</td>
+                        <td>Mejor comprensión</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>✨ Principios de "Prompt Engineering" (Ingeniería de Instrucciones)</h4>
+
+            <div class="theory-box">
+                <p>Un <strong>"prompt"</strong> es la instrucción que le das a la IA. Para obtener mejores resultados, tu prompt debe incluir:</p>
+                
+                <ol>
+                    <li><strong>Contexto:</strong> Explica quién eres y la situación</li>
+                    <li><strong>Tarea específica:</strong> Qué quieres exactamente</li>
+                    <li><strong>Formato:</strong> Cómo quieres el resultado</li>
+                    <li><strong>Tono:</strong> Formal, casual, persuasivo, etc.</li>
+                    <li><strong>Restricciones:</strong> Límites de palabras, elementos a incluir/excluir</li>
+                </ol>
+
+                <h4>Ejemplo de prompt bien estructurado:</h4>
+                <pre><code>Contexto: Soy gerente de ventas de una empresa de software.
+Tarea: Necesito escribir un email a un cliente que lleva 2 semanas
+sin responder nuestra propuesta.
+Formato: Email profesional, máximo 150 palabras.
+Tono: Cordial pero con sentido de urgencia.
+Incluir: Valor de nuestra solución y llamado a la acción claro.</code></pre>
+            </div>
+
+            <h4>🎯 Fórmulas útiles para diferentes tipos de escritura</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Situación</th>
+                        <th>Fórmula de prompt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Email de seguimiento</td>
+                        <td>"Redacta un email de seguimiento para [situación], tono [formal/casual], enfocado en [objetivo]"</td>
+                    </tr>
+                    <tr>
+                        <td>Resumen ejecutivo</td>
+                        <td>"Resume este contenido en [X] palabras, destacando [aspectos clave], para [audiencia]"</td>
+                    </tr>
+                    <tr>
+                        <td>Mejora de texto</td>
+                        <td>"Mejora este texto: [pegar texto]. Hazlo más [claro/profesional/conciso] manteniendo [requisito]"</td>
+                    </tr>
+                    <tr>
+                        <td>Adaptación de tono</td>
+                        <td>"Reescribe este mensaje con un tono [especificar]: [pegar texto]"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🔧 Práctica Guiada 1: Redacción de Correos Profesionales</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Dominar la creación de correos electrónicos efectivos para diferentes situaciones laborales.</p>
+
+                <h4>Tiempo estimado: 60 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Ejercicio 1: Email de presentación profesional</h4>
+                        <p><strong>Situación:</strong> Necesitas presentarte a un nuevo cliente o proveedor.</p>
+                        <p><strong>Prompt a usar:</strong></p>
+                        <pre><code>Actúa como experto en comunicación corporativa.
+
+Contexto: Soy [tu profesión/rol] de [tu empresa/actividad].
+Necesito presentarme a [tipo de persona: cliente/proveedor/socio].
+
+Tarea: Redacta un email de presentación profesional.
+
+Contenido a incluir:
+- Saludo cordial
+- Breve presentación personal y de mi empresa
+- Propósito del contacto
+- Propuesta de valor clara
+- Llamado a la acción (reunión/llamada)
+- Cierre profesional
+
+Tono: Profesional y cordial
+Longitud: Máximo 200 palabras
+Formato: Email estándar con asunto atractivo</code></pre>
+                        
+                        <p><strong>Acción:</strong> Copia este prompt, personalízalo con tu información y ejecútalo en ChatGPT o tu asistente preferido.</p>
+                    </div>
+
+                    <div class="step">
+                        <h4>Ejercicio 2: Email de seguimiento</h4>
+                        <p><strong>Situación:</strong> Enviaste una propuesta hace una semana y no has recibido respuesta.</p>
+                        <p><strong>Prompt a usar:</strong></p>
+                        <pre><code>Redacta un email de seguimiento para una propuesta enviada hace una semana.
+
+Contexto: [Explica brevemente el contexto de la propuesta]
+
+Objetivos del email:
+1. Recordar amablemente la propuesta enviada
+2. Mostrar interés genuino en su respuesta
+3. Ofrecer disponibilidad para aclarar dudas
+4. Crear sentido de urgencia sin presionar
+
+Tono: Profesional, cordial, no insistente
+Longitud: 100-150 palabras
+Incluir: Pregunta abierta que invite a responder</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Ejercicio 3: Email difícil - Comunicar malas noticias</h4>
+                        <p><strong>Situación:</strong> Debes informar sobre un retraso en la entrega o un problema.</p>
+                        <p><strong>Prompt a usar:</strong></p>
+                        <pre><code>Ayúdame a redactar un email para comunicar [tipo de problema/retraso].
+
+Contexto: [Explica la situación]
+
+Estructura requerida:
+1. Reconocimiento directo del problema
+2. Explicación breve (sin excusas)
+3. Solución propuesta o plan de acción
+4. Medidas para evitar que se repita
+5. Disculpa sincera
+6. Reafirmación del compromiso
+
+Tono: Honesto, profesional, responsable
+Longitud: Máximo 250 palabras</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Refinamiento y personalización</h4>
+                        <p>Para cada email generado:</p>
+                        <ul>
+                            <li>Lee el resultado completo</li>
+                            <li>Identifica qué cambiarías</li>
+                            <li>Pide ajustes: "Hazlo más breve", "Cambia el tono a más informal", "Agrega un ejemplo específico"</li>
+                            <li>Itera hasta tener el resultado perfecto</li>
+                            <li>Agrega tu toque personal final</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear tu biblioteca de plantillas</h4>
+                        <p>Organiza los mejores prompts y resultados en un documento:</p>
+                        <ul>
+                            <li>Categoriza por tipo de comunicación</li>
+                            <li>Guarda los prompts que mejor funcionaron</li>
+                            <li>Crea variaciones para diferentes contextos</li>
+                            <li>Actualiza según aprendas más</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 2: Informes y Documentos Profesionales</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Crear documentos más extensos y estructurados con ayuda de IA.</p>
+
+                <h4>Tiempo estimado: 45 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Generar estructura de informe</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Necesito crear la estructura de un informe sobre [tema].
+
+Contexto: [Explica el propósito y audiencia del informe]
+
+Por favor, genera:
+1. Título sugerido
+2. Estructura de secciones con descripciones breves
+3. Puntos clave a cubrir en cada sección
+4. Formato recomendado
+
+Tipo de informe: [Mensual/Trimestral/De proyecto/Ejecutivo]
+Extensión aproximada: [Número de páginas o palabras]</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Desarrollar cada sección</h4>
+                        <p>Una vez tengas la estructura, desarrolla cada sección:</p>
+                        <pre><code>Desarrolla la sección "[nombre de la sección]" del informe.
+
+Información disponible:
+[Pega tus datos, números, hechos relevantes]
+
+Requisitos:
+- Longitud: [X] palabras
+- Incluir: [elementos específicos]
+- Tono: Profesional y claro
+- Usar: Lenguaje accesible, evitar jerga innecesaria</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear resumen ejecutivo</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>A partir de este informe completo:
+[Pega el contenido del informe]
+
+Crea un resumen ejecutivo de máximo 300 palabras que:
+1. Destaque los hallazgos principales
+2. Presente las conclusiones clave
+3. Resuma las recomendaciones
+4. Sea comprensible para alguien que no leyó el informe completo</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Mejorar claridad y legibilidad</h4>
+                        <p>Para cualquier sección compleja:</p>
+                        <pre><code>Analiza este texto y mejora su claridad:
+[Pega el texto]
+
+Acciones a realizar:
+- Simplificar oraciones largas
+- Eliminar redundancias
+- Mejorar la estructura de párrafos
+- Sugerir subtítulos si es necesario
+- Mantener el significado original</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 3: Contenido para Redes Sociales</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Crear contenido atractivo para redes sociales de tu negocio o marca profesional.</p>
+
+                <h4>Tiempo estimado: 30 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Post de LinkedIn profesional</h4>
+                        <pre><code>Crea un post para LinkedIn sobre [tema].
+
+Contexto: Soy [tu rol/profesión]
+Objetivo: [Educar/Inspirar/Promocionar/Networking]
+
+Requisitos:
+- Hook inicial impactante (primera línea)
+- Desarrollo en 3-4 párrafos cortos
+- Incluir una pregunta o llamado a la acción
+- Tono: Profesional pero accesible
+- Longitud: 150-200 palabras
+- Sugerir 3-5 hashtags relevantes</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Serie de contenidos temáticos</h4>
+                        <pre><code>Genera 5 ideas de posts para una semana sobre [tu área de expertise].
+
+Para cada post incluye:
+- Tema específico
+- Tipo de contenido (tip, historia, pregunta, estadística, etc.)
+- Objetivo (educar, entretener, engagement)
+- Sketch del contenido (50 palabras)
+
+Audiencia: [Describe tu audiencia]
+Plataforma: [LinkedIn/Instagram/Facebook]</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Adaptar mensaje a diferentes plataformas</h4>
+                        <pre><code>Tengo este mensaje sobre [tema]:
+[Pega tu mensaje original]
+
+Adáptalo para:
+1. LinkedIn (profesional, 200 palabras)
+2. Instagram (visual, 100 palabras + sugerencia de tipo de imagen)
+3. Facebook (conversacional, 150 palabras)
+
+Mantén el mensaje core pero ajusta tono y formato para cada plataforma.</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-warning">
+                <strong>⚠️ Mejores prácticas y cuidados:</strong>
+                <ul>
+                    <li><strong>Siempre revisa:</strong> La IA puede cometer errores factuales</li>
+                    <li><strong>Personaliza:</strong> Agrega tu voz y experiencia personal</li>
+                    <li><strong>Verifica datos:</strong> No confíes ciegamente en estadísticas generadas</li>
+                    <li><strong>Considera el contexto cultural:</strong> Adapta expresiones según tu región</li>
+                    <li><strong>Protege información sensible:</strong> No compartas datos confidenciales en los prompts</li>
+                </ul>
+            </div>
+
+            <div class="alert-success">
+                <strong>✅ Al finalizar este módulo habrás:</strong>
+                <ul>
+                    <li>✓ Dominado técnicas de prompt engineering</li>
+                    <li>✓ Creado emails profesionales para diferentes situaciones</li>
+                    <li>✓ Generado informes estructurados</li>
+                    <li>✓ Desarrollado contenido para redes sociales</li>
+                    <li>✓ Creado tu biblioteca personal de plantillas de comunicación</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <strong>📝 Tarea para casa:</strong> Usa la IA para toda tu comunicación escrita de la próxima semana. Documenta cuánto tiempo ahorras y cómo mejora la calidad de tus mensajes.
+            </div>
+        </section>
+
+        <!-- MÓDULO 3 -->
+        <section id="modulo3">
+            <div class="module-card">
+                <h2>📅 Módulo 3: IA para Organizar el Trabajo</h2>
+                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span></p>
+            </div>
+
+            <h3>🎓 Contenido Teórico</h3>
+
+            <div class="theory-box">
+                <h4>IA como asistente de productividad</h4>
+                <p>La organización efectiva es clave para el éxito profesional. La IA puede convertirse en tu asistente personal para:</p>
+                <ul>
+                    <li>Planificar y priorizar tareas</li>
+                    <li>Crear agendas y cronogramas</li>
+                    <li>Automatizar actividades repetitivas</li>
+                    <li>Gestionar proyectos</li>
+                    <li>Establecer recordatorios y seguimientos</li>
+                    <li>Optimizar el uso del tiempo</li>
+                </ul>
+            </div>
+
+            <h4>🎯 Metodologías de productividad potenciadas por IA</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metodología</th>
+                        <th>Cómo la IA ayuda</th>
+                        <th>Beneficio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>GTD (Getting Things Done)</strong></td>
+                        <td>Clasificación automática de tareas, creación de listas de acciones</td>
+                        <td>Claridad mental, mejor ejecución</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Eisenhower Matrix</strong></td>
+                        <td>Priorización de tareas por urgencia e importancia</td>
+                        <td>Enfoque en lo realmente importante</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pomodoro</strong></td>
+                        <td>Diseño de bloques de trabajo y descansos optimizados</td>
+                        <td>Mayor concentración y productividad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Time Blocking</strong></td>
+                        <td>Creación de agendas con bloques de tiempo estratégicos</td>
+                        <td>Mejor gestión del tiempo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>🤖 Herramientas de automatización básica</h4>
+
+            <div class="theory-box">
+                <p>Aunque no profundizaremos en herramientas técnicas complejas, es importante conocer opciones simples de automatización:</p>
+                
+                <ol>
+                    <li><strong>Automatización de emails:</strong>
+                        <ul>
+                            <li>Respuestas automáticas inteligentes</li>
+                            <li>Filtros y etiquetado automático</li>
+                            <li>Programación de envíos</li>
+                        </ul>
+                    </li>
+                    <li><strong>Gestión de calendario:</strong>
+                        <ul>
+                            <li>Sugerencias de horarios para reuniones</li>
+                            <li>Recordatorios automáticos</li>
+                            <li>Detección de conflictos</li>
+                        </ul>
+                    </li>
+                    <li><strong>Flujos de trabajo:</strong>
+                        <ul>
+                            <li>Creación de plantillas reutilizables</li>
+                            <li>Checklists inteligentes</li>
+                            <li>Seguimiento automático de tareas</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h4>📊 Principios de planificación efectiva con IA</h4>
+
+            <ul>
+                <li><strong>Realismo:</strong> La IA puede ayudarte a estimar tiempos más realistas basándose en información histórica</li>
+                <li><strong>Flexibilidad:</strong> Crea planes que permitan ajustes y contingencias</li>
+                <li><strong>Priorización:</strong> Identifica lo urgente vs. lo importante</li>
+                <li><strong>Equilibrio:</strong> Balancea trabajo, descansos y tiempo personal</li>
+                <li><strong>Seguimiento:</strong> Establece puntos de control y revisión</li>
+            </ul>
+
+            <h3>🔧 Práctica Guiada 1: Planificación Semanal de Trabajo</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Crear un plan semanal completo y realista para tu trabajo o negocio.</p>
+
+                <h4>Tiempo estimado: 60 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Paso 1: Inventario de tareas y responsabilidades</h4>
+                        <p><strong>Prompt inicial:</strong></p>
+                        <pre><code>Actúa como consultor de productividad experto.
+
+Mi información:
+- Rol/Profesión: [Tu rol]
+- Sector: [Tu industria]
+- Responsabilidades principales: [Lista 5-7 responsabilidades]
+- Tareas pendientes actuales: [Lista tus tareas pendientes]
+- Objetivos de esta semana: [2-3 objetivos principales]
+
+Ayúdame a:
+1. Categorizar mis tareas por tipo (estratégicas, operativas, administrativas, etc.)
+2. Identificar tareas que podrían delegarse o automatizarse
+3. Detectar posibles duplicidades o redundancias</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Paso 2: Priorización con Matriz de Eisenhower</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Toma las siguientes tareas y clasifícalas según la Matriz de Eisenhower:
+[Lista todas tus tareas]
+
+Para cada tarea, indica:
+- Cuadrante: (Urgente/Importante, Urgente/No importante, No urgente/Importante, No urgente/No importante)
+- Justificación breve
+- Acción recomendada: (Hacer ahora, Programar, Delegar, Eliminar)
+
+Presenta el resultado en formato de tabla clara.</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Paso 3: Estimar tiempos realistas</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Para cada una de estas tareas prioritarias, ayúdame a estimar el tiempo necesario:
+
+Tareas:
+[Lista las tareas del cuadrante "Hacer ahora" y "Programar"]
+
+Por cada tarea proporciona:
+- Tiempo estimado (considerando interrupciones y contingencias)
+- Mejor momento del día para realizarla (según nivel de energía requerido)
+- Si debería dividirse en sub-tareas más pequeñas
+
+Mi disponibilidad: [Horas disponibles por día]
+Mi pico de energía: [Mañana/Tarde/Noche]</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Paso 4: Crear agenda semanal optimizada</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Crea una agenda semanal (Lunes a Viernes) con estas tareas priorizadas y tiempos estimados:
+
+[Pega la información de los pasos anteriores]
+
+Requisitos:
+- Horario de trabajo: [Tu horario, ej: 8:00 AM - 6:00 PM]
+- Incluir breaks: Descanso de 10 min cada 90 min, almuerzo de 1 hora
+- Time blocking: Agrupar tareas similares
+- Dejar buffers del 20% para imprevistos
+- Reuniones existentes: [Lista reuniones fijas]
+- Un día debe tener menos carga para tareas emergentes
+
+Formato: Tabla día por día con bloques de tiempo, tarea y tipo de actividad.</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Paso 5: Crear checklist de seguimiento</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>A partir del plan semanal creado, genera:
+
+1. Checklist diaria de inicio de jornada (preparación y prioridades del día)
+2. Checklist de cierre de jornada (revisión y preparación del siguiente día)
+3. Checklist de revisión semanal (viernes tarde - evaluación de la semana)
+
+Incluye preguntas de reflexión que me ayuden a mejorar continuamente.</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Paso 6: Implementar y ajustar</h4>
+                        <ul>
+                            <li>Copia el plan a tu herramienta de calendario favorita (Google Calendar, Outlook, etc.)</li>
+                            <li>Configura recordatorios para cada bloque de tiempo</li>
+                            <li>Al final de cada día, registra qué funcionó y qué no</li>
+                            <li>El viernes, pide a la IA que te ayude a ajustar el plan basándose en tu experiencia</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 2: Automatización de Tareas Repetitivas</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Identificar y crear sistemas para automatizar tareas que consumen tiempo sin agregar valor.</p>
+
+                <h4>Tiempo estimado: 45 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Identificar candidatos para automatización</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Ayúdame a identificar tareas que puedo automatizar.
+
+Tareas que realizo regularmente:
+[Lista todas las tareas que haces semanalmente]
+
+Para cada tarea, analiza:
+1. ¿Es repetitiva? (se hace de la misma forma cada vez)
+2. ¿Consume mucho tiempo?
+3. ¿Requiere poca creatividad o decisión?
+4. ¿Es candidata para automatización?
+
+Prioriza las 5 mejores candidatas para automatizar.</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear plantillas y procedimientos estándar</h4>
+                        <p><strong>Ejemplo con respuestas de email comunes:</strong></p>
+                        <pre><code>Creo estas 5 plantillas de respuesta para diferentes situaciones comunes:
+
+Situaciones que manejo frecuentemente:
+1. [Describe situación 1]
+2. [Describe situación 2]
+3. [Describe situación 3]
+4. [Describe situación 4]
+5. [Describe situación 5]
+
+Para cada una, crea:
+- Plantilla de respuesta base
+- Puntos variables que debo personalizar
+- Tono apropiado
+- Tiempo estimado de personalización</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Diseñar flujos de trabajo optimizados</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Tengo este proceso que realizo regularmente:
+[Describe el proceso paso a paso]
+
+Ayúdame a:
+1. Identificar pasos redundantes o innecesarios
+2. Sugerir un orden más eficiente
+3. Señalar puntos donde podría usar IA
+4. Crear un diagrama de flujo simplificado (en texto)
+5. Estimar el ahorro de tiempo con el nuevo proceso</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear sistema de gestión de información</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Necesito organizar mejor mi información de trabajo.
+
+Tipos de información que manejo:
+[Lista: documentos, emails, notas, contactos, proyectos, etc.]
+
+Crea un sistema de organización que incluya:
+1. Estructura de carpetas lógica y escalable
+2. Convención de nombres de archivos
+3. Método de etiquetado/categorización
+4. Frecuencia de revisión y archivo
+5. Criterios para decidir qué guardar y qué eliminar
+
+Sector: [Tu industria]
+Herramientas disponibles: [Google Drive, OneDrive, etc.]</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Implementar y medir resultados</h4>
+                        <ul>
+                            <li>Implementa una mejora a la vez</li>
+                            <li>Mide el tiempo antes y después</li>
+                            <li>Documenta las plantillas y procedimientos</li>
+                            <li>Comparte con tu equipo (si aplica)</li>
+                            <li>Refina basándote en la experiencia</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 3: Gestión de Proyectos con IA</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Planificar y dar seguimiento a un proyecto completo usando IA como asistente.</p>
+
+                <h4>Tiempo estimado: 40 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Definir alcance y objetivos del proyecto</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Actúa como Project Manager experto.
+
+Proyecto: [Nombre/descripción del proyecto]
+Objetivo final: [Qué quieres lograr]
+Plazo: [Fecha límite]
+Recursos disponibles: [Equipo, presupuesto, herramientas]
+
+Ayúdame a:
+1. Definir el alcance específico (qué incluye y qué NO incluye)
+2. Establecer objetivos SMART (Específicos, Medibles, Alcanzables, Relevantes, Temporales)
+3. Identificar entregables clave
+4. Listar riesgos potenciales
+5. Sugerir métricas de éxito</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear estructura de desglose del trabajo (WBS)</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Para este proyecto:
+[Pega la definición del paso anterior]
+
+Crea una estructura de desglose del trabajo (WBS) con:
+- Fases principales del proyecto
+- Tareas dentro de cada fase
+- Sub-tareas si es necesario
+- Dependencias entre tareas
+- Duración estimada de cada tarea
+- Responsable (o rol) sugerido
+
+Presenta en formato jerárquico claro.</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Desarrollar cronograma realista</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Basándote en el WBS anterior, crea un cronograma que incluya:
+
+1. Diagrama de Gantt en formato texto/tabla
+2. Ruta crítica del proyecto
+3. Hitos importantes con fechas
+4. Buffers para contingencias
+5. Fechas de revisión y puntos de control
+
+Consideraciones:
+- Fecha de inicio: [Fecha]
+- Fecha de entrega: [Fecha]
+- Días disponibles por semana: [Número]
+- Recursos limitados: [Especifica si hay limitaciones]</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Sistema de seguimiento y reporte</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Crea un sistema simple de seguimiento para este proyecto:
+
+1. Dashboard semanal: ¿Qué métricas debo revisar cada semana?
+2. Template de reporte de avance: Estructura y contenido
+3. Señales de alerta: ¿Qué indicaría que el proyecto está en riesgo?
+4. Checklist de cierre de fase: Qué verificar antes de pasar a la siguiente fase
+5. Template de lecciones aprendidas para el cierre del proyecto</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Gestión de cambios y adaptaciones</h4>
+                        <p>Durante el proyecto, usa este prompt cuando surjan cambios:</p>
+                        <pre><code>Mi proyecto está enfrentando este cambio/problema:
+[Describe la situación]
+
+Estado actual del proyecto:
+- Fase: [En qué fase estás]
+- Avance: [% completado]
+- Desviaciones actuales: [Si las hay]
+
+Ayúdame a:
+1. Evaluar el impacto del cambio (alcance, tiempo, costo, calidad)
+2. Proponer opciones de acción con pros y contras
+3. Ajustar el cronograma si es necesario
+4. Identificar qué comunicar a stakeholders
+5. Actualizar el plan de riesgos</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-success">
+                <strong>✅ Al finalizar este módulo habrás:</strong>
+                <ul>
+                    <li>✓ Creado un plan semanal optimizado con IA</li>
+                    <li>✓ Identificado oportunidades de automatización en tu trabajo</li>
+                    <li>✓ Desarrollado plantillas y procedimientos estándar</li>
+                    <li>✓ Diseñado un sistema de organización de información</li>
+                    <li>✓ Planificado y estructurado un proyecto completo</li>
+                    <li>✓ Establecido sistemas de seguimiento y mejora continua</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <strong>📝 Tarea para casa:</strong> Implementa tu plan semanal durante 2 semanas. Registra diariamente qué funcionó, qué no, y ajusta con ayuda de la IA. Al final, compara tu productividad con semanas anteriores.
+            </div>
+        </section>
+
+        <!-- MÓDULO 4 -->
+        <section id="modulo4">
+            <div class="module-card">
+                <h2>🎨 Módulo 4: IA para Presentaciones y Contenido Visual</h2>
+                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span></p>
+            </div>
+
+            <h3>🎓 Contenido Teórico</h3>
+
+            <div class="theory-box">
+                <h4>El poder de la comunicación visual</h4>
+                <p>En el mundo profesional, la capacidad de crear presentaciones y contenido visual impactante es crucial. La IA democratiza estas habilidades, permitiéndote:</p>
+                <ul>
+                    <li>Generar imágenes profesionales sin ser diseñador</li>
+                    <li>Crear presentaciones estructuradas y atractivas</li>
+                    <li>Diseñar material de marketing básico</li>
+                    <li>Producir infografías y visualizaciones de datos</li>
+                    <li>Desarrollar identidad visual consistente</li>
+                </ul>
+            </div>
+
+            <h4>🖼️ Tipos de contenido visual que puedes crear</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo de contenido</th>
+                        <th>Herramientas de IA</th>
+                        <th>Casos de uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Presentaciones</strong></td>
+                        <td>ChatGPT + Gamma.ai / Beautiful.ai</td>
+                        <td>Pitch, informes, capacitaciones</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Imágenes generadas</strong></td>
+                        <td>DALL-E, Midjourney, Stable Diffusion</td>
+                        <td>Ilustraciones, conceptos visuales</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Diseño gráfico</strong></td>
+                        <td>Canva AI, Adobe Firefly</td>
+                        <td>Flyers, posters, posts sociales</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Infografías</strong></td>
+                        <td>Canva AI, Visme</td>
+                        <td>Visualización de datos, procesos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Logos e identidad</strong></td>
+                        <td>Looka, Brandmark</td>
+                        <td>Branding básico, identidad visual</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>🎯 Principios de diseño visual efectivo</h4>
+
+            <ol>
+                <li><strong>Jerarquía visual:</strong> Guía la atención del espectador a lo más importante</li>
+                <li><strong>Contraste:</strong> Diferencia elementos clave del fondo</li>
+                <li><strong>Alineación:</strong> Orden y profesionalismo</li>
+                <li><strong>Repetición:</strong> Consistencia y cohesión</li>
+                <li><strong>Proximidad:</strong> Agrupa elementos relacionados</li>
+                <li><strong>Espacio en blanco:</strong> Respira, no satures</li>
+                <li><strong>Color:</strong> Psicología y emoción</li>
+                <li><strong>Tipografía:</strong> Legibilidad y personalidad</li>
+            </ol>
+
+            <div class="theory-box">
+                <h4>Prompts efectivos para generar imágenes</h4>
+                <p>Un buen prompt para generación de imágenes debe incluir:</p>
+                <ul>
+                    <li><strong>Sujeto principal:</strong> Qué o quién es el foco</li>
+                    <li><strong>Acción/Escena:</strong> Qué está sucediendo</li>
+                    <li><strong>Entorno:</strong> Dónde ocurre</li>
+                    <li><strong>Estilo visual:</strong> Fotografía, ilustración, 3D, etc.</li>
+                    <li><strong>Iluminación:</strong> Natural, dramática, soft, etc.</li>
+                    <li><strong>Perspectiva:</strong> Ángulo de cámara</li>
+                    <li><strong>Detalles técnicos:</strong> Calidad, resolución</li>
+                </ul>
+
+                <p><strong>Ejemplo de prompt estructurado:</strong></p>
+                <pre><code>A professional businesswoman presenting to a team in a modern office,
+natural lighting from large windows, contemporary style, clean and minimal,
+shot from slightly low angle, photorealistic, high quality, 4K</code></pre>
+            </div>
+
+            <h3>🔧 Práctica Guiada 1: Crear Presentación Profesional con IA</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Desarrollar una presentación completa y profesional desde cero usando IA.</p>
+
+                <h4>Tiempo estimado: 75 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Definir estructura y contenido</h4>
+                        <p><strong>Prompt inicial:</strong></p>
+                        <pre><code>Actúa como experto en presentaciones corporativas.
+
+Necesito crear una presentación sobre: [Tema]
+Audiencia: [Describe tu audiencia]
+Objetivo: [Qué quieres lograr con la presentación]
+Duración: [Tiempo de presentación]
+Contexto: [Dónde/cuándo se presentará]
+
+Crea una estructura completa que incluya:
+1. Título principal atractivo
+2. Número óptimo de slides
+3. Contenido de cada slide con:
+   - Título del slide
+   - Puntos clave (bullet points)
+   - Tipo de visual sugerido (gráfico, imagen, diagrama, etc.)
+4. Narrativa que conecte todos los slides
+5. Llamado a la acción final</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Desarrollar contenido de cada slide</h4>
+                        <p>Para cada slide, usa este prompt:</p>
+                        <pre><code>Desarrolla el contenido completo del slide [número]: "[Título]"
+
+Contexto de la presentación: [Breve resumen]
+Objetivo de este slide: [Qué debe comunicar]
+
+Proporciona:
+1. Título optimizado (máximo 8 palabras)
+2. Contenido principal (3-5 bullet points concisos)
+3. Nota del presentador: Qué decir al mostrar este slide (50-100 palabras)
+4. Descripción detallada del visual recomendado
+5. Transición al siguiente slide
+
+Principio: Menos texto, más impacto visual</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Diseñar slide de portada impactante</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Para la portada de mi presentación:
+
+Título: [Tu título]
+Subtítulo: [Tu subtítulo]
+Presentador: [Tu nombre y rol]
+Audiencia: [Tu audiencia]
+Tono de la presentación: [Formal/Innovador/Inspirador/etc.]
+
+Dame:
+1. 3 opciones de diseño de portada (descripción visual)
+2. Esquema de colores sugerido (paleta principal y complementaria)
+3. Tipografía recomendada (para títulos y texto)
+4. Elementos gráficos que refuercen el mensaje
+5. Descripción de imagen de fondo o elemento principal
+
+Considera las mejores prácticas de diseño visual.</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear visualizaciones de datos</h4>
+                        <p>Si tu presentación incluye datos:</p>
+                        <pre><code>Tengo estos datos que necesito presentar:
+[Pega tus datos o describe la información]
+
+Objetivo: [Qué insight quieres transmitir]
+Audiencia: [Nivel de expertise]
+
+Ayúdame a:
+1. Elegir el tipo de gráfico más efectivo (barra, línea, pie, etc.)
+2. Estructurar los datos para máximo impacto
+3. Redactar el título del gráfico (que comunique el mensaje clave)
+4. Diseñar labels y leyenda claros
+5. Sugerir cómo narrar este dato en la presentación
+6. Destacar el insight principal visualmente
+
+Evita: Gráficos sobrecargados, colores confusos</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Desarrollar script de presentación</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Basándote en esta presentación completa:
+[Pega la estructura y contenido de tus slides]
+
+Crea un script de presentación que incluya:
+
+1. Opening impactante (primer minuto): Hook, presentación personal, roadmap
+2. Para cada slide: Qué decir (conversacional, no leer textualmente)
+3. Transiciones fluidas entre secciones
+4. Momentos para pausar y permitir preguntas
+5. Manejo de Q&A anticipando 5 preguntas probables
+6. Cierre memorable con llamado a la acción
+
+Tono: [Tu estilo de presentación]
+Duración total: [Minutos disponibles]</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Implementar en PowerPoint/Google Slides</h4>
+                        <p>Pasos finales:</p>
+                        <ul>
+                            <li>Abre PowerPoint o Google Slides</li>
+                            <li>Elige una plantilla profesional o crea desde cero</li>
+                            <li>Implementa el diseño y contenido generado</li>
+                            <li>Usa fuentes consistentes (máximo 2 familias)</li>
+                            <li>Aplica la paleta de colores sugerida</li>
+                            <li>Agrega imágenes de alta calidad (ver siguiente práctica)</li>
+                            <li>Revisa ortografía y coherencia visual</li>
+                            <li>Practica tu presentación con el script</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 2: Generar Imágenes con IA</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Aprender a generar imágenes personalizadas usando herramientas de IA generativa.</p>
+
+                <h4>Tiempo estimado: 45 minutos</h4>
+
+                <div class="alert-warning">
+                    <strong>⚠️ Nota:</strong> Para esta práctica usaremos herramientas con versiones gratuitas limitadas. DALL-E (integrado en ChatGPT Plus), Microsoft Designer (gratis), o alternativas gratuitas como Ideogram.
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Acceder a herramienta de generación</h4>
+                        <p><strong>Opciones:</strong></p>
+                        <ul>
+                            <li><strong>Microsoft Designer:</strong> <a href="https://designer.microsoft.com/" target="_blank">designer.microsoft.com</a> (Gratis con cuenta Microsoft)</li>
+                            <li><strong>Ideogram:</strong> <a href="https://ideogram.ai/" target="_blank">ideogram.ai</a> (Versión gratuita disponible)</li>
+                            <li><strong>ChatGPT Plus:</strong> DALL-E integrado (Si tienes suscripción)</li>
+                            <li><strong>Canva AI:</strong> <a href="https://www.canva.com/" target="_blank">canva.com</a> (Funciones básicas gratuitas)</li>
+                        </ul>
+                        <p>Crea tu cuenta en al menos una de estas plataformas.</p>
+                    </div>
+
+                    <div class="step">
+                        <h4>Ejercicio 1: Imagen conceptual para presentación</h4>
+                        <p>Genera una imagen que represente un concepto de tu presentación.</p>
+                        <p><strong>Primero, desarrolla el prompt con ChatGPT:</strong></p>
+                        <pre><code>Necesito un prompt para generar una imagen que represente: [tu concepto]
+
+Contexto: [Para qué la usarás]
+Estilo deseado: [Fotografía realista/Ilustración moderna/Minimalista/etc.]
+Colores: [Preferencias de color]
+Elementos a incluir: [Lista elementos importantes]
+Elementos a evitar: [Lo que NO quieres ver]
+
+Crea un prompt detallado optimizado para generadores de imágenes de IA.</code></pre>
+                        <p>Luego usa ese prompt en tu herramienta de generación de imágenes.</p>
+                    </div>
+
+                    <div class="step">
+                        <h4>Ejercicio 2: Imagen para material de marketing</h4>
+                        <p><strong>Prompt para desarrollar:</strong></p>
+                        <pre><code>Ayúdame a crear un prompt para generar una imagen de [producto/servicio/evento]
+
+Uso: [Post de redes sociales/Banner web/Flyer/etc.]
+Mensaje clave: [Qué quieres comunicar]
+Emociones a evocar: [Ej: confianza, innovación, cercanía]
+Target: [A quién va dirigido]
+Restricciones: [Tamaño, formato, orientación]
+
+Incluye en el prompt especificaciones técnicas apropiadas.</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Refinar resultados con iteración</h4>
+                        <p>Si la primera imagen no es perfecta:</p>
+                        <ul>
+                            <li><strong>Ajusta el prompt:</strong> Sé más específico en lo que quieres cambiar</li>
+                            <li><strong>Modifica elementos:</strong> "Mismo concepto pero con iluminación más cálida"</li>
+                            <li><strong>Cambia perspectiva:</strong> "Vista desde otro ángulo"</li>
+                            <li><strong>Altera el estilo:</strong> "En estilo ilustración vectorial en lugar de fotorrealista"</li>
+                            <li><strong>Regenera variaciones:</strong> Pide múltiples versiones</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Edición básica post-generación</h4>
+                        <p>Muchas herramientas permiten edición básica:</p>
+                        <ul>
+                            <li>Extender la imagen (outpainting)</li>
+                            <li>Eliminar elementos (inpainting)</li>
+                            <li>Ajustar colores y brillo</li>
+                            <li>Recortar y redimensionar</li>
+                            <li>Agregar texto</li>
+                        </ul>
+                        <p>Experimenta con estas funciones para perfeccionar tu imagen.</p>
+                    </div>
+
+                    <div class="step">
+                        <h4>Mejores prácticas y consideraciones éticas</h4>
+                        <div class="alert-danger">
+                            <strong>⚠️ Importante:</strong>
+                            <ul>
+                                <li>Verifica los derechos de uso comercial de las imágenes generadas</li>
+                                <li>No generes imágenes de personas reales específicas sin permiso</li>
+                                <li>Evita contenido engañoso o desinformación</li>
+                                <li>No uses para suplantar identidad o falsificar documentos</li>
+                                <li>Respeta derechos de autor (no copies estilos de artistas específicos)</li>
+                                <li>Indica cuando una imagen es generada por IA (según contexto)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 3: Diseño Rápido con Canva AI</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Crear material visual profesional para tu negocio usando Canva con IA integrada.</p>
+
+                <h4>Tiempo estimado: 40 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Configurar cuenta de Canva</h4>
+                        <ul>
+                            <li>Accede a <a href="https://www.canva.com/" target="_blank">canva.com</a></li>
+                            <li>Crea cuenta gratuita (con email o Google)</li>
+                            <li>Explora la interfaz y plantillas disponibles</li>
+                            <li>Activa la prueba de Canva Pro si está disponible (para acceder a más funciones IA)</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Ejercicio: Crear post para redes sociales</h4>
+                        <p><strong>Primero, planifica con ChatGPT:</strong></p>
+                        <pre><code>Necesito crear un post visual para [plataforma: Instagram/LinkedIn/Facebook]
+
+Contenido: [De qué trata el post]
+Objetivo: [Qué quieres lograr]
+Audiencia: [Tu target]
+Elementos de marca: [Colores, fuentes, estilo si los tienes]
+
+Dame:
+1. Texto principal del post (headline)
+2. Texto secundario (si aplica)
+3. Call-to-action
+4. Descripción del diseño visual recomendado
+5. Sugerencia de paleta de colores
+6. Caption para acompañar el post (texto en la descripción)
+7. Hashtags relevantes (5-10)</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Usar Magic Design de Canva</h4>
+                        <ul>
+                            <li>En Canva, busca "Magic Design" o crea nuevo diseño</li>
+                            <li>Selecciona tipo: Post de Instagram, LinkedIn, etc.</li>
+                            <li>Describe tu idea o pega la descripción generada por ChatGPT</li>
+                            <li>Canva generará múltiples opciones de diseño</li>
+                            <li>Elige la que más te guste como base</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Personalizar y refinar el diseño</h4>
+                        <ul>
+                            <li><strong>Textos:</strong> Ajusta con el contenido generado previamente</li>
+                            <li><strong>Colores:</strong> Aplica tu paleta de marca</li>
+                            <li><strong>Imágenes:</strong> Reemplaza con fotos propias o genera con IA (Text to Image en Canva)</li>
+                            <li><strong>Elementos:</strong> Agrega íconos, formas, ilustraciones</li>
+                            <li><strong>Efectos:</strong> Aplica filtros y estilos</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear variaciones para diferentes plataformas</h4>
+                        <p>Usa "Resize" (Redimensionar) de Canva para adaptar:</p>
+                        <ul>
+                            <li>Post de Instagram (1080x1080)</li>
+                            <li>Story de Instagram (1080x1920)</li>
+                            <li>Post de Facebook (1200x630)</li>
+                            <li>Banner de LinkedIn (1584x396)</li>
+                            <li>Post de LinkedIn (1200x627)</li>
+                        </ul>
+                        <p>Canva ajustará automáticamente el diseño para cada formato.</p>
+                    </div>
+
+                    <div class="step">
+                        <h4>Descargar y programar publicación</h4>
+                        <ul>
+                            <li>Descarga en alta calidad (PNG o JPG)</li>
+                            <li>Opcionalmente, programa desde Canva si tienes Pro</li>
+                            <li>Guarda el diseño para reutilizar como plantilla</li>
+                            <li>Crea una carpeta de "Plantillas" para diseños recurrentes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-success">
+                <strong>✅ Al finalizar este módulo habrás:</strong>
+                <ul>
+                    <li>✓ Creado una presentación profesional completa con IA</li>
+                    <li>✓ Generado imágenes personalizadas con herramientas de IA</li>
+                    <li>✓ Diseñado material visual para redes sociales</li>
+                    <li>✓ Aprendido principios básicos de diseño visual</li>
+                    <li>✓ Desarrollado habilidades de prompt engineering para imágenes</li>
+                    <li>✓ Creado una biblioteca de plantillas reutilizables</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <strong>📝 Tarea para casa:</strong> Crea una serie de 3 posts visuales para tu negocio o proyecto personal usando las técnicas aprendidas. Comparte al menos uno en redes sociales y observa el engagement.
+            </div>
+        </section>
+
+        <!-- MÓDULO 5 -->
+        <section id="modulo5">
+            <div class="module-card">
+                <h2>📊 Módulo 5: IA para Analizar Información</h2>
+                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span></p>
+            </div>
+
+            <h3>🎓 Contenido Teórico</h3>
+
+            <div class="theory-box">
+                <h4>Análisis de datos simplificado con IA</h4>
+                <p>El análisis de información es fundamental para tomar decisiones informadas. La IA puede ayudarte a:</p>
+                <ul>
+                    <li>Procesar y organizar grandes volúmenes de datos</li>
+                    <li>Identificar patrones y tendencias</li>
+                    <li>Generar insights accionables</li>
+                    <li>Crear visualizaciones comprensibles</li>
+                    <li>Predecir escenarios futuros</li>
+                    <li>Automatizar reportes periódicos</li>
+                </ul>
+            </div>
+
+            <h4>📈 Tipos de análisis que puedes realizar</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo de análisis</th>
+                        <th>Qué responde</th>
+                        <th>Ejemplo de uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Descriptivo</strong></td>
+                        <td>¿Qué pasó?</td>
+                        <td>Ventas del último mes, productividad del equipo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Diagnóstico</strong></td>
+                        <td>¿Por qué pasó?</td>
+                        <td>Causas de caída en ventas, factores de éxito</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Predictivo</strong></td>
+                        <td>¿Qué pasará?</td>
+                        <td>Proyecciones de demanda, tendencias futuras</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Prescriptivo</strong></td>
+                        <td>¿Qué debería hacer?</td>
+                        <td>Recomendaciones de acción, optimización</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>🎯 Herramientas de IA para análisis</h4>
+
+            <div class="theory-box">
+                <ul>
+                    <li><strong>ChatGPT con Plugins de análisis:</strong> Puede procesar y analizar datos CSV/Excel</li>
+                    <li><strong>Google Sheets + IA:</strong> Fórmulas inteligentes y análisis automatizados</li>
+                    <li><strong>Microsoft Excel con Copilot:</strong> Asistente IA para análisis de datos</li>
+                    <li><strong>Claude (Anthropic):</strong> Excelente para análisis de texto y documentos</li>
+                    <li><strong>Gemini:</strong> Integración con Google Workspace para análisis</li>
+                </ul>
+            </div>
+
+            <h4>📊 Preparación de datos para análisis</h4>
+
+            <ol>
+                <li><strong>Limpieza de datos:</strong>
+                    <ul>
+                        <li>Eliminar duplicados</li>
+                        <li>Corregir errores y formatos inconsistentes</li>
+                        <li>Manejar datos faltantes</li>
+                    </ul>
+                </li>
+                <li><strong>Organización:</strong>
+                    <ul>
+                        <li>Estructurar en formato tabular</li>
+                        <li>Etiquetar columnas claramente</li>
+                        <li>Separar diferentes tipos de información</li>
+                    </ul>
+                </li>
+                <li><strong>Contextualización:</strong>
+                    <ul>
+                        <li>Explicar qué significa cada variable</li>
+                        <li>Proporcionar unidades y escalas</li>
+                        <li>Indicar el período temporal</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>🔧 Práctica Guiada 1: Análisis de Datos de Ventas</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Analizar datos de ventas o ingresos para extraer insights y tomar decisiones.</p>
+
+                <h4>Tiempo estimado: 70 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Preparar tus datos</h4>
+                        <p>Organiza tus datos en una hoja de cálculo con estructura clara:</p>
+                        <ul>
+                            <li><strong>Columnas típicas:</strong> Fecha, Producto/Servicio, Cantidad, Precio unitario, Total, Cliente (opcional), Categoría</li>
+                            <li>Asegúrate de tener al menos 3 meses de datos</li>
+                            <li>Si no tienes datos reales, puedes crear un set de ejemplo o usar datos hipotéticos</li>
+                        </ul>
+                        <p><strong>Formato ejemplo:</strong></p>
+                        <pre><code>Fecha       | Producto     | Cantidad | Precio | Total  | Categoría
+2024-10-01  | Producto A   | 5        | 100    | 500    | Electrónica
+2024-10-02  | Producto B   | 3        | 150    | 450    | Hogar
+...</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Análisis descriptivo inicial</h4>
+                        <p>Copia tus datos y usa este prompt en ChatGPT:</p>
+                        <pre><code>Actúa como analista de datos experto.
+
+Aquí están mis datos de ventas de los últimos [período]:
+[Pega tus datos o describe la estructura y algunas filas de muestra]
+
+Por favor, realiza un análisis descriptivo que incluya:
+
+1. **Resumen ejecutivo:**
+   - Total de ventas del período
+   - Número de transacciones
+   - Ticket promedio
+   - Producto/categoría más vendida
+
+2. **Tendencias temporales:**
+   - Ventas por mes/semana
+   - Días de mayor actividad
+   - Identificar estacionalidad si existe
+
+3. **Análisis por producto/categoría:**
+   - Top 5 productos por ventas
+   - Productos con menor desempeño
+   - Distribución de ventas por categoría
+
+4. **Insights iniciales:**
+   - 3 hallazgos clave
+   - Patrones o anomalías detectadas</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Análisis diagnóstico - Identificar causas</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Basándote en el análisis anterior, profundiza en las causas:
+
+Situación específica a analizar: [Ejemplo: "Por qué las ventas cayeron en septiembre"]
+
+Ayúdame a:
+1. Identificar posibles factores causales (internos y externos)
+2. Correlacionar con eventos específicos si los hay
+3. Comparar con períodos similares anteriores
+4. Proponer hipótesis explicativas
+
+Contexto adicional: [Agrega cualquier información relevante: lanzamientos, 
+campañas, cambios en el mercado, etc.]</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Análisis predictivo - Proyecciones</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Con base en estos datos históricos:
+[Resumen de los datos y tendencias]
+
+Genera proyecciones para los próximos [3/6] meses:
+
+1. **Escenario conservador:** (crecimiento mínimo esperado)
+2. **Escenario realista:** (tendencia actual)
+3. **Escenario optimista:** (mejor caso posible)
+
+Para cada escenario incluye:
+- Ventas totales proyectadas por mes
+- Supuestos considerados
+- Factores de riesgo
+- Indicadores a monitorear
+
+Considera:
+- Estacionalidad detectada
+- Tendencias históricas
+- [Otros factores específicos de tu contexto]</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Análisis prescriptivo - Recomendaciones</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Basándote en todo el análisis realizado:
+[Resumen de hallazgos clave]
+
+Proporciona recomendaciones accionables en tres áreas:
+
+1. **Optimización de productos/servicios:**
+   - Qué productos potenciar
+   - Qué productos reconsiderar
+   - Oportunidades de bundling o cross-selling
+
+2. **Estrategias de ventas:**
+   - Tácticas para aumentar ticket promedio
+   - Períodos óptimos para promociones
+   - Segmentos de clientes a priorizar
+
+3. **Acciones inmediatas (próximos 30 días):**
+   - Top 3 acciones prioritarias
+   - Métricas para medir impacto
+   - Resources necesarios
+
+Cada recomendación debe ser:
+- Específica y accionable
+- Basada en datos
+- Con impacto estimado</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear dashboard visual en Google Sheets</h4>
+                        <p>Usa ChatGPT para diseñar tu dashboard:</p>
+                        <pre><code>Necesito crear un dashboard visual en Google Sheets para monitorear estas métricas:
+[Lista tus KPIs principales]
+
+Ayúdame a:
+1. Diseñar la estructura del dashboard (qué va dónde)
+2. Sugerir tipos de gráficos para cada métrica
+3. Proporcionar fórmulas de Google Sheets necesarias
+4. Indicar cómo automatizar la actualización de datos
+5. Sugerir formato condicional para alertas (ej: rojo si ventas < meta)
+
+Nivel de expertise en Sheets: [Principiante/Intermedio]</code></pre>
+                        
+                        <p>Luego implementa en tu hoja de cálculo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 2: Análisis de Productividad y Operaciones</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Analizar métricas operativas para mejorar eficiencia y productividad.</p>
+
+                <h4>Tiempo estimado: 45 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Definir métricas clave</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Ayúdame a establecer KPIs de productividad para mi [área/departamento/negocio].
+
+Contexto:
+- Tipo de negocio: [Describe tu actividad]
+- Tamaño del equipo: [Número de personas]
+- Procesos principales: [Lista procesos clave]
+- Objetivos actuales: [Qué buscas mejorar]
+
+Proporciona:
+1. 5-7 KPIs relevantes y medibles
+2. Cómo calcular cada uno
+3. Benchmarks o rangos saludables
+4. Frecuencia de medición recomendada
+5. Formato de tracking (tabla/plantilla)</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Analizar uso del tiempo</h4>
+                        <p>Si tienes registro de actividades:</p>
+                        <pre><code>Analiza cómo se distribuye mi tiempo de trabajo:
+
+Actividades típicas de mi semana:
+[Lista actividades con horas aproximadas]
+
+Ayúdame a:
+1. Categorizar actividades (estratégicas, operativas, administrativas, interrupciones)
+2. Calcular % de tiempo en cada categoría
+3. Identificar actividades de bajo valor
+4. Detectar ineficiencias o cuellos de botella
+5. Comparar con la distribución ideal para mi rol
+6. Sugerir plan de optimización
+
+Mi rol: [Tu posición/función]
+Objetivos principales: [Tus prioridades]</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Análisis de problemas recurrentes</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Tengo estos problemas o incidencias recurrentes:
+[Lista problemas, frecuencia, impacto]
+
+Realiza un análisis de causa raíz usando:
+1. Técnica de los 5 Por Qués
+2. Diagrama de Ishikawa (espina de pescado) - describir en texto
+3. Análisis de Pareto (80/20) - qué 20% de causas genera 80% de problemas
+
+Para cada problema principal identifica:
+- Causa raíz probable
+- Solución recomendada
+- Prevención futura
+- Prioridad de atención</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear sistema de mejora continua</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Basándome en los análisis anteriores, diseña un sistema simple de mejora continua:
+
+Incluye:
+1. **Ciclo de revisión:** Qué revisar y cuándo (diario, semanal, mensual)
+2. **Métricas de seguimiento:** Dashboard con 5-7 indicadores clave
+3. **Proceso de experimentación:** Cómo probar mejoras pequeñas
+4. **Documentación:** Qué registrar y cómo
+5. **Celebración de logros:** Cómo reconocer mejoras
+
+Debe ser:
+- Simple de implementar
+- Sostenible en el tiempo
+- Adaptable
+- Orientado a resultados</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 3: Análisis de Texto y Feedback</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Analizar feedback de clientes, reseñas o encuestas para extraer insights accionables.</p>
+
+                <h4>Tiempo estimado: 35 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Recopilar y preparar feedback</h4>
+                        <ul>
+                            <li>Reúne comentarios de clientes (emails, reseñas, encuestas)</li>
+                            <li>Organízalos en un formato simple</li>
+                            <li>Incluye fecha, fuente, y el comentario completo</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Análisis de sentimiento</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Analiza el sentimiento de estos comentarios de clientes:
+
+[Pega 10-20 comentarios reales o representativos]
+
+Proporciona:
+1. **Distribución de sentimiento:**
+   - % Positivo, Neutro, Negativo
+   - Comentarios más positivos y más negativos
+
+2. **Análisis por aspecto:**
+   - Qué se menciona sobre: producto/servicio, atención, precio, etc.
+   - Sentimiento por cada aspecto
+
+3. **Temas emergentes:**
+   - Palabras/temas más mencionados
+   - Patrones recurrentes
+
+4. **Insights accionables:**
+   - Fortalezas a capitalizar
+   - Debilidades a atender
+   - Oportunidades de mejora</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Priorizar acciones basadas en feedback</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Basándote en el análisis de feedback:
+
+Crea un plan de acción priorizado:
+
+1. **Quick Wins** (impacto alto, esfuerzo bajo):
+   - Problemas fáciles de resolver con gran impacto en satisfacción
+
+2. **Proyectos importantes** (impacto alto, esfuerzo alto):
+   - Mejoras significativas que requieren más recursos
+
+3. **Mejoras incrementales** (impacto moderado, esfuerzo bajo):
+   - Optimizaciones continuas
+
+4. **Reconsiderar** (impacto bajo, esfuerzo alto):
+   - Qué NO hacer por ahora
+
+Para cada acción incluye:
+- Descripción específica
+- Impacto esperado en satisfacción
+- Recursos/tiempo necesarios
+- Responsable sugerido
+- Plazo recomendado</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear respuestas tipo para feedback</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Crea plantillas de respuesta para diferentes tipos de feedback:
+
+Basándote en los comentarios analizados, genera:
+
+1. **Respuesta a feedback positivo:**
+   - Agradecimiento personalizado
+   - Invitación a seguir siendo cliente
+   - Posible solicitud de testimonial/referencia
+
+2. **Respuesta a feedback negativo:**
+   - Reconocimiento del problema
+   - Disculpa sincera
+   - Solución específica
+   - Compromiso de mejora
+
+3. **Respuesta a feedback constructivo:**
+   - Agradecimiento por el feedback
+   - Explicación de cómo lo usarás
+   - Actualización de mejoras implementadas
+
+Tono: [Especifica el tono de tu marca: cercano/profesional/casual]</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-warning">
+                <strong>⚠️ Consideraciones importantes en análisis de datos:</strong>
+                <ul>
+                    <li><strong>Correlación ≠ Causalidad:</strong> Dos variables relacionadas no implican que una cause la otra</li>
+                    <li><strong>Tamaño de muestra:</strong> Conclusiones con pocos datos pueden ser engañosas</li>
+                    <li><strong>Sesgos:</strong> La IA puede perpetuar sesgos presentes en los datos</li>
+                    <li><strong>Contexto:</strong> Los números sin contexto pueden llevar a conclusiones erróneas</li>
+                    <li><strong>Privacidad:</strong> Anonimiza datos personales antes de analizarlos con IA</li>
+                </ul>
+            </div>
+
+            <div class="alert-success">
+                <strong>✅ Al finalizar este módulo habrás:</strong>
+                <ul>
+                    <li>✓ Realizado análisis descriptivo, diagnóstico, predictivo y prescriptivo</li>
+                    <li>✓ Analizado datos de ventas y extraído insights accionables</li>
+                    <li>✓ Evaluado métricas de productividad y eficiencia</li>
+                    <li>✓ Analizado feedback de clientes y priorizado acciones</li>
+                    <li>✓ Creado dashboards y sistemas de seguimiento</li>
+                    <li>✓ Desarrollado habilidades de toma de decisiones basada en datos</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <strong>📝 Tarea para casa:</strong> Implementa un dashboard simple con tus métricas clave y actualízalo semanalmente durante un mes. Documenta decisiones que tomes basándote en estos datos.
+            </div>
+        </section>
+
+        <!-- MÓDULO 6 -->
+        <section id="modulo6">
+            <div class="module-card">
+                <h2>⚖️ Módulo 6: Uso Responsable de la IA + Cierre</h2>
+                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span></p>
+            </div>
+
+            <h3>🎓 Contenido Teórico</h3>
+
+            <div class="theory-box">
+                <h4>Ética y responsabilidad en el uso de IA</h4>
+                <p>A medida que integramos la IA en nuestro trabajo, debemos ser conscientes de las implicaciones éticas, legales y sociales. Un uso responsable implica:</p>
+                <ul>
+                    <li>Comprender las limitaciones de la IA</li>
+                    <li>Proteger la privacidad y los datos</li>
+                    <li>Evitar sesgos y discriminación</li>
+                    <li>Mantener transparencia sobre el uso de IA</li>
+                    <li>Verificar información antes de actuar</li>
+                    <li>Considerar el impacto social y laboral</li>
+                </ul>
+            </div>
+
+            <h4>⚠️ Limitaciones y riesgos de la IA</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Limitación</th>
+                        <th>Descripción</th>
+                        <th>Cómo mitigarla</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Alucinaciones</strong></td>
+                        <td>La IA puede generar información falsa con confianza</td>
+                        <td>Verificar datos, especialmente fechas, números y hechos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sesgos</strong></td>
+                        <td>Puede reflejar prejuicios presentes en sus datos de entrenamiento</td>
+                        <td>Revisar críticamente, diversificar fuentes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Falta de contexto</strong></td>
+                        <td>No comprende contexto cultural o situacional profundo</td>
+                        <td>Proporcionar contexto explícito en prompts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Privacidad</strong></td>
+                        <td>Los datos compartidos pueden ser almacenados</td>
+                        <td>No compartir información confidencial o personal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Desactualización</strong></td>
+                        <td>Conocimiento limitado a su fecha de entrenamiento</td>
+                        <td>Verificar información actual con otras fuentes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sobredependencia</strong></td>
+                        <td>Riesgo de perder habilidades propias</td>
+                        <td>Usar IA como herramienta, no como reemplazo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>🔒 Protección de datos y privacidad</h4>
+
+            <div class="alert-danger">
+                <strong>❌ NUNCA compartas con IA:</strong>
+                <ul>
+                    <li>Contraseñas o credenciales de acceso</li>
+                    <li>Números de tarjetas de crédito o cuentas bancarias</li>
+                    <li>Información personal identificable de terceros sin consentimiento</li>
+                    <li>Datos médicos sensibles</li>
+                    <li>Información confidencial de clientes o de la empresa</li>
+                    <li>Documentos legales con información sensible</li>
+                    <li>Propiedad intelectual no pública</li>
+                </ul>
+            </div>
+
+            <div class="alert-success">
+                <strong>✅ Buenas prácticas de privacidad:</strong>
+                <ul>
+                    <li>Anonimiza datos antes de analizarlos con IA</li>
+                    <li>Lee los términos de servicio y políticas de privacidad</li>
+                    <li>Usa versiones empresariales si manejas datos sensibles</li>
+                    <li>Elimina conversaciones con información delicada</li>
+                    <li>Considera herramientas de IA on-premise para datos críticos</li>
+                </ul>
+            </div>
+
+            <h4>⚖️ Marco ético para uso de IA en el trabajo</h4>
+
+            <ol>
+                <li><strong>Transparencia:</strong>
+                    <ul>
+                        <li>Sé claro cuando el contenido es generado por IA</li>
+                        <li>No presentes trabajo de IA como completamente tuyo sin reconocimiento</li>
+                        <li>Informa a stakeholders relevantes sobre el uso de IA</li>
+                    </ul>
+                </li>
+                <li><strong>Responsabilidad:</strong>
+                    <ul>
+                        <li>Tú eres responsable del output final, no la IA</li>
+                        <li>Revisa, edita y verifica todo contenido generado</li>
+                        <li>No uses IA para evadir responsabilidades</li>
+                    </ul>
+                </li>
+                <li><strong>Equidad:</strong>
+                    <ul>
+                        <li>Evalúa si tus prompts contienen sesgos</li>
+                        <li>Considera el impacto en diferentes grupos</li>
+                        <li>No uses IA para discriminar o excluir</li>
+                    </ul>
+                </li>
+                <li><strong>Beneficencia:</strong>
+                    <ul>
+                        <li>Usa IA para mejorar, no para dañar</li>
+                        <li>Considera el bienestar de todos los afectados</li>
+                        <li>Prioriza usos que generen valor social</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>💼 IA y el futuro del trabajo</h4>
+
+            <div class="theory-box">
+                <p><strong>Perspectiva constructiva:</strong> La IA no viene a reemplazar trabajos, sino a transformarlos. Las habilidades más valoradas serán:</p>
+                <ul>
+                    <li><strong>Pensamiento crítico:</strong> Evaluar y cuestionar resultados de IA</li>
+                    <li><strong>Creatividad:</strong> Lo que la IA aún no puede igualar</li>
+                    <li><strong>Inteligencia emocional:</strong> Empatía y comprensión humana</li>
+                    <li><strong>Juicio ético:</strong> Tomar decisiones morales complejas</li>
+                    <li><strong>Colaboración:</strong> Trabajar efectivamente con IA y humanos</li>
+                    <li><strong>Aprendizaje continuo:</strong> Adaptarse a nuevas herramientas</li>
+                </ul>
+            </div>
+
+            <h3>🔧 Práctica Guiada 1: Auditoría Ética de Tus Usos de IA</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Evaluar críticamente cómo estás usando IA y identificar áreas de mejora ética.</p>
+
+                <h4>Tiempo estimado: 40 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Inventario de usos actuales</h4>
+                        <p><strong>Ejercicio de reflexión:</strong></p>
+                        <ul>
+                            <li>Lista todos los usos que has dado a IA hasta ahora</li>
+                            <li>Categorízalos: comunicación, análisis, creatividad, organización, etc.</li>
+                            <li>Marca cuáles han sido más valiosos y cuáles menos</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Evaluación ética de cada uso</h4>
+                        <p><strong>Prompt para análisis:</strong></p>
+                        <pre><code>Actúa como consultor de ética en IA.
+
+Uso de IA que quiero evaluar:
+[Describe un uso específico: qué hiciste, con qué herramienta, para qué propósito]
+
+Evalúa este uso según estos criterios:
+
+1. **Transparencia:**
+   - ¿Fue claro que usé IA?
+   - ¿Debería haberlo comunicado explícitamente?
+   - ¿Presenté el resultado apropiadamente?
+
+2. **Privacidad:**
+   - ¿Compartí información que no debía?
+   - ¿Protegí datos de terceros?
+   - ¿Consideré las políticas de privacidad?
+
+3. **Precisión:**
+   - ¿Verifiqué la información generada?
+   - ¿Podría haber errores significativos?
+   - ¿Agregué mi expertise y juicio?
+
+4. **Impacto:**
+   - ¿Quién se beneficia de este uso?
+   - ¿Hay algún perjudicado potencial?
+   - ¿El resultado es socialmente positivo?
+
+Proporciona calificación (Apropiado / Requiere ajustes / Problemático) y recomendaciones.</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear tu código de ética personal</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Ayúdame a crear un código de ética personal para mi uso de IA en el trabajo.
+
+Mi contexto:
+- Profesión: [Tu rol]
+- Sector: [Tu industria]
+- Usos principales de IA: [Lista tus usos más comunes]
+
+Crea un código conciso que incluya:
+
+1. **Principios fundamentales** (3-5 principios guía)
+2. **Líneas rojas** (Qué nunca haré con IA)
+3. **Mejores prácticas** (Compromisos específicos)
+4. **Proceso de verificación** (Cómo revisaré mi trabajo con IA)
+5. **Mejora continua** (Cómo me mantendré actualizado)
+
+Debe ser:
+- Práctico y accionable
+- Fácil de recordar
+- Aplicable a situaciones cotidianas</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Implementar salvaguardas</h4>
+                        <p>Establece procesos concretos:</p>
+                        <ul>
+                            <li><strong>Checklist de verificación:</strong> Antes de usar output de IA, verificar [lista específica]</li>
+                            <li><strong>Regla de divulgación:</strong> Cuándo y cómo indicar que usaste IA</li>
+                            <li><strong>Revisión de privacidad:</strong> Qué revisar antes de compartir datos con IA</li>
+                            <li><strong>Segunda opinión:</strong> Cuándo buscar validación humana adicional</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 2: Detectar y Corregir Sesgos</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Desarrollar habilidad para identificar sesgos en prompts y resultados de IA.</p>
+
+                <h4>Tiempo estimado: 35 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Comprender tipos de sesgos</h4>
+                        <p><strong>Prompt educativo:</strong></p>
+                        <pre><code>Explícame con ejemplos concretos estos tipos de sesgos en IA:
+
+1. Sesgo de género
+2. Sesgo cultural
+3. Sesgo de confirmación
+4. Sesgo de selección
+5. Sesgo histórico
+
+Para cada uno:
+- Definición simple
+- Ejemplo de cómo aparece en IA
+- Cómo podría afectar mi trabajo en [tu sector]
+- Señales para detectarlo</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Analizar tus propios prompts</h4>
+                        <p><strong>Ejercicio práctico:</strong></p>
+                        <pre><code>Revisa estos prompts que he usado:
+[Pega 3-5 de tus prompts reales]
+
+Analízalos buscando:
+1. ¿Contienen suposiciones implícitas problemáticas?
+2. ¿Usan lenguaje inclusivo o excluyente?
+3. ¿Podrían generar resultados sesgados?
+4. ¿Consideran diversas perspectivas?
+
+Para cada problema detectado:
+- Explicar el sesgo
+- Proponer versión mejorada del prompt
+- Justificar los cambios</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Ejercicio de reformulación inclusiva</h4>
+                        <p>Practica con estos ejemplos problemáticos:</p>
+                        <pre><code>Mejora estos prompts para hacerlos más inclusivos y menos sesgados:
+
+1. "Describe a un CEO exitoso"
+2. "Crea un perfil de candidato ideal para desarrollador"
+3. "Escribe sobre cómo manejar empleados difíciles"
+4. "Genera ideas para atraer clientes millennials"
+
+Para cada uno:
+- Identifica supuestos problemáticos
+- Propón versión inclusiva
+- Explica por qué es mejor</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear guía personal anti-sesgos</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Crea una guía rápida para revisar mis prompts antes de enviarlos:
+
+Checklist: "¿Mi prompt..."
+- [ ] ...usa lenguaje inclusivo?
+- [ ] ...evita estereotipos?
+- [ ] ...considera diversas perspectivas?
+- [ ] [Agrega otros puntos relevantes]
+
+Incluye también:
+- Palabras/frases de alerta a evitar
+- Alternativas inclusivas comunes
+- Preguntas de verificación rápida</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🔧 Práctica Guiada 3: Plan Personal de Aprendizaje Continuo</h3>
+
+            <div class="practice-box">
+                <h4>Objetivo</h4>
+                <p>Diseñar tu estrategia para mantenerte actualizado y seguir mejorando en el uso de IA.</p>
+
+                <h4>Tiempo estimado: 45 minutos</h4>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Autoevaluación de habilidades actuales</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Ayúdame a evaluar mis habilidades actuales con IA:
+
+Experiencia hasta ahora:
+- Herramientas que domino: [Lista]
+- Herramientas que conozco pero no domino: [Lista]
+- Herramientas que no he probado: [Lista]
+
+Usos que me siento cómodo realizando:
+[Lista]
+
+Áreas donde aún tengo dificultades:
+[Lista]
+
+Basándote en esto:
+1. Identifica mis fortalezas principales
+2. Señala gaps importantes a cubrir
+3. Prioriza 3 áreas de desarrollo inmediato
+4. Sugiere recursos de aprendizaje para cada área</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Definir objetivos de aprendizaje SMART</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Ayúdame a establecer objetivos de aprendizaje en IA para los próximos 3 meses:
+
+Mi objetivo general: [Qué quieres lograr con IA]
+Mi disponibilidad: [Horas por semana para aprender]
+Mi estilo de aprendizaje: [Práctico/Teórico/Mixto]
+
+Crea 3 objetivos SMART que sean:
+- Específicos (qué exactamente)
+- Medibles (cómo sabré que los logré)
+- Alcanzables (realistas con mi tiempo)
+- Relevantes (alineados con mi trabajo)
+- Temporales (fecha límite)
+
+Para cada objetivo incluye:
+- Hitos intermedios
+- Métricas de progreso
+- Recursos necesarios
+- Proyecto práctico para aplicar lo aprendido</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crear sistema de aprendizaje continuo</h4>
+                        <p><strong>Prompt:</strong></p>
+                        <pre><code>Diseña un sistema sostenible de aprendizaje continuo sobre IA:
+
+Mi situación:
+- Tiempo disponible: [X horas/semana]
+- Presupuesto para formación: [$X/mes]
+- Preferencia: [Online/Presencial/Autodidacta]
+
+Crea un sistema que incluya:
+
+1. **Fuentes de información:**
+   - Newsletters relevantes (recomienda 3)
+   - Blogs/sitios web a seguir
+   - Podcasts o canales de YouTube
+   - Comunidades online
+
+2. **Práctica regular:**
+   - "Retos semanales" con IA
+   - Proyectos mensuales
+   - Experimentos con nuevas herramientas
+
+3. **Networking:**
+   - Grupos de interés
+   - Eventos o webinars
+   - Posibles mentores o peer learning
+
+4. **Documentación:**
+   - Qué y cómo documentar aprendizajes
+   - Cómo construir tu portfolio de IA
+
+5. **Revisión y ajuste:**
+   - Frecuencia de evaluación
+   - Indicadores de que el sistema funciona</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Planificar primeros 30 días post-curso</h4>
+                        <p><strong>Prompt final:</strong></p>
+                        <pre><code>Crea un plan detallado para mis primeros 30 días después de este curso:
+
+Objetivo: Consolidar lo aprendido y establecer hábitos sostenibles
+
+Incluye:
+
+**Semana 1 - Consolidación:**
+- Tareas diarias específicas
+- Revisión de materiales del curso
+- Implementar [herramienta/proceso específico]
+
+**Semana 2 - Aplicación:**
+- Proyectos reales a realizar
+- Métricas a medir
+- Ajustes basados en experiencia
+
+**Semana 3 - Expansión:**
+- Nueva herramienta o técnica a aprender
+- Compartir conocimiento (cómo)
+- Networking o comunidad
+
+**Semana 4 - Evaluación y planificación:**
+- Revisar progreso vs objetivos
+- Documentar lecciones aprendidas
+- Planificar siguientes 60 días
+
+Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios de éxito</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h4>Compromisos finales</h4>
+                        <p><strong>Ejercicio personal:</strong></p>
+                        <p>Escribe en tu documento personal:</p>
+                        <ul>
+                            <li><strong>Mi compromiso #1 con IA:</strong> [Qué harás diferente]</li>
+                            <li><strong>Mi compromiso #2:</strong> [Cómo lo aplicarás en tu trabajo]</li>
+                            <li><strong>Mi compromiso #3:</strong> [Cómo compartirás el conocimiento]</li>
+                            <li><strong>Fecha de primera revisión:</strong> [30 días desde hoy]</li>
+                            <li><strong>Accountability partner:</strong> [Quién te acompañará]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🎓 Evaluación Final y Reflexión</h3>
+
+            <div class="practice-box">
+                <h4>Revisión del aprendizaje</h4>
+                
+                <p>Responde estas preguntas de reflexión:</p>
+
+                <ol>
+                    <li><strong>¿Cuál fue tu aprendizaje más importante del curso?</strong></li>
+                    <li><strong>¿Qué herramienta o técnica vas a implementar inmediatamente?</strong></li>
+                    <li><strong>¿Cómo crees que la IA puede transformar tu trabajo en los próximos 6 meses?</strong></li>
+                    <li><strong>¿Qué obstáculos anticipas y cómo los superarás?</strong></li>
+                    <li><strong>¿A quién más podrías ayudar compartiendo estos conocimientos?</strong></li>
+                </ol>
+
+                <h4>Proyecto integrador final</h4>
+                <p>Desarrolla un caso completo que integre múltiples módulos:</p>
+                <ul>
+                    <li>Identifica un desafío real de tu trabajo</li>
+                    <li>Aplica al menos 3 técnicas aprendidas en el curso</li>
+                    <li>Documenta el proceso y resultados</li>
+                    <li>Presenta tu caso en 5 minutos (puede ser documento o presentación breve)</li>
+                </ul>
+            </div>
+
+            <div class="alert-success">
+                <strong>🎉 ¡Felicitaciones por completar el curso!</strong>
+                <p>Has adquirido habilidades fundamentales para integrar la IA en tu trabajo de manera ética y efectiva. Recuerda:</p>
+                <ul>
+                    <li>✓ La IA es una herramienta poderosa, pero tu criterio y creatividad siguen siendo insustituibles</li>
+                    <li>✓ El aprendizaje continuo es clave en un campo que evoluciona rápidamente</li>
+                    <li>✓ Usar IA responsablemente beneficia a todos</li>
+                    <li>✓ Compartir tu conocimiento multiplica el impacto positivo</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <strong>📚 Recursos adicionales para seguir aprendiendo:</strong>
+                <ul>
+                    <li><a href="https://www.coursera.org/learn/ai-for-everyone" target="_blank">AI For Everyone - Andrew Ng (Coursera)</a></li>
+                    <li><a href="https://www.elementsofai.com/" target="_blank">Elements of AI (Curso gratuito)</a></li>
+                    <li><a href="https://www.youtube.com/@OpenAI" target="_blank">Canal de YouTube de OpenAI</a></li>
+                    <li><a href="https://www.reddit.com/r/ArtificialIntelligence/" target="_blank">Comunidad r/ArtificialIntelligence en Reddit</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- HERRAMIENTAS -->
+        <section id="herramientas">
+            <h2>🛠️ Directorio de Herramientas de IA</h2>
+            
+            <p>Aquí encontrarás las principales herramientas de IA mencionadas en el curso, organizadas por categoría:</p>
+
+            <h3>💬 Asistentes Conversacionales</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>ChatGPT</h4>
+                    <p>El asistente de IA más popular. Excelente para escritura, análisis y tareas generales.</p>
+                    <a href="https://chatgpt.com/" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>Microsoft Copilot</h4>
+                    <p>Integrado con Bing, puede buscar en internet y citar fuentes actualizadas.</p>
+                    <a href="https://www.bing.com/search?q=Bing+AI&showconv=1" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>Google Gemini</h4>
+                    <p>Asistente de Google con integración a todos sus servicios (Gmail, Docs, Drive).</p>
+                    <a href="https://gemini.google.com/app" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>Claude</h4>
+                    <p>Conocido por conversaciones largas y análisis detallado de documentos.</p>
+                    <a href="https://claude.ai/" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>DeepSeek</h4>
+                    <p>Alternativa emergente con buenas capacidades de razonamiento.</p>
+                    <a href="https://chat.deepseek.com/" target="_blank">Visitar →</a>
+                </div>
+            </div>
+
+            <h3>🎨 Generación de Imágenes</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>Microsoft Designer</h4>
+                    <p>Herramienta gratuita de Microsoft para generar imágenes y diseños.</p>
+                    <a href="https://designer.microsoft.com/" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>DALL-E</h4>
+                    <p>Integrado en ChatGPT Plus. Generación de imágenes de alta calidad.</p>
+                    <a href="https://openai.com/dall-e" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>Ideogram</h4>
+                    <p>Excelente para generar imágenes con texto. Versión gratuita disponible.</p>
+                    <a href="https://ideogram.ai/" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>Canva AI</h4>
+                    <p>Diseño gráfico simplificado con IA integrada. Ideal para no diseñadores.</p>
+                    <a href="https://www.canva.com/" target="_blank">Visitar →</a>
+                </div>
+            </div>
+
+            <h3>📊 Análisis y Productividad</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>Notion AI</h4>
+                    <p>IA integrada en Notion para notas, documentos y bases de datos.</p>
+                    <a href="https://www.notion.so/product/ai" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>Excel Copilot</h4>
+                    <p>Asistente IA en Excel para análisis de datos y fórmulas.</p>
+                    <a href="https://www.microsoft.com/microsoft-365/copilot" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>Sheets AI</h4>
+                    <p>Funciones de IA para Google Sheets.</p>
+                    <a href="https://workspace.google.com/features/" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>Gamma.ai</h4>
+                    <p>Crea presentaciones profesionales automáticamente a partir de texto.</p>
+                    <a href="https://gamma.app/" target="_blank">Visitar →</a>
+                </div>
+            </div>
+
+            <h3>✍️ Escritura y Contenido</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>Grammarly</h4>
+                    <p>Corrección gramatical y mejora de estilo con IA.</p>
+                    <a href="https://www.grammarly.com/" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>QuillBot</h4>
+                    <p>Parafraseado y mejora de textos.</p>
+                    <a href="https://quillbot.com/" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>Copy.ai</h4>
+                    <p>Generación de copy para marketing y ventas.</p>
+                    <a href="https://www.copy.ai/" target="_blank">Visitar →</a>
+                </div>
+                <div class="tool-card">
+                    <h4>Jasper</h4>
+                    <p>Plataforma completa de contenido con IA para marketing.</p>
+                    <a href="https://www.jasper.ai/" target="_blank">Visitar →</a>
+                </div>
+            </div>
+
+            <div class="alert-warning">
+                <strong>💡 Consejos para elegir herramientas:</strong>
+                <ul>
+                    <li>Empieza con versiones gratuitas antes de pagar</li>
+                    <li>Evalúa si se integra con herramientas que ya usas</li>
+                    <li>Lee reseñas y políticas de privacidad</li>
+                    <li>Considera el soporte en español si lo necesitas</li>
+                    <li>Verifica que sea apropiada para tu industria</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- RECURSOS -->
+        <section id="recursos">
+            <h2>📚 Recursos Adicionales</h2>
+
+            <h3>📖 Lecturas Recomendadas</h3>
+            <ul>
+                <li><strong>"Artificial Intelligence All-in-One For Dummies"</strong> - Introducción completa y accesible</li>
+                <li><strong>"Generative AI in Software Development"</strong> - Aplicaciones prácticas en desarrollo</li>
+                <li><strong>"Prompt Engineering for Generative AI"</strong> - Guía completa de prompting</li>
+                <li><strong>"AI Ethics in Action"</strong> - Consideraciones éticas fundamentales</li>
+                <li><strong>"Introduction to Generative AI"</strong> - Fundamentos técnicos accesibles</li>
+            </ul>
+
+            <h3>🎓 Cursos Online Gratuitos</h3>
+            <ul>
+                <li><a href="https://www.elementsofai.com/" target="_blank">Elements of AI</a> - Curso introductorio completo</li>
+                <li><a href="https://www.coursera.org/learn/ai-for-everyone" target="_blank">AI For Everyone by Andrew Ng</a> - En Coursera</li>
+                <li><a href="https://learnprompting.org/" target="_blank">Learn Prompting</a> - Curso gratuito de prompt engineering</li>
+                <li><a href="https://microsoft.com/ai" target="_blank">Microsoft AI Skills Navigator</a> - Recursos de Microsoft</li>
+            </ul>
+
+            <h3>🎙️ Podcasts y Canales</h3>
+            <ul>
+                <li><strong>AI Breakdown</strong> - Noticias de IA explicadas</li>
+                <li><strong>The AI Podcast</strong> - Entrevistas con expertos</li>
+                <li><strong>Lex Fridman Podcast</strong> - Conversaciones profundas sobre IA</li>
+                <li>Canal de YouTube: <strong>Two Minute Papers</strong> - Investigación de IA explicada brevemente</li>
+            </ul>
+
+            <h3>👥 Comunidades</h3>
+            <ul>
+                <li><a href="https://www.reddit.com/r/artificial/" target="_blank">r/artificial</a> - Comunidad general de IA</li>
+                <li><a href="https://www.reddit.com/r/ChatGPT/" target="_blank">r/ChatGPT</a> - Específica de ChatGPT</li>
+                <li><a href="https://discord.gg/openai" target="_blank">OpenAI Discord</a> - Comunidad oficial</li>
+                <li>Grupos de LinkedIn sobre IA en tu industria</li>
+            </ul>
+
+            <h3>📰 Newsletters para Mantenerte Actualizado</h3>
+            <ul>
+                <li><strong>The Batch</strong> (DeepLearning.AI) - Semanal</li>
+                <li><strong>AI Breakfast</strong> - Diaria, noticias breves</li>
+                <li><strong>Import AI</strong> - Análisis semanal profundo</li>
+                <li><strong>TLDR AI</strong> - Resumen diario de noticias</li>
+            </ul>
+
+            <h3>🔧 Plantillas y Recursos Descargables</h3>
+            <div class="alert-success">
+                <p><strong>Basándote en este curso, puedes crear:</strong></p>
+                <ul>
+                    <li>Tu biblioteca personal de prompts efectivos</li>
+                    <li>Checklist de uso ético de IA</li>
+                    <li>Dashboard de seguimiento de productividad</li>
+                    <li>Plantillas de comunicación asistidas por IA</li>
+                    <li>Guía rápida de herramientas para cada necesidad</li>
+                </ul>
+            </div>
+
+            <h3>📞 Soporte Continuo</h3>
+            <p>Si tienes preguntas o necesitas orientación adicional:</p>
+            <ul>
+                <li><strong>Institución:</strong> Instituto Superior Tecnológico Liceo Cristiano</li>
+                <li><strong>Carrera:</strong> Desarrollo de Software</li>
+                <li><strong>Contacto:</strong> A través de tu facilitador/estudiante asignado</li>
+            </ul>
+
+            <div class="highlight">
+                <p><strong>💡 Recuerda:</strong> El campo de la IA evoluciona rápidamente. Mantén la curiosidad, experimenta con nuevas herramientas, y no dejes de aprender. ¡El mejor momento para empezar es ahora!</p>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p><strong>Instituto Superior Tecnológico Liceo Cristiano</strong></p>
+        <p>Proyecto: "Inteligencia Artificial para el Trabajo: Herramientas Digitales para la Comunidad"</p>
+        <p>Carrera: Desarrollo de Software</p>
+        <p>© 2026 - Todos los derechos reservados</p>
+        <p style="margin-top: 20px; font-size: 0.9em;">
+            <em>Este material es resultado del proyecto de vinculación con la sociedad.<br>
+            Diseñado para empoderar a profesionales y emprendedores en el uso responsable de la Inteligencia Artificial.</em>
+        </p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight active section in navigation
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Print friendly
+        window.addEventListener('beforeprint', () => {
+            document.querySelectorAll('nav').forEach(nav => nav.style.display = 'none');
+        });
+
+        window.addEventListener('afterprint', () => {
+            document.querySelectorAll('nav').forEach(nav => nav.style.display = 'block');
+        });
+
+        // Add copy button to code blocks
+        document.querySelectorAll('pre code').forEach((block) => {
+            const button = document.createElement('button');
+            button.innerText = 'Copiar';
+            button.style.cssText = 'position:absolute;right:10px;top:10px;padding:5px 10px;background:#4CAF50;color:white;border:none;border-radius:3px;cursor:pointer;font-size:12px;';
+            
+            const pre = block.parentElement;
+            pre.style.position = 'relative';
+            pre.appendChild(button);
+            
+            button.addEventListener('click', async () => {
+                await navigator.clipboard.writeText(block.textContent);
+                button.innerText = '✓ Copiado';
+                setTimeout(() => {
+                    button.innerText = 'Copiar';
+                }, 2000);
+            });
+        });
+
+        console.log('Curso de IA - ISTLC - Versión 1.0');
+        console.log('¡Bienvenido al curso! Usa este documento como guía de referencia.');
+    </script>
+</body>
+</html>

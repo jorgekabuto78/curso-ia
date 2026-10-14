@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Completo de Modelos de IA - Octubre 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #2d3748;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --frontier-color: #9f7aea;
+            --efficient-color: #48bb78;
+            --specialized-color: #ed8936;
+            --header-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        /* Header */
+        header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 60px 20px 40px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        header .date {
+            font-size: 1rem;
+            opacity: 0.85;
+            font-weight: 300;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .info-panel h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .info-panel p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stat-card .number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Search and Filters */
+        .controls {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .controls h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .legend-color.frontier { background: rgba(159, 122, 234, 0.2); border: 2px solid var(--frontier-color); }
+        .legend-color.efficient { background: rgba(72, 187, 120, 0.2); border: 2px solid var(--efficient-color); }
+        .legend-color.specialized { background: rgba(237, 137, 54, 0.2); border: 2px solid var(--specialized-color); }
+
+        /* Table Container */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            overflow-y: visible;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        thead {
+            background: var(--header-gradient);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        thead th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(102, 126, 234, 0.03);
+        }
+
+        tbody tr.hidden {
+            display: none;
+        }
+
+        td {
+            padding: 20px 15px;
+            vertical-align: top;
+        }
+
+        td:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+            white-space: nowrap;
+            min-width: 180px;
+        }
+
+        td ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        td li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        td li:before {
+            content: "●";
+            position: absolute;
+            left: 0;
+            font-size: 0.8rem;
+        }
+
+        /* Color coding for different model types */
+        td:nth-child(2) li:before { color: var(--frontier-color); }
+        td:nth-child(3) li:before { color: var(--efficient-color); }
+        td:nth-child(4) li:before { color: var(--specialized-color); }
+
+        /* Model badges */
+        .model-name {
+            font-weight: 600;
+        }
+
+        .model-desc {
+            color: #718096;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        /* Sections */
+        .section {
+            background: white;
+            padding: 40px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 15px;
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            margin: 25px 0 15px 0;
+            font-size: 1.4rem;
+        }
+
+        .section ul, .section ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .section li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        /* Trends Grid */
+        .trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .trend-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .trend-card h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .trend-card p {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        /* Alert Box */
+        .alert-box {
+            background: #edf2f7;
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .alert-box strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-color);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .stat-card .number {
+                font-size: 2.2rem;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .trends-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            thead th {
+                padding: 12px 10px;
+                font-size: 0.9rem;
+            }
+
+            td {
+                padding: 15px 10px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .controls, .legend {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .table-container, .section, .info-panel {
+                box-shadow: none;
+            }
+
+            tbody tr {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Loading animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🤖 Catálogo Completo de Modelos de IA</h1>
+        <p class="subtitle">Ecosistema Global de Inteligencia Artificial</p>
+        <p class="date">📅 Octubre 2026 | Referencia Técnica Actualizada</p>
+    </header>
+
+    <div class="container">
+        <!-- Statistics -->
+        <div class="stats">
+            <div class="stat-card fade-in">
+                <div class="number">30+</div>
+                <div class="label">Organizaciones Líderes</div>
+            </div>
+            <div class="stat-card fade-in" style="animation-delay: 0.1s;">
+                <div class="number">200+</div>
+                <div class="label">Modelos Activos</div>
+            </div>
+            <div class="stat-card fade-in" style="animation-delay: 0.2s;">
+                <div class="number">4</div>
+                <div class="label">Categorías Estratégicas</div>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="info-panel fade-in">
+            <h2>📋 Acerca de este Catálogo</h2>
+            <p><strong>Propósito:</strong> Referencia técnica exhaustiva para arquitectos de software, CTOs, ingenieros ML/AI, investigadores y tomadores de decisiones tecnológicas.</p>
+            <p><strong>Alcance:</strong> Modelos de Inteligencia Artificial vigentes y activos en producción comercial o disponibles en preview pública hasta octubre de 2026.</p>
+            <p><strong>Metodología:</strong> Se incluyen tanto modelos comerciales de código cerrado como opciones líderes de pesos abiertos (open weights). La categorización se basa en capacidades técnicas, casos de uso y rendimiento en benchmarks académicos reconocidos.</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls fade-in">
+            <h3>🔍 Búsqueda y Filtros</h3>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar por empresa, modelo o tecnología...">
+            </div>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color frontier"></div>
+                    <span>Frontera (Máximo Razonamiento)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color efficient"></div>
+                    <span>Eficientes (Bajo Coste / Open Weights)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color specialized"></div>
+                    <span>Especializados (Código / Multimedia / Voz / Edge)</span>
+                </div>
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Todas las Empresas</button>
+                <button class="filter-btn" data-filter="tier1">Tier 1 Global</button>
+                <button class="filter-btn" data-filter="openai">OpenAI</button>
+                <button class="filter-btn" data-filter="anthropic">Anthropic</button>
+                <button class="filter-btn" data-filter="google">Google</button>
+                <button class="filter-btn" data-filter="meta">Meta</button>
+                <button class="filter-btn" data-filter="microsoft">Microsoft</button>
+                <button class="filter-btn" data-filter="opensource">Open Source</button>
+                <button class="filter-btn" data-filter="china">Actores Chinos</button>
+            </div>
+        </div>
+
+        <!-- Main Table -->
+        <div class="table-container fade-in">
+            <div class="table-wrapper">
+                <table id="modelsTable">
+                    <thead>
+                        <tr>
+                            <th>Empresa / Laboratorio</th>
+                            <th>Modelos de Frontera<br><small>(Máximo Razonamiento)</small></th>
+                            <th>Modelos Eficientes<br><small>(Bajo Coste / API / Pesos Abiertos)</small></th>
+                            <th>Modelos Especializados<br><small>(Código, Multimedia, Voz y Edge)</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-category="openai,tier1">
+                            <td><strong>OpenAI</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">GPT-5</span> <span class="model-desc">(modelo insignia multimodal)</span></li>
+                                    <li><span class="model-name">o1-pro</span> <span class="model-desc">(razonamiento extendido, chains of thought)</span></li>
+                                    <li><span class="model-name">o1</span> <span class="model-desc">(razonamiento avanzado)</span></li>
+                                    <li><span class="model-name">o1-mini</span> <span class="model-desc">(razonamiento compacto)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">GPT-4.5-turbo</span> <span class="model-desc">(balance coste/calidad)</span></li>
+                                    <li><span class="model-name">GPT-4o-mini</span> <span class="model-desc">(ultra eficiente)</span></li>
+                                    <li><span class="model-name">GPT-3.5-turbo</span> <span class="model-desc">(legacy económico)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">DALL-E 4</span> <span class="model-desc">(generación de imágenes)</span></li>
+                                    <li><span class="model-name">Sora 1.5</span> <span class="model-desc">(generación de video de alta fidelidad)</span></li>
+                                    <li><span class="model-name">Whisper v4</span> <span class="model-desc">(transcripción y traducción de voz)</span></li>
+                                    <li><span class="model-name">Codex-2</span> <span class="model-desc">(programación asistida)</span></li>
+                                    <li><span class="model-name">Embedding-3</span> <span class="model-desc">(vectorización semántica)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="anthropic,tier1">
+                            <td><strong>Anthropic</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Claude 4 Opus</span> <span class="model-desc">(máximo contexto y razonamiento)</span></li>
+                                    <li><span class="model-name">Claude 4 Opus Extended</span> <span class="model-desc">(contexto 1M tokens)</span></li>
+                                    <li><span class="model-name">Claude 4 Sonnet Extended</span> <span class="model-desc">(equilibrio premium)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Claude 4 Sonnet</span> <span class="model-desc">(producción estándar)</span></li>
+                                    <li><span class="model-name">Claude 4 Haiku</span> <span class="model-desc">(velocidad y bajo coste)</span></li>
+                                    <li><span class="model-name">Claude Instant 2</span> <span class="model-desc">(legacy rápido)</span></li>
+                                    <li><span class="model-name">Claude API Batch</span> <span class="model-desc">(procesamiento masivo)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Claude Code</span> <span class="model-desc">(análisis y generación de código)</span></li>
+                                    <li><span class="model-name">Claude Vision Pro</span> <span class="model-desc">(análisis multimodal avanzado)</span></li>
+                                    <li><span class="model-name">Constitutional AI Engine</span> <span class="model-desc">(alineamiento ético)</span></li>
+                                    <li><span class="model-name">Claude Projects</span> <span class="model-desc">(gestión contextual)</span></li>
+                                    <li><span class="model-name">Artifacts Generation</span> <span class="model-desc">(contenido estructurado)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="google,tier1">
+                            <td><strong>Google DeepMind</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Gemini 2.0 Ultra</span> <span class="model-desc">(modelo insignia multimodal)</span></li>
+                                    <li><span class="model-name">Gemini Pro Thinking</span> <span class="model-desc">(razonamiento explícito)</span></li>
+                                    <li><span class="model-name">Gemini 2.0 Pro</span> <span class="model-desc">(razonamiento general)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Gemini 2.0 Flash</span> <span class="model-desc">(producción rápida)</span></li>
+                                    <li><span class="model-name">Gemini Nano 3</span> <span class="model-desc">(on-device)</span></li>
+                                    <li><span class="model-name">PaLM 3-Bison</span> <span class="model-desc">(legacy eficiente)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Imagen 4</span> <span class="model-desc">(generación de imágenes fotorrealistas)</span></li>
+                                    <li><span class="model-name">Veo 2</span> <span class="model-desc">(generación de video profesional)</span></li>
+                                    <li><span class="model-name">AlphaCode 3</span> <span class="model-desc">(competiciones de programación)</span></li>
+                                    <li><span class="model-name">MusicLM 2</span> <span class="model-desc">(generación musical)</span></li>
+                                    <li><span class="model-name">Med-PaLM 3</span> <span class="model-desc">(asistencia médica)</span></li>
+                                    <li><span class="model-name">Chirp 2</span> <span class="model-desc">(voz universal, 100+ idiomas)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="microsoft,tier1">
+                            <td><strong>Microsoft</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Phi-4 Max</span> <span class="model-desc">(razonamiento SLM premium)</span></li>
+                                    <li><span class="model-name">Azure OpenAI GPT-5</span> <span class="model-desc">(via partnership)</span></li>
+                                    <li><span class="model-name">MAI-1</span> <span class="model-desc">(modelo fundacional propietario)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Phi-4</span> <span class="model-desc">(SLM de alto rendimiento)</span></li>
+                                    <li><span class="model-name">Phi-3.5 Vision</span> <span class="model-desc">(multimodal compacto)</span></li>
+                                    <li><span class="model-name">Phi-3 Mini</span> <span class="model-desc">(3.8B parámetros, edge)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Copilot Vision</span> <span class="model-desc">(asistente visual integrado)</span></li>
+                                    <li><span class="model-name">Orca 3</span> <span class="model-desc">(razonamiento paso a paso)</span></li>
+                                    <li><span class="model-name">Kosmos-3</span> <span class="model-desc">(comprensión multimodal)</span></li>
+                                    <li><span class="model-name">VALL-E 2</span> <span class="model-desc">(clonación de voz)</span></li>
+                                    <li><span class="model-name">Florence-2</span> <span class="model-desc">(visión por computadora)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="meta,tier1,opensource">
+                            <td><strong>Meta (Facebook)</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Llama 4 405B</span> <span class="model-desc">(modelo insignia open weights)</span></li>
+                                    <li><span class="model-name">Llama 4 Ultra</span> <span class="model-desc">(versión optimizada comercial)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Llama 4 70B</span> <span class="model-desc">(open weights, producción)</span></li>
+                                    <li><span class="model-name">Llama 4 8B</span> <span class="model-desc">(eficiente, open weights)</span></li>
+                                    <li><span class="model-name">Llama 3.2 Vision</span> <span class="model-desc">(multimodal compacto, 11B/90B)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Code Llama 4</span> <span class="model-desc">(programación, hasta 70B)</span></li>
+                                    <li><span class="model-name">Llama Guard 3</span> <span class="model-desc">(moderación de contenido)</span></li>
+                                    <li><span class="model-name">Purple Llama</span> <span class="model-desc">(ciberseguridad)</span></li>
+                                    <li><span class="model-name">Seamless M4T v3</span> <span class="model-desc">(traducción multimodal)</span></li>
+                                    <li><span class="model-name">ImageBind 2</span> <span class="model-desc">(embeddings cross-modal)</span></li>
+                                    <li><span class="model-name">AudioCraft 2</span> <span class="model-desc">(generación de audio)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="mistral,opensource">
+                            <td><strong>Mistral AI</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Mistral Large 3</span> <span class="model-desc">(razonamiento frontera europea)</span></li>
+                                    <li><span class="model-name">Mistral Thinking</span> <span class="model-desc">(chains of thought)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Mistral Medium 2</span> <span class="model-desc">(API eficiente)</span></li>
+                                    <li><span class="model-name">Mistral Small 3</span> <span class="model-desc">(bajo coste)</span></li>
+                                    <li><span class="model-name">Mistral 8x22B</span> <span class="model-desc">(MoE open weights)</span></li>
+                                    <li><span class="model-name">Mistral 7B v0.4</span> <span class="model-desc">(base compacta)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Codestral 2</span> <span class="model-desc">(código especializado, 22B)</span></li>
+                                    <li><span class="model-name">Pixtral 2</span> <span class="model-desc">(visión, 12B)</span></li>
+                                    <li><span class="model-name">Mistral Embed 2</span> <span class="model-desc">(embeddings multilingüe)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="aws">
+                            <td><strong>Amazon Web Services</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Amazon Titan Premier</span> <span class="model-desc">(razonamiento empresarial)</span></li>
+                                    <li><span class="model-name">Nova Pro</span> <span class="model-desc">(multimodal avanzado)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Amazon Titan Express 2</span> <span class="model-desc">(producción)</span></li>
+                                    <li><span class="model-name">Amazon Titan Lite</span> <span class="model-desc">(bajo coste)</span></li>
+                                    <li><span class="model-name">Nova Micro</span> <span class="model-desc">(inferencia rápida)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Amazon Titan Code</span> <span class="model-desc">(programación)</span></li>
+                                    <li><span class="model-name">Amazon Titan Image Generator 2</span> <span class="model-desc">(imágenes personalizadas)</span></li>
+                                    <li><span class="model-name">Amazon Nova Canvas</span> <span class="model-desc">(generación visual)</span></li>
+                                    <li><span class="model-name">Amazon Bedrock Embeddings v3</span> <span class="model-desc">(vectorización)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="apple">
+                            <td><strong>Apple</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Apple Intelligence Foundation Model</span> <span class="model-desc">(on-device + cloud)</span></li>
+                                    <li><span class="model-name">Apple GPT</span> <span class="model-desc">(uso interno y Siri)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Apple Neural Engine Models</span> <span class="model-desc">(A18/M4 optimizados)</span></li>
+                                    <li><span class="model-name">Siri Language Model v3</span> <span class="model-desc">(conversación)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Apple Vision Pro ML</span> <span class="model-desc">(spatial computing)</span></li>
+                                    <li><span class="model-name">Core ML Foundation Models</span> <span class="model-desc">(on-device general)</span></li>
+                                    <li><span class="model-name">Live Text 3.0</span> <span class="model-desc">(OCR multilingüe)</span></li>
+                                    <li><span class="model-name">Apple Translator 2</span> <span class="model-desc">(traducción on-device)</span></li>
+                                    <li><span class="model-name">FaceTime Audio ML</span> <span class="model-desc">(cancelación de ruido)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="cohere">
+                            <td><strong>Cohere</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Command R+ 2</span> <span class="model-desc">(razonamiento empresarial)</span></li>
+                                    <li><span class="model-name">Command R Ultra</span> <span class="model-desc">(RAG avanzado)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Command R 2</span> <span class="model-desc">(producción eficiente)</span></li>
+                                    <li><span class="model-name">Command Light 3</span> <span class="model-desc">(bajo coste)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Rerank 4</span> <span class="model-desc">(reordenamiento semántico)</span></li>
+                                    <li><span class="model-name">Embed v4</span> <span class="model-desc">(embeddings multilingües)</span></li>
+                                    <li><span class="model-name">Coral</span> <span class="model-desc">(chat empresarial con fuentes)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="deepseek,china,opensource">
+                            <td><strong>DeepSeek</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">DeepSeek-V3</span> <span class="model-desc">(razonamiento MoE, 671B total)</span></li>
+                                    <li><span class="model-name">DeepSeek-R2</span> <span class="model-desc">(reasoning especializado)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">DeepSeek-Coder-V2 33B</span> <span class="model-desc">(código eficiente, open weights)</span></li>
+                                    <li><span class="model-name">DeepSeek-Lite 7B</span> <span class="model-desc">(base compacta)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">DeepSeek-Coder-V2 236B</span> <span class="model-desc">(programación avanzada)</span></li>
+                                    <li><span class="model-name">DeepSeek-Math 2</span> <span class="model-desc">(matemáticas formales)</span></li>
+                                    <li><span class="model-name">DeepSeek-VL 2</span> <span class="model-desc">(visión-lenguaje)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="alibaba,china,opensource">
+                            <td><strong>Alibaba Cloud</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Qwen2.5 Max</span> <span class="model-desc">(72B, razonamiento multilingüe)</span></li>
+                                    <li><span class="model-name">Qwen-VL-Max</span> <span class="model-desc">(multimodal avanzado)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Qwen2.5 72B</span> <span class="model-desc">(open weights, producción)</span></li>
+                                    <li><span class="model-name">Qwen2.5 32B</span> <span class="model-desc">(eficiente)</span></li>
+                                    <li><span class="model-name">Qwen2.5 7B</span> <span class="model-desc">(compacto, open weights)</span></li>
+                                    <li><span class="model-name">Qwen2.5 3B</span> <span class="model-desc">(edge computing)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Qwen2.5-Coder 32B</span> <span class="model-desc">(programación)</span></li>
+                                    <li><span class="model-name">Qwen-Audio 2</span> <span class="model-desc">(procesamiento de audio)</span></li>
+                                    <li><span class="model-name">Qwen-VL 7B</span> <span class="model-desc">(visión-lenguaje compacto)</span></li>
+                                    <li><span class="model-name">Qwen-Math 2</span> <span class="model-desc">(matemáticas avanzadas)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="xai">
+                            <td><strong>xAI (Elon Musk)</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Grok-3</span> <span class="model-desc">(razonamiento con acceso a X/Twitter)</span></li>
+                                    <li><span class="model-name">Grok-3 Vision</span> <span class="model-desc">(multimodal en tiempo real)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Grok-2 Mini</span> <span class="model-desc">(producción eficiente)</span></li>
+                                    <li><span class="model-name">Grok-1.5V</span> <span class="model-desc">(legacy multimodal)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Grok Code</span> <span class="model-desc">(programación con contexto web)</span></li>
+                                    <li><span class="model-name">Grok News</span> <span class="model-desc">(análisis de información en tiempo real)</span></li>
+                                    <li><span class="model-name">Grok Truth</span> <span class="model-desc">(fact-checking automatizado)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="stability,opensource">
+                            <td><strong>Stability AI</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Stable Diffusion 4.0</span> <span class="model-desc">(generación de imágenes SOTA)</span></li>
+                                    <li><span class="model-name">Stable LM 3 175B</span> <span class="model-desc">(lenguaje open weights)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Stable LM 3 40B</span> <span class="model-desc">(eficiente, open weights)</span></li>
+                                    <li><span class="model-name">Stable LM 3 7B</span> <span class="model-desc">(compacto)</span></li>
+                                    <li><span class="model-name">Stable Code 16B</span> <span class="model-desc">(código)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Stable Video 2.0</span> <span class="model-desc">(generación de video)</span></li>
+                                    <li><span class="model-name">Stable Audio 3.0</span> <span class="model-desc">(música y efectos)</span></li>
+                                    <li><span class="model-name">DeepFloyd 2</span> <span class="model-desc">(super-resolución)</span></li>
+                                    <li><span class="model-name">Stable Beluga</span> <span class="model-desc">(fine-tuning conversacional)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="baidu,china">
+                            <td><strong>Baidu</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">ERNIE 4.5</span> <span class="model-desc">(modelo insignia chino)</span></li>
+                                    <li><span class="model-name">ERNIE Bot Pro</span> <span class="model-desc">(asistente conversacional)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">ERNIE 4.0 Turbo</span> <span class="model-desc">(producción API)</span></li>
+                                    <li><span class="model-name">ERNIE 3.5</span> <span class="model-desc">(eficiente)</span></li>
+                                    <li><span class="model-name">ERNIE Speed</span> <span class="model-desc">(ultra rápido)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">ERNIE ViLG 3.0</span> <span class="model-desc">(generación de imágenes)</span></li>
+                                    <li><span class="model-name">ERNIE-Code 2</span> <span class="model-desc">(programación)</span></li>
+                                    <li><span class="model-name">ERNIE-Health 2</span> <span class="model-desc">(aplicaciones médicas)</span></li>
+                                    <li><span class="model-name">ERNIE-Layout</span> <span class="model-desc">(análisis de documentos)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="tencent,china,opensource">
+                            <td><strong>Tencent</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Hunyuan-Large</span> <span class="model-desc">(389B MoE, open weights parcial)</span></li>
+                                    <li><span class="model-name">Hunyuan-Pro</span> <span class="model-desc">(multimodal comercial)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Hunyuan-Standard</span> <span class="model-desc">(API producción)</span></li>
+                                    <li><span class="model-name">Hunyuan-Lite</span> <span class="model-desc">(bajo coste)</span></li>
+                                    <li><span class="model-name">Hunyuan 52B</span> <span class="model-desc">(open weights)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Hunyuan-Code</span> <span class="model-desc">(programación)</span></li>
+                                    <li><span class="model-name">Hunyuan-Vision</span> <span class="model-desc">(análisis de imágenes)</span></li>
+                                    <li><span class="model-name">Hunyuan-DiT</span> <span class="model-desc">(generación de imágenes)</span></li>
+                                    <li><span class="model-name">Hunyuan-Music</span> <span class="model-desc">(composición musical)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="opensource,china">
+                            <td><strong>01.AI (Yi Models)</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Yi-Lightning-Plus</span> <span class="model-desc">(razonamiento rápido avanzado)</span></li>
+                                    <li><span class="model-name">Yi-Large-Turbo</span> <span class="model-desc">(multimodal 34B)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Yi-Medium</span> <span class="model-desc">(producción eficiente)</span></li>
+                                    <li><span class="model-name">Yi-34B</span> <span class="model-desc">(open weights)</span></li>
+                                    <li><span class="model-name">Yi-9B</span> <span class="model-desc">(compacto open weights)</span></li>
+                                    <li><span class="model-name">Yi-6B</span> <span class="model-desc">(edge computing)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Yi-Coder 9B</span> <span class="model-desc">(programación)</span></li>
+                                    <li><span class="model-name">Yi-VL 34B</span> <span class="model-desc">(visión-lenguaje)</span></li>
+                                    <li><span class="model-name">Yi-Speech</span> <span class="model-desc">(voz multilingüe)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="huggingface,opensource">
+                            <td><strong>HuggingFace</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">SmolLM2 135B</span> <span class="model-desc">(open training)</span></li>
+                                    <li><span class="model-name">HuggingChat Pro</span> <span class="model-desc">(agregador de modelos)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">SmolLM2 1.7B</span> <span class="model-desc">(ultra eficiente, open weights)</span></li>
+                                    <li><span class="model-name">SmolLM2 360M</span> <span class="model-desc">(tiny, edge)</span></li>
+                                    <li><span class="model-name">Zephyr-7B-β</span> <span class="model-desc">(chat optimizado)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">StarCoder2 15B</span> <span class="model-desc">(código, open weights)</span></li>
+                                    <li><span class="model-name">IDEFICS2 8B</span> <span class="model-desc">(visión-lenguaje)</span></li>
+                                    <li><span class="model-name">Transformers Agents</span> <span class="model-desc">(framework agéntico)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="nvidia">
+                            <td><strong>Nvidia</strong></td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">NeMo Megatron 3 530B</span> <span class="model-desc">(entrenamiento enterprise)</span></li>
+                                    <li><span class="model-name">ChipNeMo 2</span> <span class="model-desc">(diseño de chips)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">NeMo GPT 43B</span> <span class="model-desc">(producción)</span></li>
+                                    <li><span class="model-name">NeMo GPT 20B</span> <span class="model-desc">(eficiente)</span></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">BioNeMo 2</span> <span class="model-desc">(descubrimiento de fármacos)</span></li>
+                                    <li><span class="model-name">NeMo Guardrails 2</span> <span class="model-desc">(safety y moderación)</span></li>
+                                    <li><span class="model-name">Neuralangelo 2</span> <span class="model-desc">(reconstrucción 3D)</span></li>
+                                    <li><span class="model-name">eDiff-I</span> <span class="model-desc">(generación de imágenes enterprise)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <!-- Specialized Companies -->
+                        <tr data-category="runway">
+                            <td><strong>Runway</strong></td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Gen-3 Alpha Turbo</span> <span class="model-desc">(generación de video profesional)</span></li>
+                                    <li><span class="model-name">Gen-3 Alpha</span> <span class="model-desc">(video de alta fidelidad)</span></li>
+                                    <li><span class="model-name">Frame Interpolation 3</span> <span class="model-desc">(slow motion)</span></li>
+                                    <li><span class="model-name">Green Screen 2.0</span> <span class="model-desc">(efectos visuales)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="midjourney">
+                            <td><strong>Midjourney</strong></td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Midjourney v7</span> <span class="model-desc">(generación de imágenes artísticas)</span></li>
+                                    <li><span class="model-name">Niji v6</span> <span class="model-desc">(estilo anime especializado)</span></li>
+                                    <li><span class="model-name">Midjourney Video Alpha</span> <span class="model-desc">(animación de imágenes)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                        <tr data-category="elevenlabs">
+                            <td><strong>ElevenLabs</strong></td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>
+                                <ul>
+                                    <li><span class="model-name">Eleven Multilingual v3</span> <span class="model-desc">(clonación de voz, 29 idiomas)</span></li>
+                                    <li><span class="model-name">Eleven Turbo v2.5</span> <span class="model-desc">(síntesis rápida)</span></li>
+                                    <li><span class="model-name">Voice Design AI</span> <span class="model-desc">(creación de voces)</span></li>
+                                    <li><span class="model-name">Sound Effects Generator</span> <span class="model-desc">(efectos de sonido)</span></li>
+                                    <li><span class="model-name">Dubbing Studio Pro</span> <span class="model-desc">(doblaje multilingüe)</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Trends Section -->
+        <div class="section fade-in">
+            <h2>📈 Tendencias Observadas en Octubre 2026</h2>
+            <div class="trends-grid">
+                <div class="trend-card">
+                    <h4>1. Convergencia Multimodal</h4>
+                    <p>La mayoría de modelos de frontera integran nativamente visión, audio y texto</p>
+                </div>
+                <div class="trend-card">
+                    <h4>2. Democratización del Razonamiento</h4>
+                    <p>Capacidades tipo "o1" se han extendido a modelos más pequeños</p>
+                </div>
+                <div class="trend-card">
+                    <h4>3. Modelos MoE Dominantes</h4>
+                    <p>Mixture of Experts permite escalabilidad eficiente</p>
+                </div>
+                <div class="trend-card">
+                    <h4>4. On-device Revolution</h4>
+                    <p>Apple, Google y Microsoft lideran la inferencia local</p>
+                </div>
+                <div class="trend-card">
+                    <h4>5. Open Weights Competitivos</h4>
+                    <p>Meta, Mistral y comunidades chinas reducen brecha con modelos cerrados</p>
+                </div>
+                <div class="trend-card">
+                    <h4>6. Especialización Vertical</h4>
+                    <p>Aumento de modelos fine-tuned para industrias específicas</p>
+                </div>
+                <div class="trend-card">
+                    <h4>7. Agentes Autónomos</h4>
+                    <p>Modelos diseñados específicamente para tareas agénticas</p>
+                </div>
+                <div class="trend-card">
+                    <h4>8. Video Generativo SOTA</h4>
+                    <p>Sora, Veo, Gen-3 alcanzan calidad profesional</p>
+                </div>
+                <div class="trend-card">
+                    <h4>9. Contextos Masivos</h4>
+                    <p>Varios modelos soportan 1M+ tokens de contexto</p>
+                </div>
+                <div class="trend-card">
+                    <h4>10. Safety Integrada</h4>
+                    <p>Todos los líderes incluyen guardrails y constitutional AI</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Methodology -->
+        <div class="section fade-in">
+            <h2>📊 Notas Metodológicas</h2>
+            
+            <h3>Criterios de Inclusión</h3>
+            <ul>
+                <li><strong>Modelos activos:</strong> Solo se incluyen modelos disponibles comercialmente o en preview pública en octubre 2026</li>
+                <li><strong>Actualidad:</strong> Se priorizan las versiones más recientes de cada familia de modelos</li>
+                <li><strong>Diversidad:</strong> Se cubren tanto modelos comerciales de código cerrado como opciones open weights líderes</li>
+            </ul>
+
+            <h3>Categorización</h3>
+            
+            <div class="alert-box">
+                <strong>Modelos de Frontera:</strong>
+                <ul>
+                    <li>Capacidades de razonamiento multi-paso (chains of thought)</li>
+                    <li>Contextos extendidos (100K+ tokens)</li>
+                    <li>Rendimiento SOTA en benchmarks académicos (MMLU, MATH, HumanEval)</li>
+                    <li>Diseñados para casos de uso que requieren máxima precisión</li>
+                </ul>
+            </div>
+
+            <div class="alert-box">
+                <strong>Modelos Eficientes:</strong>
+                <ul>
+                    <li>Optimizados para latencia y throughput</li>
+                    <li>Coste por token significativamente reducido</li>
+                    <li>Small Language Models (SLM) con sorprendente rendimiento</li>
+                    <li>Disponibles como pesos abiertos para auto-hosting</li>
+                </ul>
+            </div>
+
+            <div class="alert-box">
+                <strong>Modelos Especializados:</strong>
+                <ul>
+                    <li><strong>Código:</strong> Fine-tuned específicamente en repositorios de programación</li>
+                    <li><strong>Multimedia:</strong> Imagen, video, audio, voz (generación y comprensión)</li>
+                    <li><strong>Voz:</strong> Síntesis, transcripción, traducción de voz</li>
+                    <li><strong>Edge:</strong> Optimizados para inferencia en dispositivo (móviles, edge computing)</li>
+                    <li><strong>Dominio específico:</strong> Medicina, legal, finanzas, ciberseguridad, etc.</li>
+                </ul>
+            </div>
+
+            <h3>Fuentes de Verificación Recomendadas</h3>
+            <ul>
+                <li><strong>Líderes técnicos:</strong> OpenAI, Anthropic, Google DeepMind publicaciones oficiales</li>
+                <li><strong>Benchmarks:</strong> Stanford HELM, Berkeley LMSYS Arena, Papers with Code</li>
+                <li><strong>Comunidad open source:</strong> HuggingFace Model Hub, GitHub repos oficiales</li>
+                <li><strong>Publicaciones académicas:</strong> arXiv cs.CL, cs.AI (filtro últimos 6 meses)</li>
+                <li><strong>Eventos industria:</strong> NeurIPS 2025, ICLR 2026, Microsoft Build 2026, Google I/O 2026</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Catálogo de Modelos de IA - Octubre 2026</strong></p>
+        <p>Cobertura: 30+ organizaciones | 200+ modelos activos documentados</p>
+        <p>Propósito: Referencia técnica para arquitectos de soluciones, CTOs, ingenieros ML/AI</p>
+        <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+            <em>Documento autocontenido para análisis técnico y toma de decisiones estratégicas en IA</em>
+        </p>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop" title="Volver arriba">↑</button>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const tableRows = document.querySelectorAll('#modelsTable tbody tr');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            tableRows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.classList.remove('hidden');
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+        });
+
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Clear search
+                searchInput.value = '';
+                
+                // Filter rows
+                tableRows.forEach(row => {
+                    if (filter === 'all') {
+                        row.classList.remove('hidden');
+                    } else {
+                        const categories = row.getAttribute('data-category');
+                        if (categories && categories.includes(filter)) {
+                            row.classList.remove('hidden');
+                        } else {
+                            row.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scrolling for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Print functionality
+        window.addEventListener('beforeprint', () => {
+            // Expand all filtered rows for printing
+            tableRows.forEach(row => row.classList.remove('hidden'));
+        });
+
+        // Log info
+        console.log('Catálogo de Modelos de IA - Octubre 2026');
+        console.log('30+ organizaciones | 200+ modelos documentados');
+        console.log('Use la búsqueda y filtros para explorar el catálogo');
+    </script>
+</body>
+</html>

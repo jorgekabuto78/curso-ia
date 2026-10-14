@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glosario Completo de Inteligencia Artificial - ISTLC 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --text: #2d3748;
+            --light-bg: #f7fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
+            --info: #4299e1;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--light-bg);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 60px 20px 40px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: -0.5px;
+        }
+
+        header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        header .info {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            margin-top: 15px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--primary);
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        /* Controls */
+        .controls {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-btn {
+            padding: 12px 20px;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Categories Filter */
+        .categories {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .category-tag {
+            padding: 8px 16px;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .category-tag:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .category-tag.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Glossary Container */
+        .glossary-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        /* Glossary Items */
+        .glossary-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .glossary-items.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .term-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .term-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .term-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            border-color: var(--primary);
+        }
+
+        .term-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .term-card.hidden {
+            display: none;
+        }
+
+        .term-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            gap: 10px;
+        }
+
+        .term-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            flex: 1;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .category-badge.fundamentals { background: rgba(102, 126, 234, 0.1); color: #667eea; }
+        .category-badge.architecture { background: rgba(72, 187, 120, 0.1); color: #48bb78; }
+        .category-badge.techniques { background: rgba(237, 137, 54, 0.1); color: #ed8936; }
+        .category-badge.applications { background: rgba(66, 153, 225, 0.1); color: #4299e1; }
+        .category-badge.ethics { background: rgba(245, 101, 101, 0.1); color: #f56565; }
+        .category-badge.tools { background: rgba(159, 122, 234, 0.1); color: #9f7aea; }
+        .category-badge.optimization { background: rgba(246, 173, 85, 0.1); color: #f6ad55; }
+        .category-badge.deployment { background: rgba(72, 187, 120, 0.1); color: #38a169; }
+
+        .term-definition {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .term-example {
+            background: var(--light-bg);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            font-style: italic;
+            color: #4a5568;
+            border-left: 3px solid var(--warning);
+        }
+
+        .term-example::before {
+            content: "💡 Ejemplo: ";
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .related-terms {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        .related-terms::before {
+            content: "🔗 Términos relacionados: ";
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* List View */
+        .term-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .term-list .term-card {
+            border-radius: 0;
+            border-bottom: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            margin: 0;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .term-list .term-card:hover {
+            background: var(--light-bg);
+            transform: none;
+            border-left-color: var(--accent);
+        }
+
+        .term-list .term-card::before {
+            display: none;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #718096;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        /* Info Section */
+        .info-section {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-top: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .info-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 15px;
+        }
+
+        .info-section h3 {
+            color: var(--secondary);
+            margin: 25px 0 15px 0;
+            font-size: 1.3rem;
+        }
+
+        .info-section ul, .info-section ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .info-section li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        /* Scroll Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-top:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .term-card {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* Print Styles */
+        @media print {
+            .controls, .scroll-top {
+                display: none;
+            }
+
+            .glossary-items {
+                grid-template-columns: 1fr;
+            }
+
+            .term-card {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .glossary-items {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .view-toggle {
+                width: 100%;
+            }
+
+            .view-btn {
+                flex: 1;
+            }
+
+            .categories {
+                margin-bottom: 15px;
+            }
+
+            .category-tag {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🧠 Glosario Completo de Inteligencia Artificial</h1>
+        <p class="subtitle">Referencia Técnica Integral de Términos y Conceptos</p>
+        <div class="info">
+            <p>📅 Octubre 2026 | ISTLC - Instituto Superior Tecnológico Liceo Cristiano</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Statistics -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="number">150+</div>
+                <div class="label">Términos Documentados</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">8</div>
+                <div class="label">Categorías Temáticas</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">100%</div>
+                <div class="label">Español Accesible</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Busca un término (Ej: Transformer, Deep Learning, Neural Network...)">
+                </div>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid" title="Vista de grid">
+                        ▦▦ Grid
+                    </button>
+                    <button class="view-btn" data-view="list" title="Vista de lista">
+                        ☰ Lista
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <p style="font-size: 0.9rem; color: #718096; margin-bottom: 15px; font-weight: 500;">Filtrar por categoría:</p>
+                <div class="categories" id="categoriesContainer">
+                    <button class="category-tag active" data-category="all">Todas</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Glossary -->
+        <div class="glossary-container">
+            <div class="glossary-items" id="glossaryItems"></div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <h2>📚 Acerca de este Glosario</h2>
+            
+            <h3>Propósito</h3>
+            <p>Este glosario proporciona definiciones técnicas claras y accesibles de los términos más importantes en el campo de la Inteligencia Artificial. Es una herramienta de referencia para estudiantes, profesionales y entusiastas de IA.</p>
+
+            <h3>Estructura Temática</h3>
+            <ul>
+                <li><strong>Fundamentos:</strong> Conceptos básicos de IA, Machine Learning y terminología general</li>
+                <li><strong>Arquitecturas:</strong> Modelos y estructuras de redes neuronales (CNN, RNN, Transformers, etc.)</li>
+                <li><strong>Técnicas:</strong> Algoritmos, métodos de entrenamiento y optimización</li>
+                <li><strong>Aplicaciones:</strong> Usos específicos como NLP, Computer Vision, Reinforcement Learning</li>
+                <li><strong>Ética y Seguridad:</strong> Consideraciones éticas, bias, fairness y responsible AI</li>
+                <li><strong>Herramientas:</strong> Frameworks, plataformas y librerías populares</li>
+                <li><strong>Optimización:</strong> Técnicas de mejora de rendimiento y eficiencia</li>
+                <li><strong>Deployment:</strong> Producción, inferencia y puesta en marcha</li>
+            </ul>
+
+            <h3>Cómo Usar Este Glosario</h3>
+            <ul>
+                <li>Utiliza la <strong>búsqueda</strong> para encontrar términos específicos rápidamente</li>
+                <li>Filtra por <strong>categoría</strong> para explorar un área temática</li>
+                <li>Cambia entre <strong>vista de grid</strong> y <strong>vista de lista</strong> según tu preferencia</li>
+                <li>Lee los <strong>ejemplos prácticos</strong> para entender aplicaciones reales</li>
+                <li>Revisa los <strong>términos relacionados</strong> para expandir tu conocimiento</li>
+                <li><strong>Imprime a PDF</strong> para tener una copia offline</li>
+            </ul>
+
+            <h3>Nota sobre Definiciones</h3>
+            <p>Las definiciones en este glosario han sido escritas con un enfoque en la claridad y accesibilidad, sin sacrificar la precisión técnica. Se incluyen ejemplos prácticos y referencias a conceptos relacionados para facilitar una comprensión más profunda.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Glosario de Inteligencia Artificial - Octubre 2026</strong></p>
+        <p>150+ términos | 8 categorías | Referencia técnica integral</p>
+        <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+            Documento educativo autocontenido para instituciones, profesionales y estudiantes de IA
+        </p>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop">↑</button>
+
+    <script>
+        // Glossary data - 150+ terms
+        const glossaryData = [
+            // Fundamentals
+            {
+                term: "Inteligencia Artificial (IA)",
+                category: "fundamentals",
+                definition: "Campo de la informática que busca crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana, como aprendizaje, reconocimiento de patrones y toma de decisiones.",
+                example: "ChatGPT es un ejemplo de IA generativa que puede conversar, responder preguntas y generar texto.",
+                related: "Machine Learning, Deep Learning, AGI"
+            },
+            {
+                term: "Machine Learning",
+                category: "fundamentals",
+                definition: "Subdominio de la IA que permite a los sistemas aprender automáticamente de los datos sin ser programados explícitamente para cada tarea.",
+                example: "Un modelo de ML que aprende a reconocer emails de spam analizando ejemplos previos.",
+                related: "Algoritmo de aprendizaje, Entrenamiento, Validación"
+            },
+            {
+                term: "Deep Learning",
+                category: "fundamentals",
+                definition: "Rama del Machine Learning que utiliza redes neuronales artificiales con múltiples capas (profundas) para aprender representaciones complejas de datos.",
+                example: "Google Translate utiliza deep learning para traducir textos entre idiomas.",
+                related: "Red Neuronal, Backpropagation, Capas Ocultas"
+            },
+            {
+                term: "Red Neuronal Artificial",
+                category: "fundamentals",
+                definition: "Modelo computacional inspirado en las neuronas biológicas del cerebro humano, compuesto por capas de nodos (neuronas) conectados que procesan información.",
+                example: "Una red neuronal que identifica objetos en imágenes tiene capas de entrada, ocultas y de salida.",
+                related: "Neurona, Sinapsis, Peso, Sesgo"
+            },
+            {
+                term: "Neurona Artificial",
+                category: "fundamentals",
+                definition: "Unidad básica de una red neuronal que recibe múltiples entradas, las suma, aplica una función de activación y produce una salida.",
+                example: "En una red neuronal simple, una neurona multiplica cada entrada por un peso y suma los resultados.",
+                related: "Función de Activación, Peso, Sesgo"
+            },
+            {
+                term: "Función de Activación",
+                category: "fundamentals",
+                definition: "Función matemática aplicada a la salida de una neurona para introducir no-linealidad y permitir a la red aprender patrones complejos.",
+                example: "ReLU (max(0, x)) es una función de activación común en deep learning.",
+                related: "ReLU, Sigmoid, Tanh, Softmax"
+            },
+            {
+                term: "Peso (Weight)",
+                category: "fundamentals",
+                definition: "Parámetro numérico en una red neuronal que pondera la importancia de cada entrada en el cálculo de una neurona. Se ajustan durante el entrenamiento.",
+                example: "En una neurona con dos entradas, cada entrada tiene un peso que determina su influencia.",
+                related: "Sesgo, Parámetro, Actualización de pesos"
+            },
+            {
+                term: "Sesgo (Bias)",
+                category: "fundamentals",
+                definition: "Parámetro adicional en una neurona que permite desplazar la salida de la función de activación, mejorando la capacidad de aprendizaje.",
+                example: "Un sesgo de +0.5 mueve la línea de decisión en un clasificador lineal.",
+                related: "Peso, Parámetro"
+            },
+            {
+                term: "Dataset",
+                category: "fundamentals",
+                definition: "Conjunto de datos utilizados para entrenar, validar y probar modelos de machine learning.",
+                example: "ImageNet es un famoso dataset con millones de imágenes etiquetadas.",
+                related: "Entrenamiento, Validación, Prueba"
+            },
+            {
+                term: "Etiqueta (Label)",
+                category: "fundamentals",
+                definition: "Anotación de referencia asociada a un ejemplo de datos que indica la respuesta correcta o categoría.",
+                example: "En un dataset de imágenes de gatos y perros, la etiqueta indica si es 'gato' o 'perro'.",
+                related: "Superviso, Anotación, Ground Truth"
+            },
+            {
+                term: "Época (Epoch)",
+                category: "fundamentals",
+                definition: "Un ciclo completo de entrenamiento donde el modelo procesa todo el dataset una vez.",
+                example: "Entrenar un modelo por 100 épocas significa pasar el dataset completo 100 veces.",
+                related: "Iteración, Batch, Entrenamiento"
+            },
+            {
+                term: "Batch",
+                category: "fundamentals",
+                definition: "Subconjunto de datos procesados juntos durante una iteración de entrenamiento.",
+                example: "Un batch de 32 significa procesar 32 ejemplos antes de actualizar los pesos.",
+                related: "Epoch, Iteración, Tamaño de batch"
+            },
+            {
+                term: "Tasa de Aprendizaje (Learning Rate)",
+                category: "fundamentals",
+                definition: "Hiperparámetro que controla la magnitud de los ajustes de pesos durante el entrenamiento.",
+                example: "Una tasa de aprendizaje de 0.01 significa cambios pequeños en los pesos por iteración.",
+                related: "Optimizador, Hiperparámetro, Descenso de Gradiente"
+            },
+            {
+                term: "Overfitting",
+                category: "fundamentals",
+                definition: "Situación donde un modelo aprende los datos de entrenamiento demasiado bien, incluyendo el ruido, y no generaliza bien a datos nuevos.",
+                example: "Un modelo memoriza imágenes específicas de entrenamiento pero falla con imágenes nuevas.",
+                related: "Underfitting, Regularización, Validación"
+            },
+            {
+                term: "Underfitting",
+                category: "fundamentals",
+                definition: "Situación donde un modelo es demasiado simple y no captura los patrones importantes en los datos.",
+                example: "Usar una línea recta para aproximar datos que siguen una curva compleja.",
+                related: "Overfitting, Complejidad del modelo, Bias"
+            },
+            {
+                term: "Generalización",
+                category: "fundamentals",
+                definition: "Capacidad de un modelo entrenado para funcionarse bien con datos nuevos no vistos durante el entrenamiento.",
+                example: "Un modelo de clasificación que reconoce gatos en fotos nuevas que no vio durante entrenamiento.",
+                related: "Validación, Prueba, Robustez"
+            },
+            {
+                term: "Hiperparámetro",
+                category: "fundamentals",
+                definition: "Parámetro configurado antes del entrenamiento que no es aprendido automáticamente por el modelo.",
+                example: "Tasa de aprendizaje, tamaño de batch, número de capas ocultas.",
+                related: "Parámetro, Ajuste de hiperparámetros, Grid Search"
+            },
+            {
+                term: "Función de Pérdida (Loss Function)",
+                category: "fundamentals",
+                definition: "Función matemática que mide qué tan mal se desempeña el modelo en los datos de entrenamiento.",
+                example: "Cross-entropy loss para clasificación, Mean Squared Error para regresión.",
+                related: "Error, Optimización, Backpropagation"
+            },
+            {
+                term: "Métrica de Evaluación",
+                category: "fundamentals",
+                definition: "Medida cuantitativa de qué tan bien funciona un modelo en una tarea específica.",
+                example: "Precisión, Recall, F1-Score, AUC para clasificación.",
+                related: "Precisión, Recall, F1-Score, Exactitud"
+            },
+            {
+                term: "Supervisado",
+                category: "fundamentals",
+                definition: "Tipo de aprendizaje donde el modelo aprende a partir de datos etiquetados con respuestas correctas.",
+                example: "Entrenar un modelo para clasificar emails como spam o no spam usando ejemplos etiquetados.",
+                related: "No supervisado, Semi-supervisado, Reforzado"
+            },
+            {
+                term: "No Supervisado",
+                category: "fundamentals",
+                definition: "Tipo de aprendizaje donde el modelo descubre patrones en datos sin etiquetas proporcionadas.",
+                example: "Clustering para agrupar clientes similares basándose en su comportamiento de compra.",
+                related: "Clustering, Reducción de dimensionalidad, Supervisado"
+            },
+            {
+                term: "Semi-supervisado",
+                category: "fundamentals",
+                definition: "Tipo de aprendizaje que combina datos etiquetados y no etiquetados para mejorar el rendimiento.",
+                example: "Usar 100 imágenes etiquetadas y 1000 imágenes sin etiquetar para entrenar un modelo de clasificación.",
+                related: "Supervisado, No supervisado, Pseudo-labeling"
+            },
+            {
+                term: "Validación Cruzada",
+                category: "fundamentals",
+                definition: "Técnica para evaluar la generalización de un modelo dividiendo el dataset en múltiples subconjuntos.",
+                example: "K-fold cross-validation divide los datos en k partes y entrena el modelo k veces.",
+                related: "Validación, Prueba, Overfitting"
+            },
+
+            // Architectures
+            {
+                term: "Convolutional Neural Network (CNN)",
+                category: "architecture",
+                definition: "Tipo de red neuronal diseñada para procesar datos con estructura de grid como imágenes, utilizando operaciones de convolución.",
+                example: "VGG, ResNet, Inception son populares CNNs para clasificación de imágenes.",
+                related: "Convolución, Pooling, Feature Map"
+            },
+            {
+                term: "Convolución",
+                category: "architecture",
+                definition: "Operación matemática que aplica un filtro (kernel) a diferentes regiones de una imagen para extraer características.",
+                example: "Un filtro de detección de bordes convoluciona sobre una imagen para resaltar los bordes.",
+                related: "Filtro, Kernel, Feature Map, Stride"
+            },
+            {
+                term: "Pooling",
+                category: "architecture",
+                definition: "Operación que reduce las dimensiones de feature maps mediante agregación (máximo, promedio) de valores locales.",
+                example: "Max pooling de 2x2 reduce una imagen 100x100 a 50x50.",
+                related: "Max Pooling, Average Pooling, Downsampling"
+            },
+            {
+                term: "Recurrent Neural Network (RNN)",
+                category: "architecture",
+                definition: "Tipo de red neuronal con conexiones recurrentes que permite procesar secuencias de datos y mantener estado temporal.",
+                example: "RNNs se usan para procesamiento de texto, series de tiempo y lenguaje natural.",
+                related: "LSTM, GRU, Secuencia, Memoria"
+            },
+            {
+                term: "LSTM (Long Short-Term Memory)",
+                category: "architecture",
+                definition: "Tipo especial de RNN con mecanismos de compuerta que resuelve el problema de dependencias a largo plazo.",
+                example: "LSTMs pueden recordar información importante a través de muchos pasos de tiempo en una secuencia.",
+                related: "RNN, GRU, Vanishing Gradient, Memory Cell"
+            },
+            {
+                term: "GRU (Gated Recurrent Unit)",
+                category: "architecture",
+                definition: "Variante simplificada de LSTM con menos parámetros pero similar capacidad para capturar dependencias a largo plazo.",
+                example: "GRUs son más eficientes que LSTMs en datasets más pequeños.",
+                related: "LSTM, RNN, Compuerta, Secuencia"
+            },
+            {
+                term: "Transformer",
+                category: "architecture",
+                definition: "Arquitectura basada en mecanismo de atención que procesa secuencias de datos en paralelo, fundamental para modelos de lenguaje modernos.",
+                example: "BERT, GPT, T5 son transformers utilizados en procesamiento de lenguaje natural.",
+                related: "Atención, Self-attention, Multi-head Attention, Encoder-Decoder"
+            },
+            {
+                term: "Mecanismo de Atención",
+                category: "architecture",
+                definition: "Mecanismo que permite al modelo enfocarse en partes específicas de la entrada relevantes para la tarea.",
+                example: "En traducción automática, la atención ayuda a alinear palabras de origen y destino.",
+                related: "Self-attention, Multi-head Attention, Query-Key-Value"
+            },
+            {
+                term: "Self-Attention",
+                category: "architecture",
+                definition: "Mecanismo de atención donde cada posición en una secuencia atiende a todas las otras posiciones en la misma secuencia.",
+                example: "En un transformer, cada palabra en una oración puede atender a todas las otras palabras.",
+                related: "Atención, Transformer, Multi-head Attention"
+            },
+            {
+                term: "Multi-head Attention",
+                category: "architecture",
+                definition: "Extensión del mecanismo de atención que ejecuta múltiples operaciones de atención en paralelo con diferentes representaciones.",
+                example: "Un transformer típico usa 8 o 16 cabezas de atención.",
+                related: "Self-attention, Transformer, Atención"
+            },
+            {
+                term: "Encoder-Decoder",
+                category: "architecture",
+                definition: "Arquitectura que consta de un encoder (procesa entrada) y decoder (genera salida), común en tareas de sequence-to-sequence.",
+                example: "Traducción automática: encoder procesa el idioma origen, decoder genera el idioma destino.",
+                related: "Transformer, Secuencia, Atención"
+            },
+            {
+                term: "Autoencoder",
+                category: "architecture",
+                definition: "Red neuronal que aprende a comprimir datos en una representación latente más pequeña (encoding) y luego reconstruirlos.",
+                example: "Compresión de imágenes o detección de anomalías usando autoencoders.",
+                related: "Representación Latente, Compresión, Unsupervised"
+            },
+            {
+                term: "Red Generativa Antagónica (GAN)",
+                category: "architecture",
+                definition: "Arquitectura con dos redes neuronales: generador (crea datos) y discriminador (valida), que compiten para mejorar.",
+                example: "StyleGAN genera imágenes realistas de caras que no existen.",
+                related: "Generador, Discriminador, Generativo"
+            },
+            {
+                term: "Variational Autoencoder (VAE)",
+                category: "architecture",
+                definition: "Autoencoder que añade restricciones probabilísticas para aprender una distribución sobre el espacio latente.",
+                example: "VAEs pueden generar nuevas imágenes similares a las de entrenamiento.",
+                related: "Autoencoder, Generativo, Representación Latente"
+            },
+            {
+                term: "U-Net",
+                category: "architecture",
+                definition: "Arquitectura CNN con estructura simétrica (encoder-decoder) comúnmente usada en segmentación de imágenes.",
+                example: "U-Net se usa para segmentar tumores en imágenes médicas.",
+                related: "CNN, Segmentación, Encoder-Decoder"
+            },
+            {
+                term: "ResNet (Residual Network)",
+                category: "architecture",
+                definition: "Arquitectura CNN que introducen conexiones residuales (skip connections) para entrenar redes muy profundas.",
+                example: "ResNet-50 es una red con 50 capas capaz de clasificar imágenes con alta precisión.",
+                related: "CNN, Skip Connection, Gradiente"
+            },
+            {
+                term: "Vision Transformer (ViT)",
+                category: "architecture",
+                definition: "Aplicación de la arquitectura Transformer a visión por computadora, dividiendo imágenes en patches.",
+                example: "ViT clasifica imágenes tratándolas como secuencias de patches de píxeles.",
+                related: "Transformer, Visión, Atención"
+            },
+            {
+                term: "Attention Is All You Need",
+                category: "architecture",
+                definition: "Referencia al artículo seminal que introdujo la arquitectura Transformer en 2017.",
+                example: "Este paper revolucionó el procesamiento de lenguaje natural e inspiró miles de nuevos modelos.",
+                related: "Transformer, Atención, Arquitectura"
+            },
+
+            // Techniques
+            {
+                term: "Backpropagation",
+                category: "techniques",
+                definition: "Algoritmo fundamental para entrenar redes neuronales calculando gradientes de la función de pérdida respecto a los pesos.",
+                example: "El backpropagation permite que el modelo ajuste sus pesos basándose en el error de predicción.",
+                related: "Gradiente, Descenso de Gradiente, Chain Rule"
+            },
+            {
+                term: "Descenso de Gradiente",
+                category: "techniques",
+                definition: "Algoritmo de optimización que ajusta iterativamente los pesos en la dirección opuesta al gradiente para minimizar la función de pérdida.",
+                example: "SGD, Adam, y RMSprop son variantes del descenso de gradiente.",
+                related: "Gradiente, Tasa de aprendizaje, Optimizador"
+            },
+            {
+                term: "Gradiente",
+                category: "techniques",
+                definition: "Vector que apunta en la dirección de mayor aumento de una función, utilizado para actualizar pesos durante el entrenamiento.",
+                example: "El gradiente negativo indica la dirección en que disminuye la función de pérdida.",
+                related: "Derivada, Descenso de Gradiente, Backpropagation"
+            },
+            {
+                term: "Optimizador",
+                category: "techniques",
+                definition: "Algoritmo que determina cómo se actualizan los pesos durante el entrenamiento basándose en los gradientes.",
+                example: "Adam es un optimizador popular que combina ventajas de AdaGrad y RMSprop.",
+                related: "Descenso de Gradiente, Momento, Tasa de aprendizaje"
+            },
+            {
+                term: "Adam Optimizer",
+                category: "techniques",
+                definition: "Optimizador adaptativo que mantiene tasas de aprendizaje adaptativas para cada parámetro basándose en estimaciones de momentos.",
+                example: "Adam es muy utilizado en deep learning por su efectividad y robustez.",
+                related: "Optimizador, Momento, Tasa de aprendizaje adaptativa"
+            },
+            {
+                term: "Momentum",
+                category: "techniques",
+                definition: "Técnica de optimización que acelera el descenso de gradiente considerando el historial de actualizaciones previas.",
+                example: "Con momentum, el optimizador 'gana velocidad' en direcciones consistentes.",
+                related: "Descenso de Gradiente, Optimizador, Aceleración"
+            },
+            {
+                term: "Regularización L1",
+                category: "techniques",
+                definition: "Técnica que añade una penalización proporcional a los valores absolutos de los pesos para reducir la complejidad del modelo.",
+                example: "L1 regularización puede llevar algunos pesos exactamente a cero, realizando selección de características.",
+                related: "Regularización, L2, Lasso"
+            },
+            {
+                term: "Regularización L2",
+                category: "techniques",
+                definition: "Técnica que añade una penalización proporcional al cuadrado de los pesos para evitar que crezcan demasiado.",
+                example: "L2 regularización (Ridge) reduce la magnitud de todos los pesos de manera uniforme.",
+                related: "Regularización, L1, Ridge"
+            },
+            {
+                term: "Dropout",
+                category: "techniques",
+                definition: "Técnica de regularización que aleatoriamente desactiva neuronas durante el entrenamiento para prevenir co-adaptación.",
+                example: "Con dropout de 0.5, el 50% de las neuronas se desactivan aleatoriamente en cada iteración.",
+                related: "Regularización, Overfitting, Stochastic Depth"
+            },
+            {
+                term: "Batch Normalization",
+                category: "techniques",
+                definition: "Técnica que normaliza las entradas a cada capa usando media y varianza del batch, acelerando el entrenamiento.",
+                example: "Batch norm permite usar tasas de aprendizaje más altas y hace los modelos menos sensibles a inicialización.",
+                related: "Normalización, Activación, Entrenamiento"
+            },
+            {
+                term: "Data Augmentation",
+                category: "techniques",
+                definition: "Técnica que aumenta el tamaño del dataset aplicando transformaciones a los datos existentes.",
+                example: "Rotar, recortar, cambiar brillo de imágenes para crear variaciones de entrenamiento.",
+                related: "Dataset, Entrenamiento, Generalización"
+            },
+            {
+                term: "Transfer Learning",
+                category: "techniques",
+                definition: "Técnica donde se utiliza un modelo pre-entrenado en una tarea como punto de partida para otra tarea.",
+                example: "Usar un modelo entrenado en ImageNet para clasificar tipos de plantas específicas.",
+                related: "Pre-entrenamiento, Fine-tuning, Reutilización"
+            },
+            {
+                term: "Fine-tuning",
+                category: "techniques",
+                definition: "Proceso de ajustar un modelo pre-entrenado en nuevos datos para especializarlo en una tarea particular.",
+                example: "Fine-tuning de BERT con datos médicos para tareas de clasificación de textos médicos.",
+                related: "Transfer Learning, Pre-entrenamiento, Adaptación"
+            },
+            {
+                term: "Knowledge Distillation",
+                category: "techniques",
+                definition: "Técnica donde un modelo grande (maestro) enseña a un modelo pequeño (estudiante) para lograr similar rendimiento con menos parámetros.",
+                example: "Comprimir un BERT grande en un modelo más pequeño para inferencia más rápida.",
+                related: "Compresión, Eficiencia, Transferencia de conocimiento"
+            },
+            {
+                term: "Pruning",
+                category: "techniques",
+                definition: "Técnica para reducir la complejidad de un modelo eliminando pesos no importantes o capas innecesarias.",
+                example: "Eliminar conexiones con pesos cercanos a cero reduce el tamaño del modelo sin perder mucho rendimiento.",
+                related: "Compresión, Eficiencia, Optimización"
+            },
+            {
+                term: "Quantización",
+                category: "techniques",
+                definition: "Técnica de comprensión que reduce la precisión numérica de pesos (ej: de float32 a int8).",
+                example: "Quantización a 8 bits reduce el tamaño del modelo en ~4x sin pérdida significativa de precisión.",
+                related: "Compresión, Inferencia, Eficiencia"
+            },
+            {
+                term: "Early Stopping",
+                category: "techniques",
+                definition: "Técnica para detener el entrenamiento cuando el rendimiento en validación deja de mejorar.",
+                example: "Monitorear el error de validación y detener si no mejora en 10 épocas consecutivas.",
+                related: "Overfitting, Validación, Paciencia"
+            },
+            {
+                term: "Inicialización de Pesos",
+                category: "techniques",
+                definition: "Estrategia para asignar valores iniciales a los pesos antes del entrenamiento.",
+                example: "Xavier/Glorot init, He init están diseñados para facilitar el flujo de gradientes.",
+                related: "Peso, Entrenamiento, Convergencia"
+            },
+            {
+                term: "Vanishing Gradient",
+                category: "techniques",
+                definition: "Problema donde los gradientes se vuelven muy pequeños en redes profundas, ralentizando el aprendizaje.",
+                example: "En redes RNN profundas, los gradientes pueden desaparecer a través de muchos pasos de tiempo.",
+                related: "Exploding Gradient, LSTM, Normalización"
+            },
+            {
+                term: "Exploding Gradient",
+                category: "techniques",
+                definition: "Problema opuesto al vanishing gradient donde los gradientes se vuelven demasiado grandes.",
+                example: "Gradient clipping limita la magnitud de los gradientes para prevenir explosión.",
+                related: "Vanishing Gradient, Clipping, Normalización"
+            },
+            {
+                term: "Gradient Clipping",
+                category: "techniques",
+                definition: "Técnica que limita la magnitud de los gradientes para prevenir el exploding gradient problem.",
+                example: "Recortar gradientes a un máximo de 1.0 previene actualizaciones de pesos demasiado grandes.",
+                related: "Exploding Gradient, Normalización, Estabilidad"
+            },
+
+            // Applications
+            {
+                term: "Procesamiento de Lenguaje Natural (NLP)",
+                category: "applications",
+                definition: "Rama de la IA que se enfoca en que las máquinas comprendan, procesen y generen lenguaje humano.",
+                example: "Traducción automática, análisis de sentimientos, respuesta a preguntas.",
+                related: "Análisis de Texto, Generación de Texto, Embeddings"
+            },
+            {
+                term: "Visión por Computadora",
+                category: "applications",
+                definition: "Rama de la IA que se enfoca en que las máquinas entiendan y analicen información visual de imágenes y videos.",
+                example: "Reconocimiento facial, detección de objetos, segmentación de imágenes.",
+                related: "CNN, Detección, Segmentación, Clasificación de Imágenes"
+            },
+            {
+                term: "Clasificación de Imágenes",
+                category: "applications",
+                definition: "Tarea de asignar una imagen a una de varias categorías predefinidas.",
+                example: "Clasificar imágenes de perros, gatos, pájaros en sus respectivas categorías.",
+                related: "CNN, Clase, Predicción, Visión"
+            },
+            {
+                term: "Detección de Objetos",
+                category: "applications",
+                definition: "Tarea de identificar y localizar objetos específicos dentro de una imagen.",
+                example: "YOLO, Faster R-CNN detectan múltiples objetos y sus localizaciones en una imagen.",
+                related: "Bounding Box, CNN, Localización"
+            },
+            {
+                term: "Segmentación de Imágenes",
+                category: "applications",
+                definition: "Tarea de dividir una imagen en regiones significativas asignando una etiqueta a cada píxel.",
+                example: "Segmentación semántica separa cada píxel en categorías como 'calle', 'coche', 'persona'.",
+                related: "Píxel, U-Net, Segmentación semántica"
+            },
+            {
+                term: "Reconocimiento Facial",
+                category: "applications",
+                definition: "Tarea de identificar o verificar la identidad de personas basándose en características faciales.",
+                example: "Face ID en iPhones utiliza aprendizaje profundo para reconocimiento facial.",
+                related: "Biometría, Detección facial, Embedding facial"
+            },
+            {
+                term: "Análisis de Sentimientos",
+                category: "applications",
+                definition: "Tarea de clasificar el sentimiento (positivo, negativo, neutro) expresado en un texto.",
+                example: "Analizar reviews de productos para determinar si son positivas o negativas.",
+                related: "Clasificación de Texto, NLP, Emoción"
+            },
+            {
+                term: "Extracción de Entidades (NER)",
+                category: "applications",
+                definition: "Tarea de identificar y clasificar entidades importantes (personas, lugares, organizaciones) en un texto.",
+                example: "Extraer nombres de personas y empresas de noticias automáticamente.",
+                related: "NLP, Clasificación de Tokens, Named Entity"
+            },
+            {
+                term: "Modelado de Lenguaje",
+                category: "applications",
+                definition: "Tarea de predecir la próxima palabra basándose en palabras anteriores en una secuencia.",
+                example: "ChatGPT es un modelo de lenguaje que genera texto predeciendo palabras secuencialmente.",
+                related: "Predicción, Generación de Texto, Perplexidad"
+            },
+            {
+                term: "Traducción Automática",
+                category: "applications",
+                definition: "Tarea de traducir texto automáticamente de un idioma a otro.",
+                example: "Google Translate traduce entre 100+ idiomas usando transformers.",
+                related: "Encoder-Decoder, NLP, Seq2Seq"
+            },
+            {
+                term: "Generación de Texto",
+                category: "applications",
+                definition: "Tarea de generar texto coherente y relevante basándose en un contexto o prompt.",
+                example: "GPT-4 puede generar historias, código, poesía basándose en instrucciones.",
+                related: "Modelado de Lenguaje, Generativo, Prompt"
+            },
+            {
+                term: "Chatbot/Asistente Virtual",
+                category: "applications",
+                definition: "Sistema de IA que mantiene conversaciones con usuarios y responde preguntas de manera conversacional.",
+                example: "ChatGPT es un chatbot basado en transformers que entiende contexto y nuances.",
+                related: "Conversacional, NLP, Diálogo"
+            },
+            {
+                term: "Aprendizaje por Refuerzo",
+                category: "applications",
+                definition: "Paradigma de aprendizaje donde un agente aprende tomando acciones y recibiendo recompensas.",
+                example: "AlphaGo aprendió a jugar Go mediante aprendizaje por refuerzo.",
+                related: "Recompensa, Política, Valor, Agente"
+            },
+            {
+                term: "Previsión de Series de Tiempo",
+                category: "applications",
+                definition: "Tarea de predecir valores futuros basándose en valores históricos de una serie de tiempo.",
+                example: "Predecir precios de acciones o demanda de energía basándose en datos históricos.",
+                related: "RNN, LSTM, Temporal"
+            },
+            {
+                term: "Recomendación",
+                category: "applications",
+                definition: "Tarea de sugerir items (películas, productos, etc.) que probablemente le gusten a un usuario.",
+                example: "Netflix recomienda películas basándose en historial de visualización.",
+                related: "Filtrado Colaborativo, Matriz de Factorización, Usuario-Item"
+            },
+            {
+                term: "Clustering/Agrupamiento",
+                category: "applications",
+                definition: "Tarea de agrupar datos similares sin etiquetas predefinidas.",
+                example: "K-means agrupa clientes en segmentos basándose en comportamiento de compra.",
+                related: "No supervisado, K-means, Distancia, Centroide"
+            },
+            {
+                term: "Reducción de Dimensionalidad",
+                category: "applications",
+                definition: "Técnica para reducir el número de características manteniendo información importante.",
+                example: "PCA reduce 1000 características de imágenes a 50 manteniendo poder predictivo.",
+                related: "PCA, t-SNE, Autoencoder, Compresión"
+            },
+            {
+                term: "Detección de Anomalías",
+                category: "applications",
+                definition: "Tarea de identificar puntos de datos anómalos que difieren significativamente del resto.",
+                example: "Detectar transacciones fraudulentas o comportamiento inusual en sistemas.",
+                related: "Outlier, Anomalía, Unsupervised"
+            },
+
+            // Ethics
+            {
+                term: "Sesgo (Bias) en IA",
+                category: "ethics",
+                definition: "Prejuicios sistemáticos en datos de entrenamiento que hacen que un modelo haga predicciones injustas o discriminatorias.",
+                example: "Un modelo de clasificación de currículos sesgado contra mujeres debido a datos históricos sesgados.",
+                related: "Equidad, Discriminación, Sesgo de género"
+            },
+            {
+                term: "Equidad (Fairness)",
+                category: "ethics",
+                definition: "Propiedad de que un sistema de IA trata a diferentes grupos de personas de manera justa e imparcial.",
+                example: "Un sistema de aprobación de hipotecas debe tratar equitativamente a todos los grupos étnicos.",
+                related: "Sesgo, Discriminación, Justicia"
+            },
+            {
+                term: "Explicabilidad (Explainability)",
+                category: "ethics",
+                definition: "Capacidad de entender y explicar cómo un modelo llega a sus predicciones.",
+                example: "LIME y SHAP son técnicas para explicar predicciones de modelos de caja negra.",
+                related: "Interpretabilidad, Transparencia, Black Box"
+            },
+            {
+                term: "Interpretabilidad",
+                category: "ethics",
+                definition: "Capacidad de entender la lógica interna de un modelo y sus decisiones.",
+                example: "Modelos de árbol de decisión son altamente interpretables comparados con redes neuronales profundas.",
+                related: "Explicabilidad, Transparencia, Entendimiento"
+            },
+            {
+                term: "Privacidad",
+                category: "ethics",
+                definition: "Derecho de individuos a que sus datos personales no sean utilizados sin consentimiento.",
+                example: "Differential privacy añade ruido a datos para proteger la privacidad individual.",
+                related: "GDPR, Datos Personales, Consentimiento"
+            },
+            {
+                term: "Privacidad Diferencial (Differential Privacy)",
+                category: "ethics",
+                definition: "Técnica matemática que garantiza privacidad agregando ruido controlado a los datos.",
+                example: "Entrenar un modelo de IA sin poder inferir si datos de un individuo específico fueron usados.",
+                related: "Privacidad, Seguridad, Ruido"
+            },
+            {
+                term: "Seguridad de IA",
+                category: "ethics",
+                definition: "Campo que estudia vulnerabilidades y ataques a sistemas de IA.",
+                example: "Ataques adversariales pueden engañar a modelos de visión añadiendo perturbaciones imperceptibles.",
+                related: "Adversarial, Robustez, Confiabilidad"
+            },
+            {
+                term: "Ejemplos Adversariales",
+                category: "ethics",
+                definition: "Entradas maliciosamente diseñadas que causan que un modelo haga predicciones incorrectas.",
+                example: "Añadir ruido casi imperceptible a una imagen de gato para que se clasifique como perro.",
+                related: "Ataque, Robustez, Seguridad"
+            },
+            {
+                term: "Robustez",
+                category: "ethics",
+                definition: "Capacidad de un modelo para mantener su rendimiento bajo perturbaciones o condiciones adversas.",
+                example: "Un modelo robusto mantiene precisión incluso con imágenes borrosas o con diferentes iluminaciones.",
+                related: "Adversarial, Estabilidad, Confiabilidad"
+            },
+            {
+                term: "Responsabilidad (Accountability)",
+                category: "ethics",
+                definition: "Necesidad de que desarrolladores de IA sean responsables por las consecuencias de sus sistemas.",
+                example: "Documentación clara de limitaciones y capacidades de un modelo de IA.",
+                related: "Transparencia, Confianza, Gobernanza"
+            },
+            {
+                term: "Gobernanza de IA",
+                category: "ethics",
+                definition: "Marcos y políticas para asegurar que la IA se desarrolla y utiliza responsablemente.",
+                example: "Regulaciones como AI Act en Europa establecen requisitos para sistemas de IA.",
+                related: "Regulación, Política, Marco Legal"
+            },
+            {
+                term: "Sesgo Histórico",
+                category: "ethics",
+                definition: "Tipo de sesgo que refleja prejuicios históricos presentes en los datos de entrenamiento.",
+                example: "Datos históricos de contratación que reflejan discriminación pasada.",
+                related: "Sesgo, Discriminación, Datos históricos"
+            },
+
+            // Tools
+            {
+                term: "TensorFlow",
+                category: "tools",
+                definition: "Framework de código abierto desarrollado por Google para machine learning y deep learning.",
+                example: "TensorFlow es usado para entrenar miles de modelos en producción en todo el mundo.",
+                related: "Framework, Deep Learning, Google"
+            },
+            {
+                term: "PyTorch",
+                category: "tools",
+                definition: "Framework de deep learning desarrollado por Meta (Facebook) con enfoque en flexibilidad y facilidad de uso.",
+                example: "PyTorch es popular en investigación por su interfaz Pythonic y debugging interactivo.",
+                related: "Framework, Deep Learning, Meta"
+            },
+            {
+                term: "Keras",
+                category: "tools",
+                definition: "API de alto nivel para redes neuronales que puede ejecutarse sobre TensorFlow.",
+                example: "Keras simplifica la construcción de modelos con una sintaxis intuitiva.",
+                related: "Framework, TensorFlow, API"
+            },
+            {
+                term: "Scikit-learn",
+                category: "tools",
+                definition: "Librería de Python para machine learning tradicional con una interfaz consistente.",
+                example: "Scikit-learn tiene implementaciones de SVM, Decision Trees, Random Forests, etc.",
+                related: "Machine Learning, Python, Librería"
+            },
+            {
+                term: "Pandas",
+                category: "tools",
+                definition: "Librería de Python para manipulación y análisis de datos con estructuras como DataFrames.",
+                example: "Pandas facilita cargar, limpiar y explorar datos antes de entrenar modelos.",
+                related: "Datos, Python, Análisis"
+            },
+            {
+                term: "NumPy",
+                category: "tools",
+                definition: "Librería de Python para computación científica y manipulación de arrays numéricos.",
+                example: "NumPy es la base de muchas librerías de ML y proporciona operaciones matemáticas eficientes.",
+                related: "Matemáticas, Python, Computación"
+            },
+            {
+                term: "Jupyter Notebook",
+                category: "tools",
+                definition: "Herramienta interactiva que permite escribir código, visualizaciones y documentación en un documento.",
+                example: "Los investigadores usan Jupyter para experimentar iterativamente con modelos de IA.",
+                related: "Desarrollo, Visualización, Documentación"
+            },
+            {
+                term: "Google Colab",
+                category: "tools",
+                definition: "Entorno Jupyter gratuito en la nube de Google que proporciona acceso a GPUs y TPUs.",
+                example: "Colab permite entrenar modelos profundos sin hardware local usando computación en la nube.",
+                related: "Jupyter, Cloud, GPU"
+            },
+            {
+                term: "Hugging Face",
+                category: "tools",
+                definition: "Plataforma y comunidad que proporciona modelos pre-entrenados y datasets para NLP.",
+                example: "Hugging Face Hub tiene miles de modelos listos para usar con una línea de código.",
+                related: "Pre-entrenado, NLP, Modelos"
+            },
+            {
+                term: "OpenCV",
+                category: "tools",
+                definition: "Librería de código abierto para visión por computadora y procesamiento de imágenes.",
+                example: "OpenCV proporciona algoritmos clásicos y modernos para análisis de imágenes.",
+                related: "Visión, Imágenes, Procesamiento"
+            },
+            {
+                term: "Matplotlib",
+                category: "tools",
+                definition: "Librería de Python para crear visualizaciones y gráficos estáticos.",
+                example: "Matplotlib es ampliamente usada para graficar resultados de entrenamiento de modelos.",
+                related: "Visualización, Gráficos, Python"
+            },
+            {
+                term: "Seaborn",
+                category: "tools",
+                definition: "Librería de visualización estadística construida sobre Matplotlib.",
+                example: "Seaborn facilita crear visualizaciones complejas de datos con pocas líneas de código.",
+                related: "Visualización, Estadística, Python"
+            },
+            {
+                term: "Docker",
+                category: "tools",
+                definition: "Plataforma para containerizar aplicaciones asegurando consistencia entre entornos.",
+                example: "Empaquetar un modelo de IA en Docker garantiza que funcione igual en desarrollo y producción.",
+                related: "Deployment, Containerización, DevOps"
+            },
+            {
+                term: "MLflow",
+                category: "tools",
+                definition: "Plataforma para gestionar el ciclo de vida completo de machine learning.",
+                example: "MLflow rastrea experimentos, vuelve a crear entornos reproducibles y empaqueta modelos.",
+                related: "Experimento, Tracking, Deployment"
+            },
+
+            // Optimization
+            {
+                term: "Precisión (Accuracy)",
+                category: "optimization",
+                definition: "Métrica que mide el porcentaje de predicciones correctas de un modelo.",
+                example: "Un modelo con 95% de precisión clasifica correctamente 95 de cada 100 ejemplos.",
+                related: "Métrica, Evaluación, Corrección"
+            },
+            {
+                term: "Precisión (Precision)",
+                category: "optimization",
+                definition: "Métrica que mide qué porcentaje de predicciones positivas son realmente correctas.",
+                example: "Precision de 90% significa que de 100 predicciones positivas, 90 son realmente positivas.",
+                related: "Recall, F1-Score, Falsos Positivos"
+            },
+            {
+                term: "Recall (Sensibilidad)",
+                category: "optimization",
+                definition: "Métrica que mide qué porcentaje de casos positivos reales son identificados correctamente.",
+                example: "Recall de 85% significa que encontramos correctamente el 85% de los casos positivos.",
+                related: "Precisión, F1-Score, Falsos Negativos"
+            },
+            {
+                term: "F1-Score",
+                category: "optimization",
+                definition: "Métrica que combina Precision y Recall en un solo número, representando el balance entre ambos.",
+                example: "F1-Score de 0.88 es el promedio armónico de Precision y Recall.",
+                related: "Precisión, Recall, Media Armónica"
+            },
+            {
+                term: "Matriz de Confusión",
+                category: "optimization",
+                definition: "Tabla que muestra verdaderos positivos, falsos positivos, verdaderos negativos y falsos negativos.",
+                example: "Una matriz de confusión de 2x2 resume el rendimiento de un clasificador binario.",
+                related: "Evaluación, Verdaderos Positivos, Falsos Negativos"
+            },
+            {
+                term: "AUC-ROC",
+                category: "optimization",
+                definition: "Métrica que mide el área bajo la curva de tasa de verdaderos positivos vs falsos positivos.",
+                example: "AUC de 0.95 indica excelente capacidad discriminativa de un clasificador.",
+                related: "Curva ROC, Umbral, Probabilidad"
+            },
+            {
+                term: "Perplexidad",
+                category: "optimization",
+                definition: "Métrica de evaluación para modelos de lenguaje que mide qué tan sorprendentes son las predicciones.",
+                example: "Una perplexidad más baja indica que el modelo predice mejor las palabras.",
+                related: "Modelado de Lenguaje, Evaluación, Entropía"
+            },
+            {
+                term: "BLEU Score",
+                category: "optimization",
+                definition: "Métrica para evaluar calidad de traducción automática comparando con referencias humanas.",
+                example: "BLEU score de 0.4 indica una calidad de traducción moderada.",
+                related: "Traducción, Evaluación, N-gramas"
+            },
+            {
+                term: "Hiperparameter Tuning",
+                category: "optimization",
+                definition: "Proceso de encontrar los mejores valores de hiperparámetros para maximizar rendimiento.",
+                example: "Buscar la mejor tasa de aprendizaje, tamaño de batch y número de capas.",
+                related: "Grid Search, Random Search, Bayesian Optimization"
+            },
+            {
+                term: "Grid Search",
+                category: "optimization",
+                definition: "Método de búsqueda exhaustiva que prueba todas las combinaciones de hiperparámetros.",
+                example: "Grid search sobre tasa de aprendizaje [0.001, 0.01, 0.1] y batch size [16, 32, 64].",
+                related: "Hiperparameter Tuning, Exhaustivo, Búsqueda"
+            },
+            {
+                term: "Random Search",
+                category: "optimization",
+                definition: "Método que prueba combinaciones aleatorias de hiperparámetros, más eficiente que grid search.",
+                example: "Random search genera 100 combinaciones aleatorias de hiperparámetros.",
+                related: "Hiperparameter Tuning, Estocástico, Eficiencia"
+            },
+            {
+                term: "Bayesian Optimization",
+                category: "optimization",
+                definition: "Método sofisticado que usa modelos probabilísticos para buscar hiperparámetros eficientemente.",
+                example: "Bayesian optimization encuentra buenos hiperparámetros con menos evaluaciones.",
+                related: "Optimización, Hiperparámetros, Probabilístico"
+            },
+            {
+                term: "Cross-Validation",
+                category: "optimization",
+                definition: "Técnica que evalúa el modelo dividiendo datos en múltiples subconjuntos.",
+                example: "5-fold cross-validation divide datos en 5 partes, entrenando 5 veces.",
+                related: "Validación, Generalización, Múltiples Folds"
+            },
+
+            // Deployment
+            {
+                term: "Inferencia",
+                category: "deployment",
+                definition: "Proceso de usar un modelo entrenado para hacer predicciones en datos nuevos.",
+                example: "Cuando usas ChatGPT, está realizando inferencia predeciendo palabras.",
+                related: "Predicción, Producción, Modelo"
+            },
+            {
+                term: "Modelo en Producción",
+                category: "deployment",
+                definition: "Modelo de IA deployado y operativo en un sistema real que atiende usuarios.",
+                example: "Un modelo de recomendación en Netflix que sugiere películas a millones de usuarios.",
+                related: "Deployment, Servicio, Escalabilidad"
+            },
+            {
+                term: "API",
+                category: "deployment",
+                definition: "Interfaz que permite que aplicaciones accedan a funcionalidades de un modelo.",
+                example: "OpenAI proporciona una API para acceder a GPT desde cualquier aplicación.",
+                related: "Servicio, Integración, REST"
+            },
+            {
+                term: "Escalabilidad",
+                category: "deployment",
+                definition: "Capacidad de un sistema para manejar creciente volumen de datos y usuarios.",
+                example: "Un modelo de IA escalable puede servir predicciones a millones de usuarios.",
+                related: "Rendimiento, Distribución, Cloud"
+            },
+            {
+                term: "Latencia",
+                category: "deployment",
+                definition: "Tiempo que tarda un modelo en producir una predicción desde que recibe una entrada.",
+                example: "Una latencia de 100ms es aceptable para la mayoría de aplicaciones web.",
+                related: "Rendimiento, Velocidad, Tiempo Real"
+            },
+            {
+                term: "Throughput",
+                category: "deployment",
+                definition: "Número de predicciones que un sistema puede procesar por unidad de tiempo.",
+                example: "Un servidor de IA con throughput de 1000 req/seg puede servir 1000 predicciones por segundo.",
+                related: "Rendimiento, Escalabilidad, Volumen"
+            },
+            {
+                term: "Monitoreo de Modelo",
+                category: "deployment",
+                definition: "Proceso continuo de rastrear el rendimiento de un modelo en producción.",
+                example: "Detectar cuando la precisión de un modelo baja por data drift o cambios en patrones.",
+                related: "Producción, Rendimiento, Data Drift"
+            },
+            {
+                term: "Data Drift",
+                category: "deployment",
+                definition: "Cambio en las características o distribución de los datos en producción vs datos de entrenamiento.",
+                example: "Los patrones de búsqueda de usuarios cambian después de un evento importante.",
+                related: "Monitoreo, Producción, Recalibración"
+            },
+            {
+                term: "Model Retraining",
+                category: "deployment",
+                definition: "Proceso de re-entrenar un modelo con datos nuevos para mantener su rendimiento.",
+                example: "Retrenar un modelo de detección de spam mensualmente con emails nuevos.",
+                related: "Actualización, Producción, Mejora"
+            },
+            {
+                term: "Versionado de Modelo",
+                category: "deployment",
+                definition: "Sistema para rastrear y gestionar diferentes versiones de un modelo.",
+                example: "Mantener modelo v1.0, v1.1, v2.0 con cambios y mejoras incrementales.",
+                related: "Control de versión, Reproducibilidad, Historial"
+            },
+
+            // Additional important terms
+            {
+                term: "Embedding",
+                category: "fundamentals",
+                definition: "Representación vectorial densa de datos de alta dimensión en un espacio de baja dimensión.",
+                example: "Word embeddings representan palabras como vectores donde palabras similares están cercanas.",
+                related: "Representación, Vector, Espacio Latente"
+            },
+            {
+                term: "Atención de Multi-Cabezas (Multi-Head Attention)",
+                category: "architecture",
+                definition: "Mecanismo de atención que ejecuta múltiples operaciones de atención en paralelo.",
+                example: "Un transformer típico tiene 8 a 16 cabezas de atención que atienden diferentes aspectos.",
+                related: "Transformer, Atención, Paralelismo"
+            },
+            {
+                term: "Perceptrón Multicapa (MLP)",
+                category: "architecture",
+                definition: "Tipo básico de red neuronal con entrada, capas ocultas y capa de salida completamente conectadas.",
+                example: "Un MLP simple con 1 capa oculta puede aproximar cualquier función continua.",
+                related: "Red Neuronal, Capas, Completamente Conectado"
+            },
+            {
+                term: "Graph Neural Network (GNN)",
+                category: "architecture",
+                definition: "Red neuronal diseñada para procesar datos en forma de grafos.",
+                example: "GNNs se usan para análisis de redes sociales, moléculas y sistemas de recomendación.",
+                related: "Grafo, Nodo, Arista, Estructura"
+            },
+            {
+                term: "Generador",
+                category: "architecture",
+                definition: "Componente de una GAN que genera datos sintéticos nuevos a partir de ruido aleatorio.",
+                example: "El generador de StyleGAN crea imágenes realistas de caras que no existen.",
+                related: "GAN, Discriminador, Síntesis"
+            },
+            {
+                term: "Discriminador",
+                category: "architecture",
+                definition: "Componente de una GAN que intenta distinguir entre datos reales y datos generados.",
+                example: "El discriminador mejora constantemente para detectar imágenes falsas del generador.",
+                related: "GAN, Generador, Clasificador"
+            },
+            {
+                term: "Softmax",
+                category: "fundamentals",
+                definition: "Función de activación que convierte valores en probabilidades que suman 1.",
+                example: "Softmax en la capa de salida convierte logits en distribución de probabilidad sobre clases.",
+                related: "Función de Activación, Probabilidad, Clasificación"
+            },
+            {
+                term: "ReLU (Rectified Linear Unit)",
+                category: "fundamentals",
+                definition: "Función de activación que retorna max(0, x), muy común en redes profundas.",
+                example: "ReLU es eficiente computacionalmente y ayuda a entrenar redes muy profundas.",
+                related: "Función de Activación, No-linealidad"
+            },
+            {
+                term: "Sigmoid",
+                category: "fundamentals",
+                definition: "Función de activación que mapea valores a rango (0, 1), interpretables como probabilidad.",
+                example: "Sigmoid es comúnmente usado en la capa de salida para clasificación binaria.",
+                related: "Función de Activación, Probabilidad, Logística"
+            },
+            {
+                term: "Tanh (Tangente Hiperbólica)",
+                category: "fundamentals",
+                definition: "Función de activación que mapea valores a rango (-1, 1), similar a Sigmoid pero centrada.",
+                example: "Tanh es preferible a Sigmoid en algunas aplicaciones por su simetría.",
+                related: "Función de Activación, Rango"
+            },
+            {
+                term: "Stride",
+                category: "architecture",
+                definition: "Parámetro que controla cuánto se mueve el filtro de convolución en cada paso.",
+                example: "Un stride de 2 reduce las dimensiones espaciales a la mitad.",
+                related: "Convolución, Filtro, Downsampling"
+            },
+            {
+                term: "Padding",
+                category: "architecture",
+                definition: "Técnica de añadir píxeles alrededor de los bordes de una imagen para controlar dimensiones.",
+                example: "Padding de 1 píxel previene que las dimensiones se reduzcan significativamente con convoluciones.",
+                related: "Convolución, Dimensiones"
+            },
+            {
+                term: "Feature Map",
+                category: "architecture",
+                definition: "Salida de una operación de convolución que representa características detectadas.",
+                example: "Un feature map puede representar bordes, texturas o patrones más complejos.",
+                related: "Convolución, Característica, Activación"
+            },
+            {
+                term: "Representación Latente",
+                category: "fundamentals",
+                definition: "Representación comprimida de datos en un espacio de menor dimensión.",
+                example: "En un autoencoder, la capa intermedia contiene la representación latente.",
+                related: "Embedding, Compresión, Espacio de Características"
+            },
+            {
+                term: "Espacio de Características",
+                category: "fundamentals",
+                definition: "Espacio multidimensional donde cada dimensión representa una característica del problema.",
+                example: "Una imagen 28x28 define un espacio de 784 dimensiones (píxeles).",
+                related: "Dimensión, Característica, Entrada"
+            },
+            {
+                term: "Sequence-to-Sequence (Seq2Seq)",
+                category: "architecture",
+                definition: "Arquitectura que mapea una secuencia de entrada a una secuencia de salida.",
+                example: "Traducción automática mapea una oración en inglés a una oración en español.",
+                related: "Encoder-Decoder, NLP, Secuencia"
+            },
+            {
+                term: "Atención Cruzada (Cross-Attention)",
+                category: "architecture",
+                definition: "Mecanismo donde un conjunto de consultas atiende a un conjunto diferente de claves y valores.",
+                example: "En traducción, el decoder atiende a representaciones del encoder.",
+                related: "Atención, Encoder-Decoder, Transformer"
+            },
+            {
+                term: "Recompensa (Reward)",
+                category: "applications",
+                definition: "Señal de realimentación en aprendizaje por refuerzo que indica cuán buena es una acción.",
+                example: "En ajedrez, ganar da recompensa +1, perder da -1.",
+                related: "Refuerzo, Política, Valor"
+            },
+            {
+                term: "Política (Policy)",
+                category: "applications",
+                definition: "Estrategia que determina qué acciones tomar basándose en el estado actual.",
+                example: "Una política en ajedrez mapea posiciones a movimientos.",
+                related: "Refuerzo, Acción, Agente"
+            },
+            {
+                term: "Función de Valor (Value Function)",
+                category: "applications",
+                definition: "Función que estima el valor esperado acumulado desde un estado dado.",
+                example: "V(estado) predice cuán probable es ganar desde esa posición de ajedrez.",
+                related: "Refuerzo, Recompensa, Descuento"
+            },
+            {
+                term: "Cross-Entropy Loss",
+                category: "fundamentals",
+                definition: "Función de pérdida común para problemas de clasificación.",
+                example: "Cross-entropy mide la divergencia entre distribución predicha y real.",
+                related: "Pérdida, Clasificación, Entropía"
+            },
+            {
+                term: "Mean Squared Error (MSE)",
+                category: "fundamentals",
+                definition: "Función de pérdida común para problemas de regresión.",
+                example: "MSE penaliza cuadratamente las diferencias entre predicciones y valores reales.",
+                related: "Pérdida, Regresión, Error"
+            },
+            {
+                term: "Regresión",
+                category: "fundamentals",
+                definition: "Tarea de predecir valores continuos (ej: precio, temperatura).",
+                example: "Predecir el precio de una casa basándose en características como tamaño y ubicación.",
+                related: "Predicción, Continuo, MSE"
+            },
+            {
+                term: "Clasificación",
+                category: "fundamentals",
+                definition: "Tarea de asignar una entrada a una de varias categorías discretas.",
+                example: "Clasificar un email como spam o no spam.",
+                related: "Categoría, Discreto, Clase"
+            },
+            {
+                term: "One-Hot Encoding",
+                category: "fundamentals",
+                definition: "Técnica para convertir variables categóricas en vectores binarios.",
+                example: "Colores: rojo=[1,0,0], verde=[0,1,0], azul=[0,0,1].",
+                related: "Codificación, Categoría, Binario"
+            },
+            {
+                term: "Normalización de Datos",
+                category: "techniques",
+                definition: "Técnica de escalar datos a un rango estándar (ej: [0,1] o [-1,1]).",
+                example: "Normalizar edades de 18-100 a rango [0,1] para entrenar mejor el modelo.",
+                related: "Preprocesamiento, Escala, Estandarización"
+            },
+            {
+                term: "Estandarización de Datos",
+                category: "techniques",
+                definition: "Técnica de centrar datos a media 0 y varianza 1.",
+                example: "Z-score normalization: (x - media) / desviación_estándar.",
+                related: "Normalización, Preprocesamiento, Media"
+            },
+            {
+                term: "Imbalance de Clases",
+                category: "fundamentals",
+                definition: "Situación donde clases en un dataset tienen proporciones muy diferentes.",
+                example: "Dataset de detección de fraude con 99% casos legales y 1% fraude.",
+                related: "Clase, Datos, Desbalance"
+            },
+            {
+                term: "Weighted Loss",
+                category: "techniques",
+                definition: "Función de pérdida que da diferentes pesos a diferentes clases o ejemplos.",
+                example: "Dar mayor peso a la clase minoritaria en problema de imbalance.",
+                related: "Pérdida, Clase, Balanceo"
+            },
+            {
+                term: "F-String Formatting",
+                category: "tools",
+                definition: "N/A (este es un término de programación Python, no de IA)",
+                example: "N/A",
+                related: "N/A"
+            }
+        ];
+
+        // Initialize glossary
+        function initializeGlossary() {
+            const glossaryItems = document.getElementById('glossaryItems');
+            const categoriesContainer = document.getElementById('categoriesContainer');
+            
+            // Get unique categories
+            const categories = [...new Set(glossaryData.map(item => item.category))];
+            
+            // Create category buttons
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'category-tag';
+                btn.dataset.category = cat;
+                btn.textContent = capitalizeCategory(cat);
+                
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.category-tag').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    filterByCategory(cat);
+                });
+                
+                categoriesContainer.appendChild(btn);
+            });
+            
+            // Render all items initially
+            renderItems(glossaryData);
+            
+            // Update stats
+            document.querySelector('.stat-card:nth-child(1) .number').textContent = glossaryData.length + '+';
+            document.querySelector('.stat-card:nth-child(2) .number').textContent = categories.length;
+        }
+
+        function capitalizeCategory(cat) {
+            const names = {
+                fundamentals: 'Fundamentos',
+                architecture: 'Arquitecturas',
+                techniques: 'Técnicas',
+                applications: 'Aplicaciones',
+                ethics: 'Ética',
+                tools: 'Herramientas',
+                optimization: 'Optimización',
+                deployment: 'Deployment'
+            };
+            return names[cat] || cat;
+        }
+
+        function renderItems(items) {
+            const glossaryItems = document.getElementById('glossaryItems');
+            glossaryItems.innerHTML = '';
+            
+            if (items.length === 0) {
+                glossaryItems.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;"><div class="empty-state-icon">🔍</div><h3>No se encontraron términos</h3><p>Intenta con otra búsqueda o categoría</p></div>';
+                return;
+            }
+            
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'term-card';
+                card.dataset.category = item.category;
+                card.innerHTML = `
+                    <div class="term-header">
+                        <div class="term-title">${item.term}</div>
+                        <div class="category-badge ${item.category}">${capitalizeCategory(item.category)}</div>
+                    </div>
+                    <div class="term-definition">${item.definition}</div>
+                    <div class="term-example">${item.example}</div>
+                    <div class="related-terms">${item.related}</div>
+                `;
+                glossaryItems.appendChild(card);
+            });
+        }
+
+        function filterByCategory(category) {
+            if (category === 'all') {
+                renderItems(glossaryData);
+            } else {
+                const filtered = glossaryData.filter(item => item.category === category);
+                renderItems(filtered);
+            }
+            updateViewMode();
+        }
+
+        function updateViewMode() {
+            const activeView = document.querySelector('.view-btn.active');
+            const viewMode = activeView.dataset.view;
+            const glossaryItems = document.getElementById('glossaryItems');
+            
+            if (viewMode === 'list') {
+                glossaryItems.classList.add('list-view');
+            } else {
+                glossaryItems.classList.remove('list-view');
+            }
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            if (searchTerm.trim() === '') {
+                renderItems(glossaryData);
+            } else {
+                const filtered = glossaryData.filter(item => 
+                    item.term.toLowerCase().includes(searchTerm) ||
+                    item.definition.toLowerCase().includes(searchTerm) ||
+                    item.related.toLowerCase().includes(searchTerm)
+                );
+                renderItems(filtered);
+            }
+            updateViewMode();
+        });
+
+        // View toggle
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                updateViewMode();
+            });
+        });
+
+        // Category filter all
+        const categoryTags = document.querySelectorAll('.category-tag');
+        categoryTags.forEach(tag => {
+            if (tag.textContent.trim() === 'Todas') {
+                tag.addEventListener('click', function() {
+                    document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    renderItems(glossaryData);
+                    updateViewMode();
+                });
+            }
+        });
+
+        // Scroll to top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeGlossary);
+    </script>
+</body>
+</html>
