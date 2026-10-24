@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,13 +44,13 @@
             color: white;
             padding: 40px 20px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         header p {
@@ -66,7 +67,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
             border-bottom: 2px solid var(--primary-color);
         }
 
@@ -114,7 +115,7 @@
             margin: 30px 0;
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             scroll-margin-top: 50px;
         }
 
@@ -145,7 +146,7 @@
             padding: 25px;
             margin: 20px 0;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .module-card h2,
@@ -212,7 +213,8 @@
         }
 
         /* Lists */
-        ul, ol {
+        ul,
+        ol {
             margin-left: 30px;
             margin-top: 10px;
             margin-bottom: 15px;
@@ -253,7 +255,7 @@
 
         .tool-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             border-color: var(--primary-color);
         }
 
@@ -337,7 +339,8 @@
             margin: 20px 0;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
@@ -593,8 +596,132 @@
             overflow: hidden;
             transition: max-height 0.2s ease-out;
         }
+
+        /* Delivery section */
+        .delivery-container {
+            background: linear-gradient(135deg, #f0f7ff 0%, #f5f3ff 100%);
+            border: 2px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0 30px 0;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+            scroll-margin-top: 70px;
+        }
+
+        .delivery-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 18px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border-left: 5px solid #0061fe;
+        }
+
+        .delivery-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #0061fe 0%, #0046b8 100%);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0, 97, 254, 0.25);
+        }
+
+        .delivery-content {
+            flex: 1;
+        }
+
+        .delivery-content h4 {
+            color: #1e3a8a;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+
+        .delivery-content p {
+            color: #4b5563;
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .delivery-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #0061fe 0%, #004dc7 100%);
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 8px rgba(0, 97, 254, 0.3);
+        }
+
+        .delivery-btn:hover {
+            background: linear-gradient(135deg, #004dc7 0%, #00378e 100%);
+            color: white !important;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0, 97, 254, 0.35);
+        }
+
+        .delivery-url {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #64748b;
+            word-break: break-all;
+        }
+
+        .delivery-url a {
+            color: #0061fe;
+            text-decoration: underline;
+        }
+
+        .delivery-tips {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 14px 18px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .delivery-tips h5 {
+            color: var(--primary-color);
+            margin: 0 0 8px 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .delivery-tips ul {
+            margin: 0 0 0 20px;
+            padding: 0;
+        }
+
+        .delivery-tips li {
+            font-size: 0.88rem;
+            color: #334155;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 640px) {
+            .delivery-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+        }
     </style>
 </head>
+
 <body>
     <header>
         <h1>🤖 Inteligencia Artificial para el Trabajo</h1>
@@ -623,25 +750,32 @@
         <!-- INTRODUCCIÓN -->
         <section id="introduccion">
             <h2>📚 Introducción al Curso</h2>
-            
+
             <div class="theory-box">
                 <h4>Bienvenida</h4>
-                <p>¡Bienvenido/a al curso <strong>"Inteligencia Artificial para el Trabajo"</strong>! Este programa está diseñado para que profesionales, emprendedores y trabajadores de cualquier sector puedan aprovechar el poder de la Inteligencia Artificial en sus actividades diarias.</p>
+                <p>¡Bienvenido/a al curso <strong>"Inteligencia Artificial para el Trabajo"</strong>! Este programa está
+                    diseñado para que profesionales, emprendedores y trabajadores de cualquier sector puedan aprovechar
+                    el poder de la Inteligencia Artificial en sus actividades diarias.</p>
             </div>
 
             <h3>🎯 Objetivos del Curso</h3>
             <ul>
-                <li><strong>Desmitificar la IA:</strong> Comprender qué es la Inteligencia Artificial y cómo puede beneficiar tu trabajo.</li>
-                <li><strong>Aplicar herramientas prácticas:</strong> Aprender a usar asistentes de IA para tareas cotidianas.</li>
+                <li><strong>Desmitificar la IA:</strong> Comprender qué es la Inteligencia Artificial y cómo puede
+                    beneficiar tu trabajo.</li>
+                <li><strong>Aplicar herramientas prácticas:</strong> Aprender a usar asistentes de IA para tareas
+                    cotidianas.</li>
                 <li><strong>Aumentar la productividad:</strong> Automatizar y optimizar procesos de trabajo.</li>
-                <li><strong>Crear contenido profesional:</strong> Generar textos, presentaciones e imágenes de calidad.</li>
+                <li><strong>Crear contenido profesional:</strong> Generar textos, presentaciones e imágenes de calidad.
+                </li>
                 <li><strong>Tomar mejores decisiones:</strong> Analizar información con ayuda de la IA.</li>
                 <li><strong>Uso responsable:</strong> Conocer los límites éticos y las buenas prácticas.</li>
             </ul>
 
             <h3>📋 Estructura del Curso</h3>
-            <p>El curso consta de <strong>6 módulos</strong> distribuidos en 6 sesiones de sábado, con un total de <strong>24 horas</strong>:</p>
-            
+            <p>El curso consta de <strong>6 módulos</strong> distribuidos en 6 sesiones de sábado, con un total de
+                <strong>24 horas</strong>:
+            </p>
+
             <table>
                 <thead>
                     <tr>
@@ -685,7 +819,8 @@
             </table>
 
             <div class="highlight">
-                <strong>💡 Metodología:</strong> Cada sesión combina teoría y práctica. Aprenderás conceptos clave y los aplicarás inmediatamente en ejercicios reales relacionados con tu trabajo o negocio.
+                <strong>💡 Metodología:</strong> Cada sesión combina teoría y práctica. Aprenderás conceptos clave y los
+                aplicarás inmediatamente en ejercicios reales relacionados con tu trabajo o negocio.
             </div>
 
             <h3>👥 ¿A quién está dirigido?</h3>
@@ -705,20 +840,67 @@
                     <li>Casos reales de tu trabajo para practicar</li>
                 </ul>
             </div>
+
+            <!-- ENTREGA DE ACTIVIDADES -->
+            <h3>📤 Entrega de Actividades Realizadas</h3>
+            <div id="entrega-actividades" class="delivery-container">
+                <p>Durante el curso realizarás diversos talleres prácticos, ejercicios guiados y tareas para aplicar lo
+                    aprendido en tu ámbito laboral. En este espacio podrás subir y entregar tus actividades completadas
+                    para su respectiva revisión y validación.</p>
+
+                <div class="delivery-card">
+                    <div class="delivery-icon">📤</div>
+                    <div class="delivery-content">
+                        <h4>Buzón Oficial de Entregas (Dropbox)</h4>
+                        <p>Haz clic en el botón para acceder a la carpeta de recepción de actividades del curso. Puedes
+                            cargar tus archivos directamente desde tu navegador sin necesidad de crear una cuenta en
+                            Dropbox.</p>
+                        <a href="https://www.dropbox.com/request/akqdtb1v12uj8k6z44g2" target="_blank"
+                            rel="noopener noreferrer" class="delivery-btn">
+                            <span>Subir Actividades a Dropbox</span>
+                            <span>↗</span>
+                        </a>
+                        <div class="delivery-url">
+                            <strong>Enlace de entrega:</strong>
+                            <a href="https://www.dropbox.com/request/akqdtb1v12uj8k6z44g2" target="_blank"
+                                rel="noopener noreferrer">https://www.dropbox.com/request/akqdtb1v12uj8k6z44g2</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="delivery-tips">
+                    <h5>📋 Pautas y recomendaciones para la entrega:</h5>
+                    <ul>
+                        <li><strong>Archivo comprimido:</strong> Entrega un solo archivo comprimido (.zip o .rar) que
+                            contenga todas las actividades desarrolladas en el módulo respectivo.</li>
+                        <li><strong>Formato del nombre del archivo:</strong> Nombra tu archivo siguiendo la estructura
+                            <code>apellido1_apellido2_nombre1_mod#.zip</code> (por ejemplo:
+                            <code>perez_gomez_juan_mod1.zip</code>).
+                        </li>
+                        <li><strong>Formatos internos aceptados:</strong> Documentos (PDF, Word), hojas de cálculo
+                            (Excel), presentaciones e imágenes/capturas de pantalla de los resultados obtenidos.</li>
+                        <li><strong>Confirmación inmediata:</strong> Una vez completada la subida, la plataforma de
+                            Dropbox te mostrará un mensaje de confirmación de carga exitosa.</li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
         <!-- MÓDULO 1 -->
         <section id="modulo1">
             <div class="module-card">
                 <h2>📘 Módulo 1: IA sin miedo - Fundamentos</h2>
-                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo1" class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
+                <p><span class="badge badge-primary">4 horas</span> <span
+                        class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo1"
+                        class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
             </div>
 
             <h3>🎓 Contenido Teórico</h3>
 
             <div class="theory-box">
                 <h4>¿Qué es la Inteligencia Artificial?</h4>
-                <p>La <strong>Inteligencia Artificial (IA)</strong> es una rama de la informática que busca crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana, como:</p>
+                <p>La <strong>Inteligencia Artificial (IA)</strong> es una rama de la informática que busca crear
+                    sistemas capaces de realizar tareas que normalmente requieren inteligencia humana, como:</p>
                 <ul>
                     <li>Comprender lenguaje natural</li>
                     <li>Reconocer patrones e imágenes</li>
@@ -764,8 +946,10 @@
 
             <div class="theory-box">
                 <h4>Diferencia clave: IA Generativa vs Automatización Simple</h4>
-                <p><strong>Automatización simple:</strong> Sigue reglas predefinidas. Ejemplo: "Si recibo un email con X palabra, moverlo a Y carpeta".</p>
-                <p><strong>IA Generativa:</strong> Aprende patrones y puede crear contenido nuevo. Ejemplo: "Escribe un email profesional respondiendo a esta consulta de un cliente".</p>
+                <p><strong>Automatización simple:</strong> Sigue reglas predefinidas. Ejemplo: "Si recibo un email con X
+                    palabra, moverlo a Y carpeta".</p>
+                <p><strong>IA Generativa:</strong> Aprende patrones y puede crear contenido nuevo. Ejemplo: "Escribe un
+                    email profesional respondiendo a esta consulta de un cliente".</p>
             </div>
 
             <h4>💼 ¿Cómo puede la IA ayudarte en tu trabajo?</h4>
@@ -882,7 +1066,8 @@ El contexto es: [explica la situación brevemente].
                     <div class="step">
                         <h4>Probar Microsoft Copilot</h4>
                         <ul>
-                            <li>Ingresa a <a href="https://www.bing.com/chat" target="_blank">Bing Chat / Copilot</a></li>
+                            <li>Ingresa a <a href="https://www.bing.com/chat" target="_blank">Bing Chat / Copilot</a>
+                            </li>
                             <li>Inicia sesión con tu cuenta de Microsoft (o crea una)</li>
                             <li>Realiza la misma consulta que hiciste en ChatGPT</li>
                             <li><strong>Observa:</strong> Copilot puede buscar en internet y citar fuentes</li>
@@ -924,7 +1109,8 @@ El contexto es: [explica la situación brevemente].
             </div>
 
             <div class="highlight">
-                <strong>📝 Tarea para casa:</strong> Durante la semana, usa el asistente de IA al menos una vez al día para una tarea real de tu trabajo. Anota qué funcionó bien y qué podrías mejorar.
+                <strong>📝 Tarea para casa:</strong> Durante la semana, usa el asistente de IA al menos una vez al día
+                para una tarea real de tu trabajo. Anota qué funcionó bien y qué podrías mejorar.
             </div>
         </section>
 
@@ -932,7 +1118,9 @@ El contexto es: [explica la situación brevemente].
         <section id="modulo2">
             <div class="module-card">
                 <h2>✍️ Módulo 2: IA para Escribir y Comunicar</h2>
-                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo2" class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
+                <p><span class="badge badge-primary">4 horas</span> <span
+                        class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo2"
+                        class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
             </div>
 
             <h3>🎓 Contenido Teórico</h3>
@@ -992,8 +1180,9 @@ El contexto es: [explica la situación brevemente].
             <h4>✨ Principios de "Prompt Engineering" (Ingeniería de Instrucciones)</h4>
 
             <div class="theory-box">
-                <p>Un <strong>"prompt"</strong> es la instrucción que le das a la IA. Para obtener mejores resultados, tu prompt debe incluir:</p>
-                
+                <p>Un <strong>"prompt"</strong> es la instrucción que le das a la IA. Para obtener mejores resultados,
+                    tu prompt debe incluir:</p>
+
                 <ol>
                     <li><strong>Contexto:</strong> Explica quién eres y la situación</li>
                     <li><strong>Tarea específica:</strong> Qué quieres exactamente</li>
@@ -1023,7 +1212,8 @@ Incluir: Valor de nuestra solución y llamado a la acción claro.</code></pre>
                 <tbody>
                     <tr>
                         <td>Email de seguimiento</td>
-                        <td>"Redacta un email de seguimiento para [situación], tono [formal/casual], enfocado en [objetivo]"</td>
+                        <td>"Redacta un email de seguimiento para [situación], tono [formal/casual], enfocado en
+                            [objetivo]"</td>
                     </tr>
                     <tr>
                         <td>Resumen ejecutivo</td>
@@ -1031,7 +1221,8 @@ Incluir: Valor de nuestra solución y llamado a la acción claro.</code></pre>
                     </tr>
                     <tr>
                         <td>Mejora de texto</td>
-                        <td>"Mejora este texto: [pegar texto]. Hazlo más [claro/profesional/conciso] manteniendo [requisito]"</td>
+                        <td>"Mejora este texto: [pegar texto]. Hazlo más [claro/profesional/conciso] manteniendo
+                            [requisito]"</td>
                     </tr>
                     <tr>
                         <td>Adaptación de tono</td>
@@ -1071,13 +1262,15 @@ Contenido a incluir:
 Tono: Profesional y cordial
 Longitud: Máximo 200 palabras
 Formato: Email estándar con asunto atractivo</code></pre>
-                        
-                        <p><strong>Acción:</strong> Copia este prompt, personalízalo con tu información y ejecútalo en ChatGPT o tu asistente preferido.</p>
+
+                        <p><strong>Acción:</strong> Copia este prompt, personalízalo con tu información y ejecútalo en
+                            ChatGPT o tu asistente preferido.</p>
                     </div>
 
                     <div class="step">
                         <h4>Ejercicio 2: Email de seguimiento</h4>
-                        <p><strong>Situación:</strong> Enviaste una propuesta hace una semana y no has recibido respuesta.</p>
+                        <p><strong>Situación:</strong> Enviaste una propuesta hace una semana y no has recibido
+                            respuesta.</p>
                         <p><strong>Prompt a usar:</strong></p>
                         <pre><code>Redacta un email de seguimiento para una propuesta enviada hace una semana.
 
@@ -1120,7 +1313,8 @@ Longitud: Máximo 250 palabras</code></pre>
                         <ul>
                             <li>Lee el resultado completo</li>
                             <li>Identifica qué cambiarías</li>
-                            <li>Pide ajustes: "Hazlo más breve", "Cambia el tono a más informal", "Agrega un ejemplo específico"</li>
+                            <li>Pide ajustes: "Hazlo más breve", "Cambia el tono a más informal", "Agrega un ejemplo
+                                específico"</li>
                             <li>Itera hasta tener el resultado perfecto</li>
                             <li>Agrega tu toque personal final</li>
                         </ul>
@@ -1270,7 +1464,8 @@ Mantén el mensaje core pero ajusta tono y formato para cada plataforma.</code><
                     <li><strong>Personaliza:</strong> Agrega tu voz y experiencia personal</li>
                     <li><strong>Verifica datos:</strong> No confíes ciegamente en estadísticas generadas</li>
                     <li><strong>Considera el contexto cultural:</strong> Adapta expresiones según tu región</li>
-                    <li><strong>Protege información sensible:</strong> No compartas datos confidenciales en los prompts</li>
+                    <li><strong>Protege información sensible:</strong> No compartas datos confidenciales en los prompts
+                    </li>
                 </ul>
             </div>
 
@@ -1286,7 +1481,8 @@ Mantén el mensaje core pero ajusta tono y formato para cada plataforma.</code><
             </div>
 
             <div class="highlight">
-                <strong>📝 Tarea para casa:</strong> Usa la IA para toda tu comunicación escrita de la próxima semana. Documenta cuánto tiempo ahorras y cómo mejora la calidad de tus mensajes.
+                <strong>📝 Tarea para casa:</strong> Usa la IA para toda tu comunicación escrita de la próxima semana.
+                Documenta cuánto tiempo ahorras y cómo mejora la calidad de tus mensajes.
             </div>
         </section>
 
@@ -1294,14 +1490,17 @@ Mantén el mensaje core pero ajusta tono y formato para cada plataforma.</code><
         <section id="modulo3">
             <div class="module-card">
                 <h2>📅 Módulo 3: IA para Organizar el Trabajo</h2>
-                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo3" class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
+                <p><span class="badge badge-primary">4 horas</span> <span
+                        class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo3"
+                        class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
             </div>
 
             <h3>🎓 Contenido Teórico</h3>
 
             <div class="theory-box">
                 <h4>IA como asistente de productividad</h4>
-                <p>La organización efectiva es clave para el éxito profesional. La IA puede convertirse en tu asistente personal para:</p>
+                <p>La organización efectiva es clave para el éxito profesional. La IA puede convertirse en tu asistente
+                    personal para:</p>
                 <ul>
                     <li>Planificar y priorizar tareas</li>
                     <li>Crear agendas y cronogramas</li>
@@ -1349,8 +1548,9 @@ Mantén el mensaje core pero ajusta tono y formato para cada plataforma.</code><
             <h4>🤖 Herramientas de automatización básica</h4>
 
             <div class="theory-box">
-                <p>Aunque no profundizaremos en herramientas técnicas complejas, es importante conocer opciones simples de automatización:</p>
-                
+                <p>Aunque no profundizaremos en herramientas técnicas complejas, es importante conocer opciones simples
+                    de automatización:</p>
+
                 <ol>
                     <li><strong>Automatización de emails:</strong>
                         <ul>
@@ -1379,7 +1579,8 @@ Mantén el mensaje core pero ajusta tono y formato para cada plataforma.</code><
             <h4>📊 Principios de planificación efectiva con IA</h4>
 
             <ul>
-                <li><strong>Realismo:</strong> La IA puede ayudarte a estimar tiempos más realistas basándose en información histórica</li>
+                <li><strong>Realismo:</strong> La IA puede ayudarte a estimar tiempos más realistas basándose en
+                    información histórica</li>
                 <li><strong>Flexibilidad:</strong> Crea planes que permitan ajustes y contingencias</li>
                 <li><strong>Priorización:</strong> Identifica lo urgente vs. lo importante</li>
                 <li><strong>Equilibrio:</strong> Balancea trabajo, descansos y tiempo personal</li>
@@ -1477,7 +1678,8 @@ Incluye preguntas de reflexión que me ayuden a mejorar continuamente.</code></p
                     <div class="step">
                         <h4>Paso 6: Implementar y ajustar</h4>
                         <ul>
-                            <li>Copia el plan a tu herramienta de calendario favorita (Google Calendar, Outlook, etc.)</li>
+                            <li>Copia el plan a tu herramienta de calendario favorita (Google Calendar, Outlook, etc.)
+                            </li>
                             <li>Configura recordatorios para cada bloque de tiempo</li>
                             <li>Al final de cada día, registra qué funcionó y qué no</li>
                             <li>El viernes, pide a la IA que te ayude a ajustar el plan basándose en tu experiencia</li>
@@ -1685,7 +1887,9 @@ Ayúdame a:
             </div>
 
             <div class="highlight">
-                <strong>📝 Tarea para casa:</strong> Implementa tu plan semanal durante 2 semanas. Registra diariamente qué funcionó, qué no, y ajusta con ayuda de la IA. Al final, compara tu productividad con semanas anteriores.
+                <strong>📝 Tarea para casa:</strong> Implementa tu plan semanal durante 2 semanas. Registra diariamente
+                qué funcionó, qué no, y ajusta con ayuda de la IA. Al final, compara tu productividad con semanas
+                anteriores.
             </div>
         </section>
 
@@ -1693,14 +1897,17 @@ Ayúdame a:
         <section id="modulo4">
             <div class="module-card">
                 <h2>🎨 Módulo 4: IA para Presentaciones y Contenido Visual</h2>
-                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo4" class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
+                <p><span class="badge badge-primary">4 horas</span> <span
+                        class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo4"
+                        class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
             </div>
 
             <h3>🎓 Contenido Teórico</h3>
 
             <div class="theory-box">
                 <h4>El poder de la comunicación visual</h4>
-                <p>En el mundo profesional, la capacidad de crear presentaciones y contenido visual impactante es crucial. La IA democratiza estas habilidades, permitiéndote:</p>
+                <p>En el mundo profesional, la capacidad de crear presentaciones y contenido visual impactante es
+                    crucial. La IA democratiza estas habilidades, permitiéndote:</p>
                 <ul>
                     <li>Generar imágenes profesionales sin ser diseñador</li>
                     <li>Crear presentaciones estructuradas y atractivas</li>
@@ -1916,7 +2123,9 @@ Duración total: [Minutos disponibles]</code></pre>
                 <h4>Tiempo estimado: 45 minutos</h4>
 
                 <div class="alert-warning">
-                    <strong>⚠️ Nota:</strong> Para esta práctica usaremos herramientas con versiones gratuitas limitadas. DALL-E (integrado en ChatGPT Plus), Microsoft Designer (gratis), o alternativas gratuitas como Ideogram.
+                    <strong>⚠️ Nota:</strong> Para esta práctica usaremos herramientas con versiones gratuitas
+                    limitadas. DALL-E (integrado en ChatGPT Plus), Microsoft Designer (gratis), o alternativas gratuitas
+                    como Ideogram.
                 </div>
 
                 <div class="steps">
@@ -1924,10 +2133,13 @@ Duración total: [Minutos disponibles]</code></pre>
                         <h4>Acceder a herramienta de generación</h4>
                         <p><strong>Opciones:</strong></p>
                         <ul>
-                            <li><strong>Microsoft Designer:</strong> <a href="https://designer.microsoft.com/" target="_blank">designer.microsoft.com</a> (Gratis con cuenta Microsoft)</li>
-                            <li><strong>Ideogram:</strong> <a href="https://ideogram.ai/" target="_blank">ideogram.ai</a> (Versión gratuita disponible)</li>
+                            <li><strong>Microsoft Designer:</strong> <a href="https://designer.microsoft.com/"
+                                    target="_blank">designer.microsoft.com</a> (Gratis con cuenta Microsoft)</li>
+                            <li><strong>Ideogram:</strong> <a href="https://ideogram.ai/"
+                                    target="_blank">ideogram.ai</a> (Versión gratuita disponible)</li>
                             <li><strong>ChatGPT Plus:</strong> DALL-E integrado (Si tienes suscripción)</li>
-                            <li><strong>Canva AI:</strong> <a href="https://www.canva.com/" target="_blank">canva.com</a> (Funciones básicas gratuitas)</li>
+                            <li><strong>Canva AI:</strong> <a href="https://www.canva.com/"
+                                    target="_blank">canva.com</a> (Funciones básicas gratuitas)</li>
                         </ul>
                         <p>Crea tu cuenta en al menos una de estas plataformas.</p>
                     </div>
@@ -1967,9 +2179,11 @@ Incluye en el prompt especificaciones técnicas apropiadas.</code></pre>
                         <p>Si la primera imagen no es perfecta:</p>
                         <ul>
                             <li><strong>Ajusta el prompt:</strong> Sé más específico en lo que quieres cambiar</li>
-                            <li><strong>Modifica elementos:</strong> "Mismo concepto pero con iluminación más cálida"</li>
+                            <li><strong>Modifica elementos:</strong> "Mismo concepto pero con iluminación más cálida"
+                            </li>
                             <li><strong>Cambia perspectiva:</strong> "Vista desde otro ángulo"</li>
-                            <li><strong>Altera el estilo:</strong> "En estilo ilustración vectorial en lugar de fotorrealista"</li>
+                            <li><strong>Altera el estilo:</strong> "En estilo ilustración vectorial en lugar de
+                                fotorrealista"</li>
                             <li><strong>Regenera variaciones:</strong> Pide múltiples versiones</li>
                         </ul>
                     </div>
@@ -2059,7 +2273,8 @@ Dame:
                         <ul>
                             <li><strong>Textos:</strong> Ajusta con el contenido generado previamente</li>
                             <li><strong>Colores:</strong> Aplica tu paleta de marca</li>
-                            <li><strong>Imágenes:</strong> Reemplaza con fotos propias o genera con IA (Text to Image en Canva)</li>
+                            <li><strong>Imágenes:</strong> Reemplaza con fotos propias o genera con IA (Text to Image en
+                                Canva)</li>
                             <li><strong>Elementos:</strong> Agrega íconos, formas, ilustraciones</li>
                             <li><strong>Efectos:</strong> Aplica filtros y estilos</li>
                         </ul>
@@ -2103,7 +2318,9 @@ Dame:
             </div>
 
             <div class="highlight">
-                <strong>📝 Tarea para casa:</strong> Crea una serie de 3 posts visuales para tu negocio o proyecto personal usando las técnicas aprendidas. Comparte al menos uno en redes sociales y observa el engagement.
+                <strong>📝 Tarea para casa:</strong> Crea una serie de 3 posts visuales para tu negocio o proyecto
+                personal usando las técnicas aprendidas. Comparte al menos uno en redes sociales y observa el
+                engagement.
             </div>
         </section>
 
@@ -2111,14 +2328,17 @@ Dame:
         <section id="modulo5">
             <div class="module-card">
                 <h2>📊 Módulo 5: IA para Analizar Información</h2>
-                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo5" class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
+                <p><span class="badge badge-primary">4 horas</span> <span
+                        class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo5"
+                        class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
             </div>
 
             <h3>🎓 Contenido Teórico</h3>
 
             <div class="theory-box">
                 <h4>Análisis de datos simplificado con IA</h4>
-                <p>El análisis de información es fundamental para tomar decisiones informadas. La IA puede ayudarte a:</p>
+                <p>El análisis de información es fundamental para tomar decisiones informadas. La IA puede ayudarte a:
+                </p>
                 <ul>
                     <li>Procesar y organizar grandes volúmenes de datos</li>
                     <li>Identificar patrones y tendencias</li>
@@ -2214,7 +2434,8 @@ Dame:
                         <h4>Preparar tus datos</h4>
                         <p>Organiza tus datos en una hoja de cálculo con estructura clara:</p>
                         <ul>
-                            <li><strong>Columnas típicas:</strong> Fecha, Producto/Servicio, Cantidad, Precio unitario, Total, Cliente (opcional), Categoría</li>
+                            <li><strong>Columnas típicas:</strong> Fecha, Producto/Servicio, Cantidad, Precio unitario,
+                                Total, Cliente (opcional), Categoría</li>
                             <li>Asegúrate de tener al menos 3 meses de datos</li>
                             <li>Si no tienes datos reales, puedes crear un set de ejemplo o usar datos hipotéticos</li>
                         </ul>
@@ -2340,7 +2561,7 @@ Ayúdame a:
 5. Sugerir formato condicional para alertas (ej: rojo si ventas < meta)
 
 Nivel de expertise en Sheets: [Principiante/Intermedio]</code></pre>
-                        
+
                         <p>Luego implementa en tu hoja de cálculo.</p>
                     </div>
                 </div>
@@ -2535,7 +2756,8 @@ Tono: [Especifica el tono de tu marca: cercano/profesional/casual]</code></pre>
             <div class="alert-warning">
                 <strong>⚠️ Consideraciones importantes en análisis de datos:</strong>
                 <ul>
-                    <li><strong>Correlación ≠ Causalidad:</strong> Dos variables relacionadas no implican que una cause la otra</li>
+                    <li><strong>Correlación ≠ Causalidad:</strong> Dos variables relacionadas no implican que una cause
+                        la otra</li>
                     <li><strong>Tamaño de muestra:</strong> Conclusiones con pocos datos pueden ser engañosas</li>
                     <li><strong>Sesgos:</strong> La IA puede perpetuar sesgos presentes en los datos</li>
                     <li><strong>Contexto:</strong> Los números sin contexto pueden llevar a conclusiones erróneas</li>
@@ -2556,7 +2778,8 @@ Tono: [Especifica el tono de tu marca: cercano/profesional/casual]</code></pre>
             </div>
 
             <div class="highlight">
-                <strong>📝 Tarea para casa:</strong> Implementa un dashboard simple con tus métricas clave y actualízalo semanalmente durante un mes. Documenta decisiones que tomes basándote en estos datos.
+                <strong>📝 Tarea para casa:</strong> Implementa un dashboard simple con tus métricas clave y actualízalo
+                semanalmente durante un mes. Documenta decisiones que tomes basándote en estos datos.
             </div>
         </section>
 
@@ -2564,14 +2787,17 @@ Tono: [Especifica el tono de tu marca: cercano/profesional/casual]</code></pre>
         <section id="modulo6">
             <div class="module-card">
                 <h2>⚖️ Módulo 6: Uso Responsable de la IA + Cierre</h2>
-                <p><span class="badge badge-primary">4 horas</span> <span class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo6" class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
+                <p><span class="badge badge-primary">4 horas</span> <span
+                        class="badge badge-warning">Teórico-Práctico</span> <a href="herramientas.html#modulo6"
+                        class="badge badge-tools" target="_blank" rel="noopener noreferrer">Herramientas</a></p>
             </div>
 
             <h3>🎓 Contenido Teórico</h3>
 
             <div class="theory-box">
                 <h4>Ética y responsabilidad en el uso de IA</h4>
-                <p>A medida que integramos la IA en nuestro trabajo, debemos ser conscientes de las implicaciones éticas, legales y sociales. Un uso responsable implica:</p>
+                <p>A medida que integramos la IA en nuestro trabajo, debemos ser conscientes de las implicaciones
+                    éticas, legales y sociales. Un uso responsable implica:</p>
                 <ul>
                     <li>Comprender las limitaciones de la IA</li>
                     <li>Proteger la privacidad y los datos</li>
@@ -2688,7 +2914,8 @@ Tono: [Especifica el tono de tu marca: cercano/profesional/casual]</code></pre>
             <h4>💼 IA y el futuro del trabajo</h4>
 
             <div class="theory-box">
-                <p><strong>Perspectiva constructiva:</strong> La IA no viene a reemplazar trabajos, sino a transformarlos. Las habilidades más valoradas serán:</p>
+                <p><strong>Perspectiva constructiva:</strong> La IA no viene a reemplazar trabajos, sino a
+                    transformarlos. Las habilidades más valoradas serán:</p>
                 <ul>
                     <li><strong>Pensamiento crítico:</strong> Evaluar y cuestionar resultados de IA</li>
                     <li><strong>Creatividad:</strong> Lo que la IA aún no puede igualar</li>
@@ -2779,9 +3006,11 @@ Debe ser:
                         <h4>Implementar salvaguardas</h4>
                         <p>Establece procesos concretos:</p>
                         <ul>
-                            <li><strong>Checklist de verificación:</strong> Antes de usar output de IA, verificar [lista específica]</li>
+                            <li><strong>Checklist de verificación:</strong> Antes de usar output de IA, verificar [lista
+                                específica]</li>
                             <li><strong>Regla de divulgación:</strong> Cuándo y cómo indicar que usaste IA</li>
-                            <li><strong>Revisión de privacidad:</strong> Qué revisar antes de compartir datos con IA</li>
+                            <li><strong>Revisión de privacidad:</strong> Qué revisar antes de compartir datos con IA
+                            </li>
                             <li><strong>Segunda opinión:</strong> Cuándo buscar validación humana adicional</li>
                         </ul>
                     </div>
@@ -3011,13 +3240,14 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
 
             <div class="practice-box">
                 <h4>Revisión del aprendizaje</h4>
-                
+
                 <p>Responde estas preguntas de reflexión:</p>
 
                 <ol>
                     <li><strong>¿Cuál fue tu aprendizaje más importante del curso?</strong></li>
                     <li><strong>¿Qué herramienta o técnica vas a implementar inmediatamente?</strong></li>
-                    <li><strong>¿Cómo crees que la IA puede transformar tu trabajo en los próximos 6 meses?</strong></li>
+                    <li><strong>¿Cómo crees que la IA puede transformar tu trabajo en los próximos 6 meses?</strong>
+                    </li>
                     <li><strong>¿Qué obstáculos anticipas y cómo los superarás?</strong></li>
                     <li><strong>¿A quién más podrías ayudar compartiendo estos conocimientos?</strong></li>
                 </ol>
@@ -3034,9 +3264,11 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
 
             <div class="alert-success">
                 <strong>🎉 ¡Felicitaciones por completar el curso!</strong>
-                <p>Has adquirido habilidades fundamentales para integrar la IA en tu trabajo de manera ética y efectiva. Recuerda:</p>
+                <p>Has adquirido habilidades fundamentales para integrar la IA en tu trabajo de manera ética y efectiva.
+                    Recuerda:</p>
                 <ul>
-                    <li>✓ La IA es una herramienta poderosa, pero tu criterio y creatividad siguen siendo insustituibles</li>
+                    <li>✓ La IA es una herramienta poderosa, pero tu criterio y creatividad siguen siendo insustituibles
+                    </li>
                     <li>✓ El aprendizaje continuo es clave en un campo que evoluciona rápidamente</li>
                     <li>✓ Usar IA responsablemente beneficia a todos</li>
                     <li>✓ Compartir tu conocimiento multiplica el impacto positivo</li>
@@ -3046,10 +3278,12 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
             <div class="highlight">
                 <strong>📚 Recursos adicionales para seguir aprendiendo:</strong>
                 <ul>
-                    <li><a href="https://www.coursera.org/learn/ai-for-everyone" target="_blank">AI For Everyone - Andrew Ng (Coursera)</a></li>
+                    <li><a href="https://www.coursera.org/learn/ai-for-everyone" target="_blank">AI For Everyone -
+                            Andrew Ng (Coursera)</a></li>
                     <li><a href="https://www.elementsofai.com/" target="_blank">Elements of AI (Curso gratuito)</a></li>
                     <li><a href="https://www.youtube.com/@OpenAI" target="_blank">Canal de YouTube de OpenAI</a></li>
-                    <li><a href="https://www.reddit.com/r/ArtificialIntelligence/" target="_blank">Comunidad r/ArtificialIntelligence en Reddit</a></li>
+                    <li><a href="https://www.reddit.com/r/ArtificialIntelligence/" target="_blank">Comunidad
+                            r/ArtificialIntelligence en Reddit</a></li>
                 </ul>
             </div>
         </section>
@@ -3057,8 +3291,9 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
         <!-- HERRAMIENTAS -->
         <section id="herramientas">
             <h2>🛠️ Directorio de Herramientas de IA</h2>
-            
-            <p>Aquí encontrarás las principales herramientas de IA mencionadas en el curso, organizadas por categoría:</p>
+
+            <p>Aquí encontrarás las principales herramientas de IA mencionadas en el curso, organizadas por categoría:
+            </p>
 
             <h3>💬 Asistentes Conversacionales</h3>
             <div class="tools-grid">
@@ -3179,7 +3414,8 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
 
             <h3>📖 Lecturas Recomendadas</h3>
             <ul>
-                <li><strong>"Artificial Intelligence All-in-One For Dummies"</strong> - Introducción completa y accesible</li>
+                <li><strong>"Artificial Intelligence All-in-One For Dummies"</strong> - Introducción completa y
+                    accesible</li>
                 <li><strong>"Generative AI in Software Development"</strong> - Aplicaciones prácticas en desarrollo</li>
                 <li><strong>"Prompt Engineering for Generative AI"</strong> - Guía completa de prompting</li>
                 <li><strong>"AI Ethics in Action"</strong> - Consideraciones éticas fundamentales</li>
@@ -3188,10 +3424,14 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
 
             <h3>🎓 Cursos Online Gratuitos</h3>
             <ul>
-                <li><a href="https://www.elementsofai.com/" target="_blank">Elements of AI</a> - Curso introductorio completo</li>
-                <li><a href="https://www.coursera.org/learn/ai-for-everyone" target="_blank">AI For Everyone by Andrew Ng</a> - En Coursera</li>
-                <li><a href="https://learnprompting.org/" target="_blank">Learn Prompting</a> - Curso gratuito de prompt engineering</li>
-                <li><a href="https://microsoft.com/ai" target="_blank">Microsoft AI Skills Navigator</a> - Recursos de Microsoft</li>
+                <li><a href="https://www.elementsofai.com/" target="_blank">Elements of AI</a> - Curso introductorio
+                    completo</li>
+                <li><a href="https://www.coursera.org/learn/ai-for-everyone" target="_blank">AI For Everyone by Andrew
+                        Ng</a> - En Coursera</li>
+                <li><a href="https://learnprompting.org/" target="_blank">Learn Prompting</a> - Curso gratuito de prompt
+                    engineering</li>
+                <li><a href="https://microsoft.com/ai" target="_blank">Microsoft AI Skills Navigator</a> - Recursos de
+                    Microsoft</li>
             </ul>
 
             <h3>🎙️ Podcasts y Canales</h3>
@@ -3204,8 +3444,10 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
 
             <h3>👥 Comunidades</h3>
             <ul>
-                <li><a href="https://www.reddit.com/r/artificial/" target="_blank">r/artificial</a> - Comunidad general de IA</li>
-                <li><a href="https://www.reddit.com/r/ChatGPT/" target="_blank">r/ChatGPT</a> - Específica de ChatGPT</li>
+                <li><a href="https://www.reddit.com/r/artificial/" target="_blank">r/artificial</a> - Comunidad general
+                    de IA</li>
+                <li><a href="https://www.reddit.com/r/ChatGPT/" target="_blank">r/ChatGPT</a> - Específica de ChatGPT
+                </li>
                 <li><a href="https://discord.gg/openai" target="_blank">OpenAI Discord</a> - Comunidad oficial</li>
                 <li>Grupos de LinkedIn sobre IA en tu industria</li>
             </ul>
@@ -3239,7 +3481,9 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
             </ul>
 
             <div class="highlight">
-                <p><strong>💡 Recuerda:</strong> El campo de la IA evoluciona rápidamente. Mantén la curiosidad, experimenta con nuevas herramientas, y no dejes de aprender. ¡El mejor momento para empezar es ahora!</p>
+                <p><strong>💡 Recuerda:</strong> El campo de la IA evoluciona rápidamente. Mantén la curiosidad,
+                    experimenta con nuevas herramientas, y no dejes de aprender. ¡El mejor momento para empezar es
+                    ahora!</p>
             </div>
         </section>
 
@@ -3249,9 +3493,12 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
         <div class="footer-nav" role="navigation" aria-label="Navegación entre documentos">
             <div class="footer-nav-title">Navegación del Proyecto</div>
             <div class="footer-nav-links">
-                <a href="./modelos.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🤖 Catálogo de Modelos</a>
-                <a href="./herramientas.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🛠️ Directorio de Herramientas</a>
-                <a href="./glosario.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🧠 Glosario de IA</a>
+                <a href="./modelos.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🤖 Catálogo
+                    de Modelos</a>
+                <a href="./herramientas.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🛠️
+                    Directorio de Herramientas</a>
+                <a href="./glosario.html" class="footer-nav-link" target="_blank" rel="noopener noreferrer">🧠 Glosario
+                    de IA</a>
             </div>
         </div>
         <p><strong>Instituto Superior Tecnológico Liceo Cristiano</strong></p>
@@ -3260,7 +3507,8 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
         <p>© 2026 - Todos los derechos reservados</p>
         <p style="margin-top: 20px; font-size: 0.9em;">
             <em>Este material es resultado del proyecto de vinculación con la sociedad.<br>
-            Diseñado para empoderar a profesionales y emprendedores en el uso responsable de la Inteligencia Artificial.</em>
+                Diseñado para empoderar a profesionales y emprendedores en el uso responsable de la Inteligencia
+                Artificial.</em>
         </p>
     </footer>
 
@@ -3283,7 +3531,7 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
         window.addEventListener('scroll', () => {
             let current = '';
             const sections = document.querySelectorAll('section');
-            
+
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 const sectionHeight = section.clientHeight;
@@ -3314,11 +3562,11 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
             const button = document.createElement('button');
             button.innerText = 'Copiar';
             button.style.cssText = 'position:absolute;right:10px;top:10px;padding:5px 10px;background:#4CAF50;color:white;border:none;border-radius:3px;cursor:pointer;font-size:12px;';
-            
+
             const pre = block.parentElement;
             pre.style.position = 'relative';
             pre.appendChild(button);
-            
+
             button.addEventListener('click', async () => {
                 await navigator.clipboard.writeText(block.textContent);
                 button.innerText = '✓ Copiado';
@@ -3332,4 +3580,5 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
         console.log('¡Bienvenido al curso! Usa este documento como guía de referencia.');
     </script>
 </body>
+
 </html>
