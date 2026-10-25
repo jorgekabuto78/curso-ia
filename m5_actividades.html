@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía del Docente - Módulo 5: IA para Analizar Información - ISTLC</title>
+<style>
+:root{
+  --primary:#667eea;--secondary:#764ba2;--bg:#f7fafc;--card:#ffffff;--text:#2d3748;
+  --muted:#718096;--border:#e2e8f0;--green:#10b981;--orange:#ed8936;
+  --info-bg:#ebf4ff;--info:#3b82f6;--warn-bg:#fffaf0;--ok-bg:#f0fff4;--tag-bg:#eef0fd;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Cabecera */
+header.hero{background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);color:#fff;text-align:center;padding:3.4rem 1.2rem 2.8rem}
+header.hero h1{font-size:2.5rem;line-height:1.2;text-shadow:0 2px 6px rgba(0,0,0,.25);margin-bottom:.8rem}
+header.hero .sub{font-size:1.2rem;opacity:.95;margin-bottom:.9rem}
+header.hero .meta{font-size:.95rem;opacity:.9}
+header.hero .badge{display:inline-block;background:rgba(255,255,255,.2);padding:.25rem .9rem;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:1rem;letter-spacing:.03em}
+
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+
+/* Navegación */
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav.toc ul{list-style:none;display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;padding:.6rem 1rem}
+nav.toc a{display:block;padding:.35rem .8rem;border-radius:8px;font-size:.88rem;font-weight:600;color:var(--text)}
+nav.toc a:hover{background:var(--tag-bg);color:var(--primary);text-decoration:none}
+
+/* Tarjetas de resumen */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin:2rem 0}
+.stat{background:var(--card);border-radius:12px;border-top:4px solid var(--primary);padding:1.4rem 1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.stat .n{font-size:2.3rem;font-weight:800;color:var(--primary);line-height:1.1}
+.stat .l{color:var(--muted);font-size:.92rem;margin-top:.3rem}
+
+/* Paneles */
+.panel{background:var(--card);border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);padding:1.6rem 1.8rem;margin:1.6rem 0}
+.panel h2{font-size:1.5rem;color:var(--primary);margin-bottom:.9rem}
+.panel h3{font-size:1.15rem;margin:1.2rem 0 .5rem;color:var(--text)}
+.panel p{margin:.5rem 0}
+.panel ul,.panel ol{margin:.5rem 0 .8rem 1.4rem}
+.panel li{margin:.3rem 0}
+
+/* Módulos / Actividades */
+.module{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);margin:2.2rem 0}
+.module-head{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:1.2rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.module-head h2{font-size:1.5rem}
+.pill{background:rgba(255,255,255,.22);padding:.4rem 1rem;border-radius:999px;font-size:.85rem;font-weight:600;white-space:nowrap}
+.module-body{padding:1.6rem 1.8rem 1.8rem}
+.module-body h3{font-size:1.1rem;color:var(--primary);margin:1.4rem 0 .5rem}
+.module-body p{margin:.5rem 0}
+.module-body ul,.module-body ol{margin:.5rem 0 .8rem 1.4rem}
+.module-body li{margin:.35rem 0}
+
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-bottom:1rem}
+.meta-card{border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;background:#fcfcff}
+.meta-card .k{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin-bottom:.25rem}
+.meta-card .v{font-size:.93rem}
+
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.3rem}
+.tag{background:var(--tag-bg);color:var(--primary);font-size:.78rem;font-weight:600;padding:.2rem .7rem;border-radius:999px}
+.tag.free{background:#d1fae5;color:#047857}
+.tag.paid{background:#feebc8;color:#c05621}
+
+/* Cajas de aviso */
+.box{border-left:4px solid var(--info);background:var(--info-bg);border-radius:8px;padding:.9rem 1.1rem;margin:1rem 0}
+.box.warn{border-color:var(--orange);background:var(--warn-bg)}
+.box.ok{border-color:var(--green);background:var(--ok-bg)}
+.box strong.t{display:block;margin-bottom:.2rem}
+
+/* Prompts y textos */
+.prompt-wrap{position:relative;margin:.8rem 0 1.3rem}
+.prompt-title{font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:.3rem}
+pre.prompt{background:#1a202c;color:#e2e8f0;border-left:4px solid var(--primary);border-radius:10px;padding:1.1rem 1.2rem;font-family:ui-monospace,'Cascadia Code',Consolas,'Courier New',monospace;font-size:.86rem;line-height:1.6;white-space:pre-wrap;word-wrap:break-word}
+.sample-text{background:#fffdf3;border:1px dashed #ecc94b;border-radius:10px;padding:1.1rem 1.2rem;font-size:.95rem;line-height:1.7}
+
+/* Tablas */
+.table-wrap{overflow-x:auto;margin:.8rem 0 1.2rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem;background:#fff}
+th,td{border:1px solid var(--border);padding:.6rem .8rem;text-align:left;vertical-align:top}
+th{background:var(--tag-bg);color:#4c51bf;font-weight:700}
+tbody tr:nth-child(even){background:#fafbff}
+td.blank{height:2.2rem}
+
+/* Solucionario */
+details{border:1px solid var(--border);border-radius:10px;margin:1rem 0;background:#fcfcff}
+details summary{cursor:pointer;padding:.8rem 1.1rem;font-weight:700;color:var(--secondary);list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"🔑 ";}
+details[open] summary{border-bottom:1px solid var(--border)}
+details .inner{padding:.6rem 1.1rem 1rem}
+
+.checklist{list-style:none;margin-left:0!important}
+.checklist li::before{content:"☐ ";color:var(--primary);font-weight:700}
+
+footer{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;text-align:center;padding:2.2rem 1rem;margin-top:3rem;font-size:.92rem}
+footer a{color:#fff;text-decoration:underline;margin:0 .6rem}
+footer p{margin:.35rem 0}
+
+@media (max-width:640px){
+  header.hero h1{font-size:1.8rem}
+  .module-body,.panel{padding:1.2rem 1.1rem}
+  .module-head{padding:1rem 1.1rem}
+  .module-head h2{font-size:1.2rem}
+}
+@media print{
+  nav.toc{display:none!important}
+  body{background:#fff}
+  .module,.panel,.stat{box-shadow:none;border:1px solid var(--border)}
+  .module{page-break-inside:auto}
+  .prompt-wrap,table,details{page-break-inside:avoid}
+  header.hero,.module-head,footer{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  pre.prompt{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* Selección controlada */
+html:not(.cp-on) body, html:not(.cp-on) body *{
+  -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+  -webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;
+}
+html:not(.cp-on) ::selection{background:transparent;color:inherit}
+html:not(.cp-on) ::-moz-selection{background:transparent;color:inherit}
+html:not(.cp-on) img, html:not(.cp-on) a{-webkit-user-drag:none;user-drag:none}
+
+/* Botón de copia: oculto salvo con la copia habilitada */
+.cp-btn{display:none!important}
+html.cp-on .cp-btn{
+  display:inline-block!important;position:absolute;top:.55rem;right:.55rem;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.35);
+  background:#4caf50;color:#fff;border:none;border-radius:6px;
+  padding:.3rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;
+  -webkit-user-select:none;user-select:none;
+}
+html.cp-on pre.prompt{padding-top:2.8rem}
+.pre-box{position:relative}
+html.cp-on .cp-btn:hover{background:#43a047}
+html.cp-on .cp-btn.done{background:#2e7d32}
+@media print{.cp-btn,html.cp-on .cp-btn{display:none!important}}
+
+.tag a.tl{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
+.tag a.tl:hover{text-decoration:underline}
+a.tl{color:#4f46e5;text-decoration:underline;text-underline-offset:2px}
+
+.panel.acc{padding:0;overflow:hidden}
+.panel.acc>h2{margin:0;font-size:1.5rem}
+.acc-btn{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.3rem 1.8rem;cursor:pointer;color:var(--primary);font-weight:700;font-size:1.5rem;line-height:1.3}
+.acc-btn:hover{background:rgba(102,126,234,.07)}
+.acc-btn:focus-visible{outline:3px solid var(--secondary);outline-offset:-3px}
+.acc-ic{flex:none;width:.65em;height:.65em;border-right:3px solid currentColor;border-bottom:3px solid currentColor;transform:rotate(45deg);transition:transform .2s;margin-top:-.25em}
+.acc-btn[aria-expanded="true"] .acc-ic{transform:rotate(-135deg);margin-top:.2em}
+.acc-body{padding:0 1.8rem 1.6rem}
+@media(max-width:700px){.acc-btn{padding:1.1rem;font-size:1.25rem}.acc-body{padding:0 1.1rem 1.2rem}}
+@media print{.acc-body[hidden]{display:block!important}.acc-ic{display:none}.acc-btn{padding:1rem 1.2rem}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="badge">GUÍA PARA EL DOCENTE</span>
+  <h1>📊 Módulo 5: IA para Analizar Información</h1>
+  <p class="sub">Actividades prácticas con textos de ejemplo listos para usar</p>
+  <p class="meta">ISTLC - Instituto Superior Tecnológico Liceo Cristiano<br>Curso "Inteligencia Artificial para el Trabajo" | Carrera: Desarrollo de Software<br>Docente: Ing. Jorge Espinoza, Msc.</p>
+</header>
+
+<nav class="toc"><ul><li><a href="#resumen">Resumen</a></li><li><a href="#preparacion">Preparación</a></li><li><a href="#a1">Act. 1</a></li><li><a href="#a2">Act. 2</a></li><li><a href="#a3">Act. 3</a></li><li><a href="#a4">Act. 4</a></li><li><a href="#a5">Act. 5</a></li><li><a href="#a6">Act. 6</a></li><li><a href="#a7">Act. 7</a></li><li><a href="#evaluacion">Evaluación</a></li><li><a href="#tarea">Tarea</a></li></ul></nav>
+
+<main class="container">
+
+  <div class="stats">
+    <div class="stat"><div class="n">4 h</div><div class="l">Duración del módulo</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">Actividades prácticas</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">Herramientas de IA</div></div>
+    <div class="stat"><div class="n">12</div><div class="l">Textos y prompts listos</div></div>
+  </div>
+
+  <section class="panel acc" id="resumen"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="resumen-body"><span>📋 Resumen de la sesión</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="resumen-body" hidden>
+    <p>Esta guía acompaña el <strong>Módulo 5: IA para Analizar Información</strong>. Los estudiantes trabajan con los datos de una tienda en línea ficticia, de la limpieza al tablero de indicadores, además de comentarios de clientes y un problema recurrente. <strong>Todas las cifras de los solucionarios están calculadas a partir de los datos de la guía</strong>, y se insiste en verificar lo que entrega la IA.</p>
+    <div class="box">
+      <strong class="t">💡 Cómo usar esta guía</strong>
+      Cada bloque oscuro es un <strong>prompt</strong> listo para proyectar en pantalla y mostrar o dictar a los estudiantes. Las secciones <strong>"Solucionario"</strong> son solo para el docente: despliéguelas cuando las necesite. Todos los nombres, empresas y datos de los casos son <strong>ficticios</strong>. El documento está pensado también para imprimirse.
+    </div>
+    <h3>Cronograma sugerido</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Tiempo</th><th>Actividad</th><th>Modalidad</th><th>Herramientas</th></tr></thead>
+      <tbody><tr><td>0:00 – 0:20</td><td>Exposición: tipos de análisis, herramientas y preparación de datos</td><td>Docente</td><td>Presentación</td></tr><tr><td>0:20 – 0:45</td><td><a href="#a1">1. Limpieza de datos</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a></span></div></td></tr><tr><td>0:45 – 1:25</td><td><a href="#a2">2. Análisis descriptivo de ventas</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a></span></div></td></tr><tr><td>1:25 – 1:55</td><td><a href="#a3">3. Diagnóstico y proyección</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>1:55 – 2:05</td><td>Descanso</td><td>—</td><td>—</td></tr><tr><td>2:05 – 2:35</td><td><a href="#a4">4. Indicadores y tablero en Google Sheets</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a></span></div></td></tr><tr><td>2:35 – 3:10</td><td><a href="#a5">5. Análisis de comentarios de clientes</a></td><td>Equipos de 3</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>3:10 – 3:30</td><td><a href="#a6">6. Causa raíz: los 5 porqués y Pareto</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>3:30 – 3:50</td><td><a href="#a7">7. Precauciones al analizar con IA</a></td><td>Grupo</td><td><div class="tags"><span class="tag">Sin herramientas</span><span class="tag">Opcional:</span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>3:50 – 4:00</td><td>Cierre y explicación de la tarea</td><td>Grupo</td><td>—</td></tr></tbody>
+    </table></div>
+    <h3>Alineación con los objetivos del curso</h3>
+    <div class="table-wrap"><table><thead><tr><th>Objetivo del curso</th><th>Actividades que lo desarrollan</th></tr></thead><tbody><tr><td><strong>Desmitificar la IA</strong></td><td>2 y 7 (la IA se equivoca al calcular)</td></tr><tr><td><strong>Aplicar herramientas prácticas</strong></td><td>2, 4, 5</td></tr><tr><td><strong>Aumentar la productividad</strong></td><td>4</td></tr><tr><td><strong>Crear contenido profesional</strong></td><td>5 (respuestas y planes de acción)</td></tr><tr><td><strong>Tomar mejores decisiones</strong></td><td>1, 2, 3, 4, 5, 6, 7</td></tr><tr><td><strong>Uso responsable</strong></td><td>1, 7 (privacidad, sesgos y verificación)</td></tr></tbody></table></div>
+  </div></section>
+
+  <section class="panel acc" id="preparacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="preparacion-body"><span>🧰 Preparación antes de la clase</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="preparacion-body" hidden>
+    <ul class="checklist"><li><strong>Datos listos:</strong> los datos de ventas aparecen en la actividad 2 también como texto, para pegar en una hoja o en el asistente.</li><li><strong>Verifique las herramientas de análisis.</strong> Algunas (<a class="tl" href="https://julius.ai/" target="_blank" rel="noopener noreferrer">Julius AI</a>, <a class="tl" href="https://columns.ai/" target="_blank" rel="noopener noreferrer">Columns AI</a>, <a class="tl" href="https://www.chatpdf.com/" target="_blank" rel="noopener noreferrer">ChatPDF</a>, Excel <a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a>) pueden tener límites o requerir pago; preséntelas como demostración si no puede probarlas.</li><li><strong>Plan B:</strong> todo el módulo puede hacerse con un asistente conversacional y <a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a>.</li><li><strong>Pruebe la carga de datos:</strong> verifique si el asistente que usará acepta pegar la tabla o subir un archivo CSV, y cuántas filas admite.</li><li><strong>Cuentas:</strong> pida que cada estudiante tenga una cuenta de Google para usar Sheets.</li><li><strong>Regla de privacidad:</strong> los datos de esta guía son ficticios. Los estudiantes no deben subir datos reales de clientes a ninguna herramienta sin anonimizarlos.</li></ul>
+    <h3>Herramientas del módulo</h3>
+    <div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Google Gemini</a></span><span class="tag"><a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a></span><span class="tag">Excel Copilot</span><span class="tag"><a class="tl" href="https://julius.ai/" target="_blank" rel="noopener noreferrer">Julius AI</a></span><span class="tag"><a class="tl" href="https://columns.ai/" target="_blank" rel="noopener noreferrer">Columns AI</a></span><span class="tag"><a class="tl" href="https://www.chatpdf.com/" target="_blank" rel="noopener noreferrer">ChatPDF</a></span></div>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:.6rem">Verde: marcadas como gratuitas en el directorio del curso. Naranja: de pago. Sin color: freemium o plan por confirmar. Los planes cambian con frecuencia: verifíquelos antes de la sesión.</p>
+  </div></section>
+
+<section class="module" id="a1">
+<div class="module-head"><h2>🧹 Actividad 1: Limpieza de datos</h2><span class="pill">25 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Detectar errores típicos de una tabla antes de analizarla y pedir ayuda a la IA para corregirlos.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Tomar mejores decisiones</div></div></div>
+<h3>Tabla sucia (ficticia)</h3><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Cantidad</th><th>Precio</th><th>Total</th></tr></thead><tbody><tr><td>2026-10-01</td><td>Audífonos</td><td>5</td><td>35</td><td>175</td></tr><tr><td>01/10/2026</td><td>audífonos</td><td>5</td><td>35</td><td>175</td></tr><tr><td>2026-10-02</td><td>Cargador</td><td class="blank"></td><td>20</td><td class="blank"></td></tr><tr><td>2026-10-03</td><td>Parlante</td><td>2</td><td>$45</td><td>90</td></tr><tr><td>2026-10-04</td><td>Camara</td><td>1</td><td>60</td><td>600</td></tr><tr><td>2026-10-05</td><td>Soporte</td><td>-3</td><td>25</td><td>-75</td></tr></tbody></table></div><ol><li><strong>(8 min)</strong> Busquen a mano todos los problemas que puedan.</li><li><strong>(10 min)</strong> Ejecuten el prompt y comparen su lista con la de la IA.</li><li><strong>(7 min)</strong> Acuerden qué decisión tomarían en cada caso (corregir, eliminar o preguntar).</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Actúa como analista de datos. Revisa esta tabla antes de analizarla:
+[pegar la tabla]
+
+Indica:
+1. Duplicados
+2. Formatos inconsistentes (fechas, mayúsculas, símbolos)
+3. Datos faltantes
+4. Valores imposibles o sospechosos
+5. Errores de cálculo
+Para cada problema propón una corrección y explica en qué filas está. No cambies ningún dato: solo propón.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario: seis problemas plantados</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Problema</th><th>Dónde</th><th>Decisión sugerida</th></tr></thead><tbody><tr><td>Fila duplicada con otro formato de fecha</td><td>Filas 1 y 2</td><td>Eliminar una; unificar el formato de fecha.</td></tr><tr><td>Mayúsculas inconsistentes</td><td>"audífonos" en la fila 2</td><td>Unificar el nombre del producto.</td></tr><tr><td>Cantidad y total faltantes</td><td>Fila 3 (Cargador)</td><td>No inventar: consultar el dato original.</td></tr><tr><td>Símbolo en el precio</td><td>"$45" en la fila 4</td><td>Quitar el símbolo y dejar un número.</td></tr><tr><td>Error de ortografía y de cálculo</td><td>Fila 5: "Camara" y total 600 (debería ser 60)</td><td>Corregir el nombre y verificar el total (1 x 60 = 60).</td></tr><tr><td>Cantidad negativa</td><td>Fila 6 (-3)</td><td>Revisar: puede ser una devolución mal registrada.</td></tr></tbody></table></div><p>Idea clave: la IA debe <strong>proponer</strong>, no corregir en silencio. Quien conoce el negocio decide cuando falta un dato.</p></div></details>
+</div>
+</section>
+
+<section class="module" id="a2">
+<div class="module-head"><h2>📈 Actividad 2: Análisis descriptivo de ventas</h2><span class="pill">40 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Analizar un conjunto de ventas, obtener los indicadores básicos y verificar los cálculos de la IA.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Tomar mejores decisiones · Aplicar herramientas prácticas</div></div></div>
+<p><strong>Caso (ficticio):</strong> "TecnoHogar" es una tienda en línea de accesorios tecnológicos. Estas son sus 28 ventas de julio a septiembre de 2026:</p><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Cantidad</th><th>Precio (USD)</th><th>Total (USD)</th><th>Categoría</th></tr></thead><tbody><tr><td>2026-07-03</td><td>Audífonos</td><td>4</td><td>35</td><td>140</td><td>Audio</td></tr><tr><td>2026-07-05</td><td>Cargador</td><td>6</td><td>20</td><td>120</td><td>Accesorios</td></tr><tr><td>2026-07-09</td><td>Parlante</td><td>2</td><td>45</td><td>90</td><td>Audio</td></tr><tr><td>2026-07-12</td><td>Cámara</td><td>1</td><td>60</td><td>60</td><td>Seguridad</td></tr><tr><td>2026-07-15</td><td>Soporte</td><td>3</td><td>25</td><td>75</td><td>Accesorios</td></tr><tr><td>2026-07-18</td><td>Audífonos</td><td>5</td><td>35</td><td>175</td><td>Audio</td></tr><tr><td>2026-07-22</td><td>Parlante</td><td>3</td><td>45</td><td>135</td><td>Audio</td></tr><tr><td>2026-07-26</td><td>Cargador</td><td>4</td><td>20</td><td>80</td><td>Accesorios</td></tr><tr><td>2026-07-29</td><td>Cámara</td><td>2</td><td>60</td><td>120</td><td>Seguridad</td></tr><tr><td>2026-08-02</td><td>Audífonos</td><td>6</td><td>35</td><td>210</td><td>Audio</td></tr><tr><td>2026-08-04</td><td>Cargador</td><td>8</td><td>20</td><td>160</td><td>Accesorios</td></tr><tr><td>2026-08-08</td><td>Parlante</td><td>4</td><td>45</td><td>180</td><td>Audio</td></tr><tr><td>2026-08-11</td><td>Cámara</td><td>2</td><td>60</td><td>120</td><td>Seguridad</td></tr><tr><td>2026-08-14</td><td>Soporte</td><td>4</td><td>25</td><td>100</td><td>Accesorios</td></tr><tr><td>2026-08-17</td><td>Audífonos</td><td>7</td><td>35</td><td>245</td><td>Audio</td></tr><tr><td>2026-08-20</td><td>Parlante</td><td>5</td><td>45</td><td>225</td><td>Audio</td></tr><tr><td>2026-08-23</td><td>Cargador</td><td>5</td><td>20</td><td>100</td><td>Accesorios</td></tr><tr><td>2026-08-27</td><td>Cámara</td><td>3</td><td>60</td><td>180</td><td>Seguridad</td></tr><tr><td>2026-08-30</td><td>Soporte</td><td>2</td><td>25</td><td>50</td><td>Accesorios</td></tr><tr><td>2026-09-03</td><td>Audífonos</td><td>3</td><td>35</td><td>105</td><td>Audio</td></tr><tr><td>2026-09-06</td><td>Cargador</td><td>5</td><td>20</td><td>100</td><td>Accesorios</td></tr><tr><td>2026-09-10</td><td>Parlante</td><td>1</td><td>45</td><td>45</td><td>Audio</td></tr><tr><td>2026-09-13</td><td>Cámara</td><td>1</td><td>60</td><td>60</td><td>Seguridad</td></tr><tr><td>2026-09-16</td><td>Soporte</td><td>2</td><td>25</td><td>50</td><td>Accesorios</td></tr><tr><td>2026-09-19</td><td>Audífonos</td><td>2</td><td>35</td><td>70</td><td>Audio</td></tr><tr><td>2026-09-22</td><td>Parlante</td><td>1</td><td>45</td><td>45</td><td>Audio</td></tr><tr><td>2026-09-25</td><td>Cargador</td><td>4</td><td>20</td><td>80</td><td>Accesorios</td></tr><tr><td>2026-09-28</td><td>Soporte</td><td>1</td><td>25</td><td>25</td><td>Accesorios</td></tr></tbody></table></div><div class="prompt-wrap">
+<div class="prompt-title">📋 Datos en texto (para pegar en el asistente)</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">fecha,producto,cantidad,precio,total,categoria
+2026-07-03,Audífonos,4,35,140,Audio
+2026-07-05,Cargador,6,20,120,Accesorios
+2026-07-09,Parlante,2,45,90,Audio
+2026-07-12,Cámara,1,60,60,Seguridad
+2026-07-15,Soporte,3,25,75,Accesorios
+2026-07-18,Audífonos,5,35,175,Audio
+2026-07-22,Parlante,3,45,135,Audio
+2026-07-26,Cargador,4,20,80,Accesorios
+2026-07-29,Cámara,2,60,120,Seguridad
+2026-08-02,Audífonos,6,35,210,Audio
+2026-08-04,Cargador,8,20,160,Accesorios
+2026-08-08,Parlante,4,45,180,Audio
+2026-08-11,Cámara,2,60,120,Seguridad
+2026-08-14,Soporte,4,25,100,Accesorios
+2026-08-17,Audífonos,7,35,245,Audio
+2026-08-20,Parlante,5,45,225,Audio
+2026-08-23,Cargador,5,20,100,Accesorios
+2026-08-27,Cámara,3,60,180,Seguridad
+2026-08-30,Soporte,2,25,50,Accesorios
+2026-09-03,Audífonos,3,35,105,Audio
+2026-09-06,Cargador,5,20,100,Accesorios
+2026-09-10,Parlante,1,45,45,Audio
+2026-09-13,Cámara,1,60,60,Seguridad
+2026-09-16,Soporte,2,25,50,Accesorios
+2026-09-19,Audífonos,2,35,70,Audio
+2026-09-22,Parlante,1,45,45,Audio
+2026-09-25,Cargador,4,20,80,Accesorios
+2026-09-28,Soporte,1,25,25,Accesorios</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><ol><li><strong>(5 min)</strong> Peguen los datos en una hoja de cálculo y revisen las columnas.</li><li><strong>(15 min)</strong> Ejecuten el prompt de análisis descriptivo.</li><li><strong>(15 min)</strong> Verifiquen las cifras de la IA con fórmulas en la hoja.</li><li><strong>(5 min)</strong> Anoten tres hallazgos.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Actúa como analista de datos experto. Aquí están las ventas de julio a septiembre de una tienda en línea:
+[pegar los datos]
+
+Realiza un análisis descriptivo con:
+1. Ventas totales, número de transacciones y ticket promedio
+2. Ventas por mes y variación entre meses
+3. Top de productos por ventas y producto con menor desempeño
+4. Distribución de ventas por categoría
+5. Tres hallazgos clave y cualquier anomalía
+
+Muestra los cálculos para poder verificarlos.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><h3>Fórmulas para verificar (columnas A a F, datos en las filas 2 a 29)</h3><div class="prompt-wrap">
+<div class="prompt-title">📋 Fórmulas de <a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a></div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">=SUM(E2:E29)
+=COUNTA(B2:B29)
+=AVERAGE(E2:E29)
+=SUMIF(B2:B29,"Parlante",E2:E29)
+=SUMIF(F2:F29,"Audio",E2:E29)</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario: resultados calculados con los datos de arriba</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Indicador</th><th>Resultado</th></tr></thead><tbody><tr><td>Ventas totales</td><td>USD 3145,00</td></tr><tr><td>Número de transacciones</td><td>28</td></tr><tr><td>Ticket promedio</td><td>USD 112,32</td></tr><tr><td>Ventas de julio</td><td>USD 995,00</td></tr><tr><td>Ventas de agosto</td><td>USD 1570,00 (+57,8 % frente a julio)</td></tr><tr><td>Ventas de septiembre</td><td>USD 580,00 (-63,1 % frente a agosto)</td></tr><tr><td>Producto líder</td><td>Audífonos: USD 945,00</td></tr><tr><td>Menor desempeño</td><td>Soporte: USD 300,00</td></tr><tr><td>Categoría Audio</td><td>USD 1665,00 (52,9 % del total)</td></tr><tr><td>Categoría Accesorios</td><td>USD 940,00 (29,9 % del total)</td></tr><tr><td>Categoría Seguridad</td><td>USD 540,00 (17,2 % del total)</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>Producto</th><th>Ventas</th></tr></thead><tbody><tr><td>Audífonos</td><td>USD 945,00</td></tr><tr><td>Parlante</td><td>USD 720,00</td></tr><tr><td>Cargador</td><td>USD 640,00</td></tr><tr><td>Cámara</td><td>USD 540,00</td></tr><tr><td>Soporte</td><td>USD 300,00</td></tr></tbody></table></div><ul><li>Si la IA entrega una cifra distinta, no la use: pida que muestre el cálculo o corríjala con la fórmula.</li><li>Los asistentes suelen equivocarse al sumar columnas largas; por eso se verifica en la hoja.</li><li>Hallazgo esperado: las ventas crecen de julio a agosto y caen en septiembre.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a3">
+<div class="module-head"><h2>🔬 Actividad 3: Diagnóstico y proyección</h2><span class="pill">30 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Proponer hipótesis sobre una caída de ventas y construir tres escenarios con supuestos explícitos.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Tomar mejores decisiones</div></div></div>
+<div class="prompt-wrap">
+<div class="prompt-title">📄 Contexto adicional</div>
+<div class="sample-text">En septiembre la tienda pausó su campaña en redes sociales del 1 al 20 y los parlantes tuvieron stock reducido durante todo el mes. En agosto no hubo cambios en precios.</div>
+</div><div class="table-wrap"><table><thead><tr><th>Mes</th><th>Ventas</th><th>Unidades</th></tr></thead><tbody><tr><td>Julio</td><td>USD 995,00</td><td>30</td></tr><tr><td>Agosto</td><td>USD 1570,00</td><td>46</td></tr><tr><td>Septiembre</td><td>USD 580,00</td><td>20</td></tr></tbody></table></div><ol><li><strong>(10 min)</strong> Ejecuten el prompt diagnóstico.</li><li><strong>(10 min)</strong> Ejecuten el prompt de escenarios.</li><li><strong>(10 min)</strong> Discutan qué tan confiable es una proyección con solo tres meses de datos.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt diagnóstico</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Con estos datos: [pegar la tabla mensual], explica por qué cayeron las ventas en septiembre.
+Contexto adicional: [pegar el contexto].
+Ayúdame a:
+1. Identificar posibles causas internas y externas
+2. Compararlas con los datos
+3. Proponer hipótesis y cómo comprobarlas</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de escenarios</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Con base en estos datos históricos genera tres escenarios para octubre: conservador, realista y optimista. Para cada uno indica las ventas proyectadas, los supuestos, los riesgos y los indicadores a monitorear. Aclara cuánta confianza merece la proyección con tan pocos datos.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario</summary><div class="inner"><ul><li>Causas plausibles en los datos: campaña pausada y stock reducido de parlantes. Son hipótesis, no certezas: se comprueban con datos de campañas y de inventario.</li><li>Escenarios de referencia calculados: conservador = nivel de septiembre (USD 580,00); realista = promedio de los tres meses (USD 1048,33); optimista = nivel de agosto (USD 1570,00).</li><li>Con solo tres meses no se puede detectar estacionalidad. Una buena respuesta de la IA lo advierte; si presenta cifras con falsa precisión, es una señal de alerta.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a4">
+<div class="module-head"><h2>📋 Actividad 4: Indicadores y tablero en Google Sheets</h2><span class="pill">30 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Definir los indicadores clave de un negocio y diseñar un tablero sencillo con fórmulas.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Tomar mejores decisiones · Aumentar la productividad</div></div></div>
+<ol><li><strong>(10 min)</strong> Ejecuten el prompt para diseñar el tablero.</li><li><strong>(15 min)</strong> Construyan en la hoja al menos tres indicadores y un gráfico.</li><li><strong>(5 min)</strong> Agreguen un formato condicional de alerta.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Necesito crear un tablero en Google Sheets para monitorear estas métricas de una tienda en línea: ventas por mes, ticket promedio, unidades por categoría, variación mensual y producto líder.
+Ayúdame a:
+1. Diseñar la estructura del tablero
+2. Sugerir el tipo de gráfico para cada métrica
+3. Proporcionar las fórmulas necesarias
+4. Sugerir formato condicional para alertas (por ejemplo, rojo si las ventas del mes son menores que las del mes anterior)
+Mi nivel en Sheets: principiante.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario: ejemplo de tablero</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Indicador</th><th>Fórmula de ejemplo</th><th>Gráfico</th></tr></thead><tbody><tr><td>Ventas por mes</td><td>=SUMIFS(E:E,G:G,"Julio")  (con una columna G de mes)</td><td>Columnas</td></tr><tr><td>Ticket promedio</td><td>=AVERAGE(E2:E29)</td><td>Número destacado</td></tr><tr><td>Unidades por categoría</td><td>=SUMIF(F:F,"Audio",C:C)</td><td>Barras</td></tr><tr><td>Variación mensual</td><td>=(Agosto-Julio)/Julio</td><td>Número con color</td></tr><tr><td>Producto líder</td><td>Una tabla dinámica ordenada de mayor a menor</td><td>Barras horizontales</td></tr></tbody></table></div><p>Valores de referencia con estos datos: variación de agosto +57,8 % y de septiembre -63,1 %. Una regla de alerta razonable es resaltar en rojo cuando la variación sea negativa.</p></div></details>
+</div>
+</section>
+
+<section class="module" id="a5">
+<div class="module-head"><h2>💬 Actividad 5: Análisis de comentarios de clientes</h2><span class="pill">35 min · Equipos de 3</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Clasificar el sentimiento de comentarios, encontrar temas recurrentes y priorizar acciones.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Tomar mejores decisiones · Crear contenido profesional</div></div></div>
+<h3>Comentarios (ficticios)</h3><ol><li>Llegó rápido y bien empacado, muy contento.</li><li>El parlante suena bien pero la batería dura poco.</li><li>Pedí un cargador y me enviaron otro modelo. Tardaron una semana en responderme.</li><li>Buen precio comparado con otras tiendas.</li><li>La cámara se desconecta del wifi todos los días.</li><li>Atención excelente, resolvieron mi duda por WhatsApp en minutos.</li><li>Es lo que esperaba, nada especial.</li><li>No hay forma de pagar con tarjeta en la web, solo transferencia.</li><li>El soporte de laptop es resistente y se ve elegante.</li><li>Tardó 10 días en llegar, pero el producto es bueno.</li><li>Me gustaría que tuvieran más colores en los audífonos.</li><li>El envío a provincias es muy caro.</li></ol><ol><li><strong>(10 min)</strong> Cada equipo clasifica los comentarios a mano (positivo, negativo, mixto o neutro).</li><li><strong>(10 min)</strong> Ejecutan el prompt y comparan con su clasificación.</li><li><strong>(10 min)</strong> Ejecutan el prompt de priorización.</li><li><strong>(5 min)</strong> Presentan una acción rápida y una acción de fondo.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de sentimiento</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Analiza el sentimiento de estos comentarios de clientes:
+[pegar los 12 comentarios]
+
+Proporciona:
+1. Distribución de sentimiento (positivo, negativo, mixto o neutro) con el número de comentarios
+2. Aspectos mencionados (producto, entrega, atención, precio, pago) y el sentimiento de cada uno
+3. Temas recurrentes
+4. Fortalezas, debilidades y oportunidades</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de priorización</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Con ese análisis crea un plan de acción priorizado con cuatro grupos: logros rápidos (alto impacto, poco esfuerzo), proyectos importantes, mejoras incrementales y cosas a no hacer por ahora. Para cada acción indica impacto esperado, recursos y plazo.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Comentario</th><th>Sentimiento</th><th>Aspecto</th></tr></thead><tbody><tr><td>1</td><td>Positivo</td><td>Entrega</td></tr><tr><td>2</td><td>Mixto o neutro</td><td>Producto</td></tr><tr><td>3</td><td>Negativo</td><td>Entrega y atención</td></tr><tr><td>4</td><td>Positivo</td><td>Precio</td></tr><tr><td>5</td><td>Negativo</td><td>Producto</td></tr><tr><td>6</td><td>Positivo</td><td>Atención</td></tr><tr><td>7</td><td>Mixto o neutro</td><td>Producto</td></tr><tr><td>8</td><td>Negativo</td><td>Pago</td></tr><tr><td>9</td><td>Positivo</td><td>Producto</td></tr><tr><td>10</td><td>Mixto o neutro</td><td>Entrega y producto</td></tr><tr><td>11</td><td>Mixto o neutro</td><td>Producto</td></tr><tr><td>12</td><td>Negativo</td><td>Precio y envío</td></tr></tbody></table></div><p><strong>Distribución con esta clasificación:</strong> Positivo: 4 (33,3 %), Mixto o neutro: 4 (33,3 %), Negativo: 4 (33,3 %). Otras clasificaciones razonables son válidas: lo valioso es la discusión de los comentarios mixtos.</p><ul><li><strong>Temas recurrentes:</strong> entrega (comentarios 1, 3, 10 y 12), producto (2, 5, 7, 9 y 11), atención (3 y 6) y pago o precio (4, 8 y 12).</li><li><strong>Logro rápido posible:</strong> responder rápido a quien recibió un producto equivocado y avisar el costo de envío antes del pago.</li><li><strong>Proyecto de fondo posible:</strong> habilitar pago con tarjeta.</li><li>Con solo 12 comentarios no se pueden sacar porcentajes concluyentes: sirven para hallar temas, no para medir la satisfacción general.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a6">
+<div class="module-head"><h2>🧩 Actividad 6: Causa raíz: los 5 porqués y Pareto</h2><span class="pill">20 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Buscar la causa raíz de un problema recurrente y decidir dónde concentrar el esfuerzo.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Tomar mejores decisiones</div></div></div>
+<div class="prompt-wrap">
+<div class="prompt-title">📄 Problema</div>
+<div class="sample-text">La aplicación de reservas de un gimnasio (ficticia) se cae los viernes por la tarde. En las últimas 8 semanas se registraron 34 incidentes.</div>
+</div><div class="table-wrap"><table><thead><tr><th>Causa registrada</th><th>Incidentes</th></tr></thead><tbody><tr><td>Servidor sin capacidad en horas pico</td><td>14</td></tr><tr><td>Consultas lentas a la base de datos</td><td>9</td></tr><tr><td>Fallas del proveedor de pagos</td><td>4</td></tr><tr><td>Errores de despliegue</td><td>3</td></tr><tr><td>Certificado vencido</td><td>2</td></tr><tr><td>Otros</td><td>2</td></tr></tbody></table></div><ol><li><strong>(10 min)</strong> Ejecuten el prompt de los 5 porqués con la causa principal.</li><li><strong>(10 min)</strong> Calculen el porcentaje acumulado de cada causa (análisis de Pareto).</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Tengo este problema recurrente: la aplicación se cae los viernes por la tarde.
+Causas registradas en 8 semanas: [pegar la tabla].
+Realiza un análisis de causa raíz con:
+1. La técnica de los 5 porqués para la causa más frecuente
+2. Un análisis de Pareto (qué pocas causas explican la mayoría de los problemas)
+Para cada causa principal indica solución recomendada, prevención y prioridad.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario: tabla de Pareto calculada</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Causa</th><th>Incidentes</th><th>% del total</th><th>% acumulado</th></tr></thead><tbody><tr><td>Servidor sin capacidad en horas pico</td><td>14</td><td>41,2 %</td><td>41,2 %</td></tr><tr><td>Consultas lentas a la base de datos</td><td>9</td><td>26,5 %</td><td>67,6 %</td></tr><tr><td>Fallas del proveedor de pagos</td><td>4</td><td>11,8 %</td><td>79,4 %</td></tr><tr><td>Errores de despliegue</td><td>3</td><td>8,8 %</td><td>88,2 %</td></tr><tr><td>Certificado vencido</td><td>2</td><td>5,9 %</td><td>94,1 %</td></tr><tr><td>Otros</td><td>2</td><td>5,9 %</td><td>100,0 %</td></tr></tbody></table></div><p>Las tres primeras causas explican 79,4 % de los incidentes. Conviene concentrar el esfuerzo ahí. Los 5 porqués llevan de "el servidor no soporta la carga" a una causa de fondo (por ejemplo, que no se hicieron pruebas de carga ni se planificó capacidad para la hora de mayor demanda).</p></div></details>
+</div>
+</section>
+
+<section class="module" id="a7">
+<div class="module-head"><h2>⚠️ Actividad 7: Precauciones al analizar con IA</h2><span class="pill">20 min · Grupo</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Reconocer errores comunes de interpretación y de manejo de datos al analizar con IA.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">Sin herramientas</span><span class="tag">Opcional:</span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Uso responsable · Tomar mejores decisiones</div></div></div>
+<p>Proyecte los cinco casos. Cada pareja identifica el problema y propone una corrección.</p><div class="table-wrap"><table><thead><tr><th>Caso</th><th>Problema</th><th>Corrección</th></tr></thead><tbody><tr><td>1. "Los clientes que compran audífonos también compran cargadores, así que los audífonos hacen que compren cargadores."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>2. "Con tres meses de datos proyectamos las ventas de todo el año."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>3. "El análisis dice que 33 % de los comentarios son negativos, así que el negocio va mal."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>4. "Subí el archivo con nombres, cédulas y teléfonos de clientes para que la IA lo analice."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>5. "La IA calculó el total de ventas y lo usamos sin revisar."</td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div><details><summary>Solucionario</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Caso</th><th>Problema</th><th>Corrección</th></tr></thead><tbody><tr><td>1</td><td>Correlación no es causalidad</td><td>Pueden comprarse juntos por ser complementarios; no se concluye una causa sin más evidencia.</td></tr><tr><td>2</td><td>Tamaño de muestra insuficiente</td><td>Usar más historial y declarar la incertidumbre del escenario.</td></tr><tr><td>3</td><td>Falta de contexto</td><td>Con 12 comentarios no hay porcentajes concluyentes; se buscan temas, no se mide el negocio.</td></tr><tr><td>4</td><td>Privacidad</td><td>Anonimizar o eliminar datos personales antes de subir cualquier archivo.</td></tr><tr><td>5</td><td>Falta de verificación</td><td>Comprobar el cálculo con una fórmula en la hoja.</td></tr></tbody></table></div></div></details>
+</div>
+</section>
+
+  <section class="panel acc" id="evaluacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="evaluacion-body"><span>📊 Rúbrica de evaluación del módulo</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="evaluacion-body" hidden>
+    <p>Puede aplicarla sobre el análisis de la actividad 2, el tablero de la actividad 4 y la discusión de la actividad 7. Cada criterio vale 5 puntos (total: 20).</p>
+    <div class="table-wrap"><table><thead><tr><th>Criterio</th><th>Excelente (5)</th><th>Logrado (4)</th><th>En proceso (2-3)</th><th>Inicial (0-1)</th></tr></thead><tbody><tr><td><strong>Preparación de datos</strong></td><td>Detecta los problemas de la tabla y decide con criterio.</td><td>Detecta la mayoría.</td><td>Detecta pocos problemas.</td><td>No revisa los datos.</td></tr><tr><td><strong>Análisis y lectura de resultados</strong></td><td>Obtiene los indicadores y los interpreta con matices.</td><td>Obtiene los indicadores con interpretación simple.</td><td>Obtiene algunos indicadores sin interpretar.</td><td>Copia el análisis sin leerlo.</td></tr><tr><td><strong>Verificación</strong></td><td>Comprueba las cifras con fórmulas y corrige errores de la IA.</td><td>Comprueba la mayoría.</td><td>Comprueba una o dos.</td><td>No verifica.</td></tr><tr><td><strong>Uso responsable</strong></td><td>Anonimiza datos y señala limitaciones y sesgos.</td><td>Señala la mayoría.</td><td>Señala algunas.</td><td>Ignora privacidad y limitaciones.</td></tr></tbody></table></div>
+  </div></section>
+
+  <section class="panel acc" id="tarea"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="tarea-body"><span>📝 Tarea para casa</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="tarea-body" hidden>
+    <p>Durante un mes, los estudiantes mantienen un <strong>tablero sencillo con sus indicadores clave</strong>, lo actualizan cada semana y documentan las decisiones que toman a partir de los datos.</p>
+    <div class="table-wrap"><table><thead><tr><th>Semana</th><th>Indicador</th><th>Valor</th><th>Qué observé</th><th>Decisión que tomé</th><th>Cómo verifiqué el dato</th></tr></thead><tbody><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div>
+    <div class="box"><strong class="t">💡 Para la próxima sesión</strong>El Módulo 6 cierra el curso con uso responsable de la IA y un proyecto integrador. Pida que piensen un desafío real de su trabajo para presentarlo en 5 minutos.</div>
+  </div></section>
+
+</main>
+
+<footer>
+  <p><strong>Instituto Superior Tecnológico Liceo Cristiano</strong></p>
+  <p>Proyecto: "Inteligencia Artificial para el Trabajo: Herramientas Digitales para la Comunidad"</p>
+  <p>Carrera: Desarrollo de Software | Guía del docente - Módulo 5</p>
+  <p>
+    <a href="https://jorgekabuto78.github.io/curso-ia/" target="_blank" rel="noopener">📚 Curso principal</a>
+    <a href="https://jorgekabuto78.github.io/curso-ia/herramientas.html" target="_blank" rel="noopener">🛠️ Directorio de herramientas</a>
+  </p>
+</footer>
+
+<script>
+(function(){
+  var on = false, root = document.documentElement;
+  function stop(e){ if(!on){ e.preventDefault(); return false; } }
+
+  ['copy','cut'].forEach(function(t){
+    document.addEventListener(t, function(e){
+      if(on) return;
+      if(e.clipboardData){ try { e.clipboardData.setData('text/plain',''); } catch(err){} }
+      e.preventDefault();
+    }, true);
+  });
+  ['selectstart','dragstart','contextmenu'].forEach(function(t){
+    document.addEventListener(t, stop, true);
+  });
+
+  function reset(){
+    document.querySelectorAll('.cp-btn').forEach(function(b){ b.textContent = 'Copiar'; b.classList.remove('done'); });
+  }
+
+  // Botones de copia de los prompts: solo responden con la copia habilitada
+  document.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('.cp-btn') : null;
+    if(!b) return;
+    if(!on){ e.preventDefault(); return; }
+    var pre = b.parentNode.querySelector('pre.prompt');
+    if(!pre) return;
+    var text = pre.textContent;
+    function ok(){
+      b.textContent = '¡Copiado!'; b.classList.add('done');
+      setTimeout(function(){ if(on){ b.textContent = 'Copiar'; b.classList.remove('done'); } }, 1800);
+    }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var done = false;
+      try { done = document.execCommand('copy'); } catch(err){}
+      document.body.removeChild(ta);
+      if(done){ ok(); } else { b.textContent = 'No se pudo'; }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok, fallback);
+    } else { fallback(); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.altKey && !e.ctrlKey && !e.metaKey){
+      if(e.code === 'KeyC'){ e.preventDefault(); on = true; root.classList.add('cp-on'); return; }
+      if(e.code === 'KeyN'){
+        e.preventDefault(); on = false; root.classList.remove('cp-on'); reset();
+        var s = window.getSelection && window.getSelection(); if(s){ s.removeAllRanges(); }
+        return;
+      }
+    }
+    if(on) return;
+    var k = (e.key || '').toLowerCase();
+    if((e.ctrlKey || e.metaKey) && ['c','x','a','s','u'].indexOf(k) !== -1){ e.preventDefault(); }
+  }, true);
+
+  document.addEventListener('selectionchange', function(){
+    if(on) return;
+    var s = window.getSelection && window.getSelection();
+    if(s && s.rangeCount && !s.isCollapsed){ s.removeAllRanges(); }
+  });
+
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details').forEach(function(d){ d.setAttribute('open',''); });
+  });
+})();
+</script>
+<script>
+(function(){
+  var panels = document.querySelectorAll('section.panel.acc');
+  function setOpen(p, open){
+    var b = p.querySelector('.acc-btn'), c = p.querySelector('.acc-body');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(open){ c.removeAttribute('hidden'); } else { c.setAttribute('hidden', ''); }
+  }
+  Array.prototype.forEach.call(panels, function(p){
+    p.querySelector('.acc-btn').addEventListener('click', function(){
+      setOpen(p, p.querySelector('.acc-btn').getAttribute('aria-expanded') !== 'true');
+    });
+  });
+  function openFor(id){
+    var el = id && document.getElementById(id);
+    if(el && el.classList.contains('acc')) setOpen(el, true);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(a) openFor(a.getAttribute('href').slice(1));
+  });
+  window.addEventListener('hashchange', function(){
+    var id = location.hash.slice(1); openFor(id);
+    var el = document.getElementById(id); if(el) el.scrollIntoView();
+  });
+})();
+</script>
+</body>
+</html>

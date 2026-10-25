@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía del Docente - Módulo 3: IA para Organizar el Trabajo - ISTLC</title>
+<style>
+:root{
+  --primary:#667eea;--secondary:#764ba2;--bg:#f7fafc;--card:#ffffff;--text:#2d3748;
+  --muted:#718096;--border:#e2e8f0;--green:#10b981;--orange:#ed8936;
+  --info-bg:#ebf4ff;--info:#3b82f6;--warn-bg:#fffaf0;--ok-bg:#f0fff4;--tag-bg:#eef0fd;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Cabecera */
+header.hero{background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);color:#fff;text-align:center;padding:3.4rem 1.2rem 2.8rem}
+header.hero h1{font-size:2.5rem;line-height:1.2;text-shadow:0 2px 6px rgba(0,0,0,.25);margin-bottom:.8rem}
+header.hero .sub{font-size:1.2rem;opacity:.95;margin-bottom:.9rem}
+header.hero .meta{font-size:.95rem;opacity:.9}
+header.hero .badge{display:inline-block;background:rgba(255,255,255,.2);padding:.25rem .9rem;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:1rem;letter-spacing:.03em}
+
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+
+/* Navegación */
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav.toc ul{list-style:none;display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;padding:.6rem 1rem}
+nav.toc a{display:block;padding:.35rem .8rem;border-radius:8px;font-size:.88rem;font-weight:600;color:var(--text)}
+nav.toc a:hover{background:var(--tag-bg);color:var(--primary);text-decoration:none}
+
+/* Tarjetas de resumen */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin:2rem 0}
+.stat{background:var(--card);border-radius:12px;border-top:4px solid var(--primary);padding:1.4rem 1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.stat .n{font-size:2.3rem;font-weight:800;color:var(--primary);line-height:1.1}
+.stat .l{color:var(--muted);font-size:.92rem;margin-top:.3rem}
+
+/* Paneles */
+.panel{background:var(--card);border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);padding:1.6rem 1.8rem;margin:1.6rem 0}
+.panel h2{font-size:1.5rem;color:var(--primary);margin-bottom:.9rem}
+.panel h3{font-size:1.15rem;margin:1.2rem 0 .5rem;color:var(--text)}
+.panel p{margin:.5rem 0}
+.panel ul,.panel ol{margin:.5rem 0 .8rem 1.4rem}
+.panel li{margin:.3rem 0}
+
+/* Módulos / Actividades */
+.module{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);margin:2.2rem 0}
+.module-head{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:1.2rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.module-head h2{font-size:1.5rem}
+.pill{background:rgba(255,255,255,.22);padding:.4rem 1rem;border-radius:999px;font-size:.85rem;font-weight:600;white-space:nowrap}
+.module-body{padding:1.6rem 1.8rem 1.8rem}
+.module-body h3{font-size:1.1rem;color:var(--primary);margin:1.4rem 0 .5rem}
+.module-body p{margin:.5rem 0}
+.module-body ul,.module-body ol{margin:.5rem 0 .8rem 1.4rem}
+.module-body li{margin:.35rem 0}
+
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-bottom:1rem}
+.meta-card{border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;background:#fcfcff}
+.meta-card .k{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin-bottom:.25rem}
+.meta-card .v{font-size:.93rem}
+
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.3rem}
+.tag{background:var(--tag-bg);color:var(--primary);font-size:.78rem;font-weight:600;padding:.2rem .7rem;border-radius:999px}
+.tag.free{background:#d1fae5;color:#047857}
+.tag.paid{background:#feebc8;color:#c05621}
+
+/* Cajas de aviso */
+.box{border-left:4px solid var(--info);background:var(--info-bg);border-radius:8px;padding:.9rem 1.1rem;margin:1rem 0}
+.box.warn{border-color:var(--orange);background:var(--warn-bg)}
+.box.ok{border-color:var(--green);background:var(--ok-bg)}
+.box strong.t{display:block;margin-bottom:.2rem}
+
+/* Prompts y textos */
+.prompt-wrap{position:relative;margin:.8rem 0 1.3rem}
+.prompt-title{font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:.3rem}
+pre.prompt{background:#1a202c;color:#e2e8f0;border-left:4px solid var(--primary);border-radius:10px;padding:1.1rem 1.2rem;font-family:ui-monospace,'Cascadia Code',Consolas,'Courier New',monospace;font-size:.86rem;line-height:1.6;white-space:pre-wrap;word-wrap:break-word}
+.sample-text{background:#fffdf3;border:1px dashed #ecc94b;border-radius:10px;padding:1.1rem 1.2rem;font-size:.95rem;line-height:1.7}
+
+/* Tablas */
+.table-wrap{overflow-x:auto;margin:.8rem 0 1.2rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem;background:#fff}
+th,td{border:1px solid var(--border);padding:.6rem .8rem;text-align:left;vertical-align:top}
+th{background:var(--tag-bg);color:#4c51bf;font-weight:700}
+tbody tr:nth-child(even){background:#fafbff}
+td.blank{height:2.2rem}
+
+/* Solucionario */
+details{border:1px solid var(--border);border-radius:10px;margin:1rem 0;background:#fcfcff}
+details summary{cursor:pointer;padding:.8rem 1.1rem;font-weight:700;color:var(--secondary);list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"🔑 ";}
+details[open] summary{border-bottom:1px solid var(--border)}
+details .inner{padding:.6rem 1.1rem 1rem}
+
+.checklist{list-style:none;margin-left:0!important}
+.checklist li::before{content:"☐ ";color:var(--primary);font-weight:700}
+
+footer{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;text-align:center;padding:2.2rem 1rem;margin-top:3rem;font-size:.92rem}
+footer a{color:#fff;text-decoration:underline;margin:0 .6rem}
+footer p{margin:.35rem 0}
+
+@media (max-width:640px){
+  header.hero h1{font-size:1.8rem}
+  .module-body,.panel{padding:1.2rem 1.1rem}
+  .module-head{padding:1rem 1.1rem}
+  .module-head h2{font-size:1.2rem}
+}
+@media print{
+  nav.toc{display:none!important}
+  body{background:#fff}
+  .module,.panel,.stat{box-shadow:none;border:1px solid var(--border)}
+  .module{page-break-inside:auto}
+  .prompt-wrap,table,details{page-break-inside:avoid}
+  header.hero,.module-head,footer{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  pre.prompt{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* Selección controlada */
+html:not(.cp-on) body, html:not(.cp-on) body *{
+  -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+  -webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;
+}
+html:not(.cp-on) ::selection{background:transparent;color:inherit}
+html:not(.cp-on) ::-moz-selection{background:transparent;color:inherit}
+html:not(.cp-on) img, html:not(.cp-on) a{-webkit-user-drag:none;user-drag:none}
+
+/* Botón de copia: oculto salvo con la copia habilitada */
+.cp-btn{display:none!important}
+html.cp-on .cp-btn{
+  display:inline-block!important;position:absolute;top:.55rem;right:.55rem;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.35);
+  background:#4caf50;color:#fff;border:none;border-radius:6px;
+  padding:.3rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;
+  -webkit-user-select:none;user-select:none;
+}
+html.cp-on pre.prompt{padding-top:2.8rem}
+.pre-box{position:relative}
+html.cp-on .cp-btn:hover{background:#43a047}
+html.cp-on .cp-btn.done{background:#2e7d32}
+@media print{.cp-btn,html.cp-on .cp-btn{display:none!important}}
+
+.tag a.tl{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
+.tag a.tl:hover{text-decoration:underline}
+a.tl{color:#4f46e5;text-decoration:underline;text-underline-offset:2px}
+
+.panel.acc{padding:0;overflow:hidden}
+.panel.acc>h2{margin:0;font-size:1.5rem}
+.acc-btn{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.3rem 1.8rem;cursor:pointer;color:var(--primary);font-weight:700;font-size:1.5rem;line-height:1.3}
+.acc-btn:hover{background:rgba(102,126,234,.07)}
+.acc-btn:focus-visible{outline:3px solid var(--secondary);outline-offset:-3px}
+.acc-ic{flex:none;width:.65em;height:.65em;border-right:3px solid currentColor;border-bottom:3px solid currentColor;transform:rotate(45deg);transition:transform .2s;margin-top:-.25em}
+.acc-btn[aria-expanded="true"] .acc-ic{transform:rotate(-135deg);margin-top:.2em}
+.acc-body{padding:0 1.8rem 1.6rem}
+@media(max-width:700px){.acc-btn{padding:1.1rem;font-size:1.25rem}.acc-body{padding:0 1.1rem 1.2rem}}
+@media print{.acc-body[hidden]{display:block!important}.acc-ic{display:none}.acc-btn{padding:1rem 1.2rem}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="badge">GUÍA PARA EL DOCENTE</span>
+  <h1>📅 Módulo 3: IA para Organizar el Trabajo</h1>
+  <p class="sub">Actividades prácticas con textos de ejemplo listos para usar</p>
+  <p class="meta">ISTLC - Instituto Superior Tecnológico Liceo Cristiano<br>Curso "Inteligencia Artificial para el Trabajo" | Carrera: Desarrollo de Software<br>Docente: Ing. Jorge Espinoza, Msc.</p>
+</header>
+
+<nav class="toc"><ul><li><a href="#resumen">Resumen</a></li><li><a href="#preparacion">Preparación</a></li><li><a href="#a1">Act. 1</a></li><li><a href="#a2">Act. 2</a></li><li><a href="#a3">Act. 3</a></li><li><a href="#a4">Act. 4</a></li><li><a href="#a5">Act. 5</a></li><li><a href="#a6">Act. 6</a></li><li><a href="#a7">Act. 7</a></li><li><a href="#evaluacion">Evaluación</a></li><li><a href="#tarea">Tarea</a></li></ul></nav>
+
+<main class="container">
+
+  <div class="stats">
+    <div class="stat"><div class="n">4 h</div><div class="l">Duración del módulo</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">Actividades prácticas</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">Herramientas de IA</div></div>
+    <div class="stat"><div class="n">12</div><div class="l">Textos y prompts listos</div></div>
+  </div>
+
+  <section class="panel acc" id="resumen"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="resumen-body"><span>📋 Resumen de la sesión</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="resumen-body" hidden>
+    <p>Esta guía acompaña el <strong>Módulo 3: IA para Organizar el Trabajo</strong>. Los estudiantes trabajan con un mismo caso (la semana de un líder técnico) para priorizar tareas, estimar tiempos, armar una agenda, detectar tareas automatizables, optimizar un proceso y planificar un proyecto con apoyo de un asistente de IA.</p>
+    <div class="box">
+      <strong class="t">💡 Cómo usar esta guía</strong>
+      Cada bloque oscuro es un <strong>prompt</strong> listo para proyectar en pantalla y mostrar o dictar a los estudiantes. Las secciones <strong>"Solucionario"</strong> son solo para el docente: despliéguelas cuando las necesite. Todos los nombres, empresas y datos de los casos son <strong>ficticios</strong>. El documento está pensado también para imprimirse.
+    </div>
+    <h3>Cronograma sugerido</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Tiempo</th><th>Actividad</th><th>Modalidad</th><th>Herramientas</th></tr></thead>
+      <tbody><tr><td>0:00 – 0:20</td><td>Exposición: IA como asistente de productividad; GTD, Eisenhower, Pomodoro y time blocking</td><td>Docente</td><td>Presentación</td></tr><tr><td>0:20 – 0:55</td><td><a href="#a1">1. Inventario y Matriz de Eisenhower</a></td><td>Individual o parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>0:55 – 1:40</td><td><a href="#a2">2. Estimación de tiempos y agenda semanal</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://calendar.google.com/" target="_blank" rel="noopener noreferrer">Google Calendar</a></span><span class="tag"><a class="tl" href="https://outlook.live.com/calendar/" target="_blank" rel="noopener noreferrer">Outlook Calendar</a></span></div></td></tr><tr><td>1:40 – 1:50</td><td>Descanso</td><td>—</td><td>—</td></tr><tr><td>1:50 – 2:05</td><td><a href="#a3">3. Checklists de seguimiento</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>2:05 – 2:30</td><td><a href="#a4">4. Caza de tareas automatizables</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://www.todoist.com/" target="_blank" rel="noopener noreferrer">Todoist</a></span><span class="tag"><a class="tl" href="https://reclaim.ai/" target="_blank" rel="noopener noreferrer">Reclaim</a></span><span class="tag"><a class="tl" href="https://get.mem.ai/" target="_blank" rel="noopener noreferrer">Mem</a></span></div></td></tr><tr><td>2:30 – 2:55</td><td><a href="#a5">5. Optimiza un proceso</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>2:55 – 3:40</td><td><a href="#a6">6. Proyecto en miniatura: del alcance al cronograma</a></td><td>Equipos de 3</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://trello.com/" target="_blank" rel="noopener noreferrer">Trello</a></span><span class="tag"><a class="tl" href="https://asana.com/" target="_blank" rel="noopener noreferrer">Asana</a></span></div></td></tr><tr><td>3:40 – 3:55</td><td><a href="#a7">7. Gestión de un cambio en el proyecto</a></td><td>Equipos</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>3:55 – 4:00</td><td>Cierre y explicación de la tarea</td><td>Grupo</td><td>—</td></tr></tbody>
+    </table></div>
+    <h3>Alineación con los objetivos del curso</h3>
+    <div class="table-wrap"><table><thead><tr><th>Objetivo del curso</th><th>Actividades que lo desarrollan</th></tr></thead><tbody><tr><td><strong>Desmitificar la IA</strong></td><td>4 (automatizar no es delegar la responsabilidad)</td></tr><tr><td><strong>Aplicar herramientas prácticas</strong></td><td>1, 2, 3, 4, 5, 6</td></tr><tr><td><strong>Aumentar la productividad</strong></td><td>1, 2, 3, 4, 5, 6</td></tr><tr><td><strong>Crear contenido profesional</strong></td><td>3 (listas y plantillas), 6 (documentos del proyecto)</td></tr><tr><td><strong>Tomar mejores decisiones</strong></td><td>1, 6, 7</td></tr><tr><td><strong>Uso responsable</strong></td><td>2, 6 y 7 (verificar fechas y cifras que propone la IA)</td></tr></tbody></table></div>
+  </div></section>
+
+  <section class="panel acc" id="preparacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="preparacion-body"><span>🧰 Preparación antes de la clase</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="preparacion-body" hidden>
+    <ul class="checklist"><li><strong>Verifique las herramientas de gestión que va a mostrar.</strong> <a class="tl" href="https://www.usemotion.com/" target="_blank" rel="noopener noreferrer">Motion</a>, <a class="tl" href="https://reclaim.ai/" target="_blank" rel="noopener noreferrer">Reclaim</a>, <a class="tl" href="https://asana.com/" target="_blank" rel="noopener noreferrer">Asana</a>, <a class="tl" href="https://trello.com/" target="_blank" rel="noopener noreferrer">Trello</a>, <a class="tl" href="https://www.todoist.com/" target="_blank" rel="noopener noreferrer">Todoist</a>, <a class="tl" href="https://get.mem.ai/" target="_blank" rel="noopener noreferrer">Mem</a> y <a class="tl" href="https://www.notion.com/product/ai" target="_blank" rel="noopener noreferrer">Notion AI</a> tienen planes y límites que cambian con frecuencia; algunas pueden exigir pago o tarjeta. Presente las que no pueda probar como demostración en pantalla.</li><li><strong>Plan B:</strong> todas las actividades pueden hacerse con un asistente conversacional (<a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a>, <a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a>, <a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a> o <a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a>) y una hoja de cálculo.</li><li><strong>Material:</strong> imprima o proyecte el caso de Andrés Salazar y la tabla de datos de la actividad 2.</li><li><strong>Calendario:</strong> pida que cada estudiante tenga abierto <a class="tl" href="https://calendar.google.com/" target="_blank" rel="noopener noreferrer">Google Calendar</a> u <a class="tl" href="https://outlook.live.com/calendar/" target="_blank" rel="noopener noreferrer">Outlook</a> para probar la agenda.</li><li><strong>Verifique las fechas:</strong> el caso del proyecto usa del 2 de noviembre al 11 de diciembre de 2026. Si da la clase en otras fechas, ajústelas.</li><li><strong>Regla de privacidad:</strong> todos los casos son ficticios; pida que usen tareas reales solo sin datos confidenciales.</li></ul>
+    <h3>Herramientas del módulo</h3>
+    <div class="tags"><span class="tag"><a class="tl" href="https://www.notion.com/product/ai" target="_blank" rel="noopener noreferrer">Notion AI</a></span><span class="tag"><a class="tl" href="https://www.todoist.com/" target="_blank" rel="noopener noreferrer">Todoist</a></span><span class="tag"><a class="tl" href="https://trello.com/" target="_blank" rel="noopener noreferrer">Trello + Butler</a></span><span class="tag"><a class="tl" href="https://asana.com/" target="_blank" rel="noopener noreferrer">Asana</a></span><span class="tag"><a class="tl" href="https://www.usemotion.com/" target="_blank" rel="noopener noreferrer">Motion</a></span><span class="tag"><a class="tl" href="https://reclaim.ai/" target="_blank" rel="noopener noreferrer">Reclaim AI</a></span><span class="tag"><a class="tl" href="https://get.mem.ai/" target="_blank" rel="noopener noreferrer">Mem AI</a></span><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:.6rem">Verde: marcadas como gratuitas en el directorio del curso. Naranja: de pago. Sin color: freemium o plan por confirmar. Los planes cambian con frecuencia: verifíquelos antes de la sesión.</p>
+  </div></section>
+
+<section class="module" id="a1">
+<div class="module-head"><h2>🎯 Actividad 1: Inventario y Matriz de Eisenhower</h2><span class="pill">35 min · Individual o parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Clasificar un conjunto de tareas por urgencia e importancia y decidir qué hacer, programar, delegar o eliminar.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aumentar la productividad · Tomar mejores decisiones</div></div></div>
+<h3>Caso (ficticio)</h3><p>Andrés Salazar es líder técnico de un equipo de tres personas en "Soluciones Andinas", una pequeña empresa de software. Esta es su lista de tareas de la semana:</p><ul><li>1. Corregir un error crítico que impide los cobros en la tienda en línea de un cliente (vence hoy).</li><li>2. Responder 15 correos acumulados.</li><li>3. Preparar la demostración del jueves para un cliente nuevo.</li><li>4. Revisar el código de un compañero (debe estar aprobado antes del viernes).</li><li>5. Actualizar el diagrama de arquitectura del proyecto.</li><li>6. Asistir a la reunión semanal del equipo (lunes 9:00).</li><li>7. Investigar una biblioteca nueva para un proyecto que empieza en dos meses.</li><li>8. Ordenar las carpetas de Drive y renombrar archivos.</li><li>9. Responder una encuesta interna de la empresa (sin fecha límite cercana).</li><li>10. Cotizar un proyecto pequeño para un cliente potencial (espera respuesta el miércoles).</li><li>11. Leer y contestar el grupo de WhatsApp general de la empresa.</li><li>12. Hacer la copia de seguridad semanal de la base de datos de pruebas.</li></ul><ol><li><strong>(5 min)</strong> Lean el caso y clasifiquen las tareas a mano, de forma intuitiva.</li><li><strong>(15 min)</strong> Ejecuten el prompt y comparen la clasificación de la IA con la suya.</li><li><strong>(10 min)</strong> Discutan cada diferencia: ¿quién tiene mejor justificación?</li><li><strong>(5 min)</strong> Ajusten la tabla final.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de clasificación</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Actúa como consultor de productividad experto. Clasifica estas tareas con la Matriz de Eisenhower:
+[pegar las 12 tareas]
+
+Para cada tarea indica:
+- Cuadrante (urgente e importante / importante no urgente / urgente no importante / ni urgente ni importante)
+- Justificación breve
+- Acción recomendada (hacer ahora, programar, delegar o eliminar)
+
+Presenta el resultado en una tabla.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario: clasificación sugerida</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Cuadrante</th><th>Tareas</th><th>Acción</th></tr></thead><tbody><tr><td>Urgente e importante</td><td>1, 3, 6, 10</td><td>Hacer ahora (la 6 es un evento fijo).</td></tr><tr><td>Importante, no urgente</td><td>4, 5, 7, 12</td><td>Programar (la 4 con fecha límite antes del viernes).</td></tr><tr><td>Urgente, no importante</td><td>2, 11</td><td>Limitar: responder correos en bloques, silenciar el grupo general.</td></tr><tr><td>Ni urgente ni importante</td><td>8, 9</td><td>Posponer o eliminar; hacerlas solo si sobra tiempo.</td></tr></tbody></table></div><p><strong>Importante:</strong> hay clasificaciones razonables distintas (por ejemplo, la 4 o la 12). Lo que se evalúa es la justificación. Si la IA propone una clasificación distinta, pida al estudiante que decida y explique por qué.</p></div></details>
+</div>
+</section>
+
+<section class="module" id="a2">
+<div class="module-head"><h2>📅 Actividad 2: Estimación de tiempos y agenda semanal</h2><span class="pill">45 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Estimar tiempos de forma realista y construir una agenda semanal con bloques de tiempo, descansos y margen para imprevistos.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://calendar.google.com/" target="_blank" rel="noopener noreferrer">Google Calendar</a></span><span class="tag"><a class="tl" href="https://outlook.live.com/calendar/" target="_blank" rel="noopener noreferrer">Outlook Calendar</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aumentar la productividad</div></div></div>
+<h3>Datos para la agenda de Andrés</h3><div class="table-wrap"><table><tbody><tr><th>Horario laboral</th><td>8:00 a 17:00, con almuerzo de 12:30 a 13:30</td></tr><tr><th>Pico de energía</th><td>Mañana</td></tr><tr><th>Reuniones fijas</th><td>Lunes 9:00 a 10:00 (equipo); miércoles 15:00 a 15:45 (llamada con cliente)</td></tr><tr><th>Demostración</th><td>Jueves 10:00 (45 minutos)</td></tr><tr><th>Estimación de tareas</th><td>Tarea 1: 3 h · Tarea 3: 4 h · Tarea 10: 2 h · Tarea 4: 1,5 h · Tarea 5: 1 h · Tarea 7: 2 h · Tarea 12: 0,5 h</td></tr><tr><th>Trabajo regular</th><td>Desarrollo del proyecto principal: 15 h por semana</td></tr><tr><th>Condiciones</th><td>Descanso de 10 min cada 90 min, 20 % de margen para imprevistos, y un día más liviano para emergencias (viernes)</td></tr></tbody></table></div><ol><li><strong>(10 min)</strong> Ejecuten el prompt de estimación para las tareas importantes.</li><li><strong>(25 min)</strong> Ejecuten el prompt de agenda y revisen que cumpla las condiciones.</li><li><strong>(10 min)</strong> Autoevalúen su agenda con la lista de verificación.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de estimación</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Para cada una de estas tareas ayúdame a estimar el tiempo necesario, considerando interrupciones y contingencias:
+[pegar las tareas del cuadrante "hacer ahora" y "programar"]
+
+Por cada tarea indica el mejor momento del día según el nivel de energía requerido y si conviene dividirla en subtareas.
+Mi disponibilidad: [horas por día]. Mi pico de energía: [mañana].</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de agenda</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Crea una agenda semanal de lunes a viernes con estas tareas y tiempos estimados:
+[pegar los datos del caso]
+
+Requisitos:
+- Horario de trabajo y almuerzo indicados
+- Descanso de 10 min cada 90 min
+- Agrupar tareas similares (time blocking)
+- Dejar 20 % de margen para imprevistos
+- Respetar las reuniones fijas
+- El viernes debe tener menos carga
+
+Formato: tabla día por día con bloque horario, tarea y tipo de actividad.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><h3>Lista de verificación de la agenda</h3><ul class="checklist"><li>Respeta almuerzo y reuniones fijas.</li><li>Las tareas difíciles están en el pico de energía.</li><li>Hay descansos y margen para imprevistos.</li><li>El viernes está más liviano.</li><li>Las horas totales caben en la semana.</li></ul><details><summary>Solucionario: qué debería notar el grupo</summary><div class="inner"><ul><li>Capacidad semanal aproximada: 40 h menos 1,75 h de reuniones fijas, menos el margen del 20 % y los descansos: alrededor de 28 h útiles.</li><li>Carga del caso: 14 h de tareas más 15 h de trabajo regular: 29 h. Es una semana ajustada.</li><li>Una buena respuesta lo detecta y propone mover la tarea 7 (investigar la biblioteca) a la semana siguiente o negociar plazos.</li><li>Compruebe que la IA no ubique tareas encima de la reunión del lunes ni de la llamada del miércoles. Es un error frecuente.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a3">
+<div class="module-head"><h2>✅ Actividad 3: Checklists de seguimiento</h2><span class="pill">15 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Crear listas de verificación de inicio, cierre y revisión semanal para sostener el plan.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aumentar la productividad</div></div></div>
+<div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">A partir del plan semanal creado, genera:
+1. Una lista de verificación de inicio de jornada (preparación y prioridades del día)
+2. Una lista de cierre de jornada (revisión y preparación del siguiente día)
+3. Una lista de revisión semanal para el viernes por la tarde
+
+Incluye preguntas de reflexión que me ayuden a mejorar continuamente. Máximo 6 puntos por lista.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><p>Opcional: pida que agreguen el método Pomodoro a un bloque de tarea difícil (25 min de trabajo y 5 de pausa) y comparen si mejora su concentración.</p><details><summary>Solucionario: ejemplo de lista de inicio</summary><div class="inner"><ul class="checklist"><li>Reviso mi agenda y confirmo las tres prioridades del día.</li><li>Silencio las notificaciones no esenciales.</li><li>Dejo abierta solo la herramienta de la primera tarea.</li><li>Confirmo reuniones y materiales.</li><li>Defino cuándo revisaré correos.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a4">
+<div class="module-head"><h2>🤖 Actividad 4: Caza de tareas automatizables</h2><span class="pill">25 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Reconocer qué tareas son buenas candidatas a automatizar o a apoyar con IA y cuáles no.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://www.todoist.com/" target="_blank" rel="noopener noreferrer">Todoist</a></span><span class="tag"><a class="tl" href="https://reclaim.ai/" target="_blank" rel="noopener noreferrer">Reclaim</a></span><span class="tag"><a class="tl" href="https://get.mem.ai/" target="_blank" rel="noopener noreferrer">Mem</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aumentar la productividad · Aplicar herramientas prácticas</div></div></div>
+<div class="table-wrap"><table><thead><tr><th>Tarea semanal de Andrés</th><th>Tiempo</th><th>¿Repetitiva?</th><th>Decisión requerida</th></tr></thead><tbody><tr><td>1. Reporte semanal de avance al cliente</td><td>1,5 h</td><td>Sí</td><td>Poca</td></tr><tr><td>2. Responder preguntas frecuentes de soporte</td><td>2 h</td><td>Sí</td><td>Poca</td></tr><tr><td>3. Copia de seguridad de la base de pruebas</td><td>0,5 h</td><td>Sí</td><td>Ninguna</td></tr><tr><td>4. Coordinar horarios de reuniones por correo</td><td>0,75 h</td><td>Sí</td><td>Poca</td></tr><tr><td>5. Redactar resúmenes de reuniones</td><td>1 h</td><td>Sí</td><td>Poca o media</td></tr><tr><td>6. Diseñar la arquitectura de una funcionalidad nueva</td><td>3 h</td><td>No</td><td>Alta</td></tr><tr><td>7. Revisar código de compañeros</td><td>2 h</td><td>En parte</td><td>Alta</td></tr><tr><td>8. Orientar al practicante</td><td>1 h</td><td>No</td><td>Alta</td></tr></tbody></table></div><ol><li><strong>(10 min)</strong> Ejecuten el prompt de análisis y comparen con su propio criterio.</li><li><strong>(10 min)</strong> Elijan las cinco mejores candidatas y escriban en qué herramienta o método las resolverían.</li><li><strong>(5 min)</strong> Puesta en común.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de análisis</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Ayúdame a identificar tareas que puedo automatizar.
+Tareas que realizo cada semana:
+[pegar la tabla]
+
+Para cada tarea analiza si es repetitiva, si consume mucho tiempo, si requiere poca creatividad o decisión, y si es candidata a automatización. Prioriza las 5 mejores.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de plantillas (para la tarea 2)</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Crea plantillas de respuesta para estas 3 situaciones de soporte: 1) el cliente no puede iniciar sesión, 2) el cliente pide una factura, 3) el cliente reporta un error en la aplicación. Para cada una incluye la respuesta base, los puntos que debo personalizar y el tono apropiado.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario</summary><div class="inner"><ul><li><strong>Mejores candidatas:</strong> 1, 2, 3, 4 y 5. Son repetitivas, consumen tiempo y requieren poca decisión.</li><li><strong>No automatizar:</strong> 6, 7 y 8. Exigen criterio, y la IA solo puede apoyar con ideas o borradores.</li><li><strong>Ideas de solución:</strong> plantillas y resúmenes con un asistente (1, 2, 5); un programador de tareas o script (3); un asistente de calendario como <a class="tl" href="https://reclaim.ai/" target="_blank" rel="noopener noreferrer">Reclaim</a> (4). Presente estas herramientas como demostración y confirme sus planes antes.</li><li>Recuerde que automatizar no es delegar la responsabilidad: se revisa el resultado.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a5">
+<div class="module-head"><h2>🔧 Actividad 5: Optimiza un proceso</h2><span class="pill">25 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Detectar pasos redundantes en un proceso y rediseñarlo con apoyo de la IA.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aumentar la productividad</div></div></div>
+<h3>Proceso actual: atender un pedido de cambio del cliente</h3><ol><li>El cliente envía un correo con el cambio.</li><li>Se copia el pedido manualmente en una hoja de cálculo.</li><li>Se envía un correo interno al líder para que lo revise.</li><li>El líder responde por chat con su opinión.</li><li>Se vuelve a copiar la decisión en la hoja de cálculo.</li><li>Se estima el costo en otra hoja.</li><li>Se redacta una cotización desde cero en un documento.</li><li>Se envía la cotización y se avisa por WhatsApp que se envió.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Tengo este proceso que realizo regularmente:
+[pegar los 8 pasos]
+
+Ayúdame a:
+1. Identificar pasos redundantes o innecesarios
+2. Sugerir un orden más eficiente
+3. Señalar puntos donde podría usar IA
+4. Crear un diagrama de flujo simplificado en texto
+5. Estimar el ahorro de tiempo con el nuevo proceso</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario: problemas del proceso</summary><div class="inner"><ul><li><strong>Copias manuales:</strong> los pasos 2 y 5 duplican el registro.</li><li><strong>Dos canales para una decisión:</strong> los pasos 3 y 4 (correo y chat).</li><li><strong>Dos hojas y una cotización desde cero:</strong> los pasos 6 y 7 se resuelven con una plantilla.</li><li><strong>Aviso duplicado:</strong> el paso 8 repite la notificación.</li><li><strong>Proceso mejorado (ejemplo):</strong> 1) formulario o plantilla de pedido, 2) revisión del líder en un solo canal, 3) estimación con una plantilla única, 4) cotización generada con IA a partir de la plantilla y revisada por una persona, 5) envío con confirmación.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a6">
+<div class="module-head"><h2>🗓️ Actividad 6: Proyecto en miniatura: del alcance al cronograma</h2><span class="pill">45 min · Equipos de 3</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Definir alcance y objetivos SMART, desglosar el trabajo, armar un cronograma y anticipar riesgos con ayuda de la IA.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://trello.com/" target="_blank" rel="noopener noreferrer">Trello</a></span><span class="tag"><a class="tl" href="https://asana.com/" target="_blank" rel="noopener noreferrer">Asana</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aumentar la productividad · Tomar mejores decisiones</div></div></div>
+<h3>Caso (ficticio)</h3><div class="table-wrap"><table><tbody><tr><th>Proyecto</th><td>Sistema de reservas de clases para el gimnasio "Fuerza Viva"</td></tr><tr><th>Objetivo final</th><td>Sitio web y aplicación para reservar clases y recibir recordatorios</td></tr><tr><th>Plazo</th><td>6 semanas, del lunes 2 de noviembre al viernes 11 de diciembre de 2026</td></tr><tr><th>Recursos</th><td>Equipo de 3 personas y presupuesto de USD 3000</td></tr></tbody></table></div><ol><li><strong>(10 min)</strong> Definan alcance y objetivos.</li><li><strong>(15 min)</strong> Desglosen el trabajo y armen el cronograma.</li><li><strong>(10 min)</strong> Identifiquen riesgos y métricas de seguimiento.</li><li><strong>(10 min)</strong> Cada equipo presenta su ruta crítica y su riesgo principal.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt 1: alcance y objetivos</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Actúa como Project Manager experto.
+Proyecto: [pegar caso]
+
+Ayúdame a:
+1. Definir el alcance (qué incluye y qué NO incluye)
+2. Establecer objetivos SMART
+3. Identificar entregables clave
+4. Listar riesgos potenciales
+5. Sugerir métricas de éxito</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt 2: desglose y cronograma</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Con la definición anterior, crea una estructura de desglose del trabajo (fases, tareas, dependencias, duración y responsable) y un cronograma en tabla que incluya hitos, ruta crítica y margen para contingencias.
+Fecha de inicio: 2 de noviembre de 2026. Fecha de entrega: 11 de diciembre de 2026.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt 3: seguimiento</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Crea un sistema simple de seguimiento: métricas semanales, plantilla de reporte de avance, señales de alerta y lista de verificación de cierre de fase.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario: criterios de revisión</summary><div class="inner"><ul><li>El alcance dice con claridad qué <strong>no</strong> incluye (por ejemplo, pagos en línea o aplicación para iPhone si no se acordó).</li><li>Un objetivo SMART de ejemplo: "Entregar el 11 de diciembre de 2026 un sistema que permita reservar una clase en menos de un minuto, con 95 % de reservas exitosas en las pruebas de aceptación".</li><li>El desglose tiene al menos cuatro fases (por ejemplo, análisis, diseño, desarrollo y pruebas) con dependencias claras.</li><li>Hay margen para contingencias y una ruta crítica identificada.</li><li>Los riesgos tienen una acción de mitigación, no solo un nombre.</li><li>Revise que las fechas y los costos propuestos por la IA sean coherentes con el caso. Es frecuente que inventen cifras.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a7">
+<div class="module-head"><h2>🔀 Actividad 7: Gestión de un cambio en el proyecto</h2><span class="pill">15 min · Equipos</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Evaluar el impacto de un cambio de alcance y proponer opciones con pros y contras.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Tomar mejores decisiones</div></div></div>
+<div class="prompt-wrap">
+<div class="prompt-title">📄 Situación</div>
+<div class="sample-text">Estamos en la semana 4 del proyecto del gimnasio. El avance es de 40 % y lo planificado era 55 %. El dueño del gimnasio pide agregar pagos en línea con tarjeta, sin mover la fecha de entrega.</div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Mi proyecto enfrenta este cambio: [pegar la situación].
+Estado actual: semana 4 de 6, avance 40 % (plan: 55 %).
+
+Ayúdame a:
+1. Evaluar el impacto en alcance, tiempo, costo y calidad
+2. Proponer opciones con pros y contras
+3. Ajustar el cronograma si hace falta
+4. Identificar qué comunicar al cliente
+5. Actualizar los riesgos</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario</summary><div class="inner"><ul><li>Una respuesta madura propone al menos tres opciones: agregar los pagos y mover la fecha, entregar los pagos en una segunda fase, o rechazar el cambio.</li><li>Con el proyecto ya retrasado, la opción de una segunda fase suele ser la más segura. Acepte otra si está bien justificada.</li><li>Debe comunicarse al cliente el impacto en fecha y costo antes de aceptar el cambio.</li><li>Pida que identifiquen qué parte de la respuesta no confiarían sin revisar con su equipo.</li></ul></div></details>
+</div>
+</section>
+
+  <section class="panel acc" id="evaluacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="evaluacion-body"><span>📊 Rúbrica de evaluación del módulo</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="evaluacion-body" hidden>
+    <p>Puede aplicarla sobre la agenda de la actividad 2 y el plan de proyecto de la actividad 6. Cada criterio vale 5 puntos (total: 20).</p>
+    <div class="table-wrap"><table><thead><tr><th>Criterio</th><th>Excelente (5)</th><th>Logrado (4)</th><th>En proceso (2-3)</th><th>Inicial (0-1)</th></tr></thead><tbody><tr><td><strong>Priorización</strong></td><td>Clasifica con criterio y justifica cada decisión.</td><td>Clasifica bien con justificación parcial.</td><td>Clasifica sin justificar.</td><td>No distingue urgente de importante.</td></tr><tr><td><strong>Planificación realista</strong></td><td>Agenda con descansos, margen y carga compatible con el tiempo.</td><td>Agenda correcta con pequeños desajustes.</td><td>Agenda que no cabe en la semana.</td><td>No elabora agenda.</td></tr><tr><td><strong>Uso de la IA</strong></td><td>Prompts con datos y condiciones claros, e iteración visible.</td><td>Prompts claros con una iteración.</td><td>Prompts genéricos.</td><td>Copia la primera respuesta.</td></tr><tr><td><strong>Verificación</strong></td><td>Detecta choques de horarios, cifras y fechas inventadas.</td><td>Detecta la mayoría.</td><td>Revisa de forma parcial.</td><td>No revisa el resultado.</td></tr></tbody></table></div>
+  </div></section>
+
+  <section class="panel acc" id="tarea"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="tarea-body"><span>📝 Tarea para casa</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="tarea-body" hidden>
+    <p>Durante <strong>dos semanas</strong>, los estudiantes implementan su plan semanal, registran cada día qué funcionó y qué no, y lo ajustan con ayuda de la IA. Al final comparan su productividad con semanas anteriores.</p>
+    <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Tareas planificadas</th><th>Tareas completadas</th><th>Qué funcionó</th><th>Qué no funcionó</th><th>Ajuste que haré</th></tr></thead><tbody><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div>
+    <div class="box"><strong class="t">💡 Para la próxima sesión</strong>El Módulo 4 trata sobre presentaciones y contenido visual. Pida que lleven el tema de una presentación real para trabajar sobre él.</div>
+  </div></section>
+
+</main>
+
+<footer>
+  <p><strong>Instituto Superior Tecnológico Liceo Cristiano</strong></p>
+  <p>Proyecto: "Inteligencia Artificial para el Trabajo: Herramientas Digitales para la Comunidad"</p>
+  <p>Carrera: Desarrollo de Software | Guía del docente - Módulo 3</p>
+  <p>
+    <a href="https://jorgekabuto78.github.io/curso-ia/" target="_blank" rel="noopener">📚 Curso principal</a>
+    <a href="https://jorgekabuto78.github.io/curso-ia/herramientas.html" target="_blank" rel="noopener">🛠️ Directorio de herramientas</a>
+  </p>
+</footer>
+
+<script>
+(function(){
+  var on = false, root = document.documentElement;
+  function stop(e){ if(!on){ e.preventDefault(); return false; } }
+
+  ['copy','cut'].forEach(function(t){
+    document.addEventListener(t, function(e){
+      if(on) return;
+      if(e.clipboardData){ try { e.clipboardData.setData('text/plain',''); } catch(err){} }
+      e.preventDefault();
+    }, true);
+  });
+  ['selectstart','dragstart','contextmenu'].forEach(function(t){
+    document.addEventListener(t, stop, true);
+  });
+
+  function reset(){
+    document.querySelectorAll('.cp-btn').forEach(function(b){ b.textContent = 'Copiar'; b.classList.remove('done'); });
+  }
+
+  // Botones de copia de los prompts: solo responden con la copia habilitada
+  document.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('.cp-btn') : null;
+    if(!b) return;
+    if(!on){ e.preventDefault(); return; }
+    var pre = b.parentNode.querySelector('pre.prompt');
+    if(!pre) return;
+    var text = pre.textContent;
+    function ok(){
+      b.textContent = '¡Copiado!'; b.classList.add('done');
+      setTimeout(function(){ if(on){ b.textContent = 'Copiar'; b.classList.remove('done'); } }, 1800);
+    }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var done = false;
+      try { done = document.execCommand('copy'); } catch(err){}
+      document.body.removeChild(ta);
+      if(done){ ok(); } else { b.textContent = 'No se pudo'; }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok, fallback);
+    } else { fallback(); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.altKey && !e.ctrlKey && !e.metaKey){
+      if(e.code === 'KeyC'){ e.preventDefault(); on = true; root.classList.add('cp-on'); return; }
+      if(e.code === 'KeyN'){
+        e.preventDefault(); on = false; root.classList.remove('cp-on'); reset();
+        var s = window.getSelection && window.getSelection(); if(s){ s.removeAllRanges(); }
+        return;
+      }
+    }
+    if(on) return;
+    var k = (e.key || '').toLowerCase();
+    if((e.ctrlKey || e.metaKey) && ['c','x','a','s','u'].indexOf(k) !== -1){ e.preventDefault(); }
+  }, true);
+
+  document.addEventListener('selectionchange', function(){
+    if(on) return;
+    var s = window.getSelection && window.getSelection();
+    if(s && s.rangeCount && !s.isCollapsed){ s.removeAllRanges(); }
+  });
+
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details').forEach(function(d){ d.setAttribute('open',''); });
+  });
+})();
+</script>
+<script>
+(function(){
+  var panels = document.querySelectorAll('section.panel.acc');
+  function setOpen(p, open){
+    var b = p.querySelector('.acc-btn'), c = p.querySelector('.acc-body');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(open){ c.removeAttribute('hidden'); } else { c.setAttribute('hidden', ''); }
+  }
+  Array.prototype.forEach.call(panels, function(p){
+    p.querySelector('.acc-btn').addEventListener('click', function(){
+      setOpen(p, p.querySelector('.acc-btn').getAttribute('aria-expanded') !== 'true');
+    });
+  });
+  function openFor(id){
+    var el = id && document.getElementById(id);
+    if(el && el.classList.contains('acc')) setOpen(el, true);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(a) openFor(a.getAttribute('href').slice(1));
+  });
+  window.addEventListener('hashchange', function(){
+    var id = location.hash.slice(1); openFor(id);
+    var el = document.getElementById(id); if(el) el.scrollIntoView();
+  });
+})();
+</script>
+</body>
+</html>

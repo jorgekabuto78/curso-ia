@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía del Docente - Módulo 4: IA para Presentaciones y Contenido Visual - ISTLC</title>
+<style>
+:root{
+  --primary:#667eea;--secondary:#764ba2;--bg:#f7fafc;--card:#ffffff;--text:#2d3748;
+  --muted:#718096;--border:#e2e8f0;--green:#10b981;--orange:#ed8936;
+  --info-bg:#ebf4ff;--info:#3b82f6;--warn-bg:#fffaf0;--ok-bg:#f0fff4;--tag-bg:#eef0fd;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Cabecera */
+header.hero{background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);color:#fff;text-align:center;padding:3.4rem 1.2rem 2.8rem}
+header.hero h1{font-size:2.5rem;line-height:1.2;text-shadow:0 2px 6px rgba(0,0,0,.25);margin-bottom:.8rem}
+header.hero .sub{font-size:1.2rem;opacity:.95;margin-bottom:.9rem}
+header.hero .meta{font-size:.95rem;opacity:.9}
+header.hero .badge{display:inline-block;background:rgba(255,255,255,.2);padding:.25rem .9rem;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:1rem;letter-spacing:.03em}
+
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+
+/* Navegación */
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav.toc ul{list-style:none;display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;padding:.6rem 1rem}
+nav.toc a{display:block;padding:.35rem .8rem;border-radius:8px;font-size:.88rem;font-weight:600;color:var(--text)}
+nav.toc a:hover{background:var(--tag-bg);color:var(--primary);text-decoration:none}
+
+/* Tarjetas de resumen */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin:2rem 0}
+.stat{background:var(--card);border-radius:12px;border-top:4px solid var(--primary);padding:1.4rem 1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.stat .n{font-size:2.3rem;font-weight:800;color:var(--primary);line-height:1.1}
+.stat .l{color:var(--muted);font-size:.92rem;margin-top:.3rem}
+
+/* Paneles */
+.panel{background:var(--card);border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);padding:1.6rem 1.8rem;margin:1.6rem 0}
+.panel h2{font-size:1.5rem;color:var(--primary);margin-bottom:.9rem}
+.panel h3{font-size:1.15rem;margin:1.2rem 0 .5rem;color:var(--text)}
+.panel p{margin:.5rem 0}
+.panel ul,.panel ol{margin:.5rem 0 .8rem 1.4rem}
+.panel li{margin:.3rem 0}
+
+/* Módulos / Actividades */
+.module{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);margin:2.2rem 0}
+.module-head{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:1.2rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.module-head h2{font-size:1.5rem}
+.pill{background:rgba(255,255,255,.22);padding:.4rem 1rem;border-radius:999px;font-size:.85rem;font-weight:600;white-space:nowrap}
+.module-body{padding:1.6rem 1.8rem 1.8rem}
+.module-body h3{font-size:1.1rem;color:var(--primary);margin:1.4rem 0 .5rem}
+.module-body p{margin:.5rem 0}
+.module-body ul,.module-body ol{margin:.5rem 0 .8rem 1.4rem}
+.module-body li{margin:.35rem 0}
+
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-bottom:1rem}
+.meta-card{border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;background:#fcfcff}
+.meta-card .k{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin-bottom:.25rem}
+.meta-card .v{font-size:.93rem}
+
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.3rem}
+.tag{background:var(--tag-bg);color:var(--primary);font-size:.78rem;font-weight:600;padding:.2rem .7rem;border-radius:999px}
+.tag.free{background:#d1fae5;color:#047857}
+.tag.paid{background:#feebc8;color:#c05621}
+
+/* Cajas de aviso */
+.box{border-left:4px solid var(--info);background:var(--info-bg);border-radius:8px;padding:.9rem 1.1rem;margin:1rem 0}
+.box.warn{border-color:var(--orange);background:var(--warn-bg)}
+.box.ok{border-color:var(--green);background:var(--ok-bg)}
+.box strong.t{display:block;margin-bottom:.2rem}
+
+/* Prompts y textos */
+.prompt-wrap{position:relative;margin:.8rem 0 1.3rem}
+.prompt-title{font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:.3rem}
+pre.prompt{background:#1a202c;color:#e2e8f0;border-left:4px solid var(--primary);border-radius:10px;padding:1.1rem 1.2rem;font-family:ui-monospace,'Cascadia Code',Consolas,'Courier New',monospace;font-size:.86rem;line-height:1.6;white-space:pre-wrap;word-wrap:break-word}
+.sample-text{background:#fffdf3;border:1px dashed #ecc94b;border-radius:10px;padding:1.1rem 1.2rem;font-size:.95rem;line-height:1.7}
+
+/* Tablas */
+.table-wrap{overflow-x:auto;margin:.8rem 0 1.2rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem;background:#fff}
+th,td{border:1px solid var(--border);padding:.6rem .8rem;text-align:left;vertical-align:top}
+th{background:var(--tag-bg);color:#4c51bf;font-weight:700}
+tbody tr:nth-child(even){background:#fafbff}
+td.blank{height:2.2rem}
+
+/* Solucionario */
+details{border:1px solid var(--border);border-radius:10px;margin:1rem 0;background:#fcfcff}
+details summary{cursor:pointer;padding:.8rem 1.1rem;font-weight:700;color:var(--secondary);list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"🔑 ";}
+details[open] summary{border-bottom:1px solid var(--border)}
+details .inner{padding:.6rem 1.1rem 1rem}
+
+.checklist{list-style:none;margin-left:0!important}
+.checklist li::before{content:"☐ ";color:var(--primary);font-weight:700}
+
+footer{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;text-align:center;padding:2.2rem 1rem;margin-top:3rem;font-size:.92rem}
+footer a{color:#fff;text-decoration:underline;margin:0 .6rem}
+footer p{margin:.35rem 0}
+
+@media (max-width:640px){
+  header.hero h1{font-size:1.8rem}
+  .module-body,.panel{padding:1.2rem 1.1rem}
+  .module-head{padding:1rem 1.1rem}
+  .module-head h2{font-size:1.2rem}
+}
+@media print{
+  nav.toc{display:none!important}
+  body{background:#fff}
+  .module,.panel,.stat{box-shadow:none;border:1px solid var(--border)}
+  .module{page-break-inside:auto}
+  .prompt-wrap,table,details{page-break-inside:avoid}
+  header.hero,.module-head,footer{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  pre.prompt{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* Selección controlada */
+html:not(.cp-on) body, html:not(.cp-on) body *{
+  -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+  -webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;
+}
+html:not(.cp-on) ::selection{background:transparent;color:inherit}
+html:not(.cp-on) ::-moz-selection{background:transparent;color:inherit}
+html:not(.cp-on) img, html:not(.cp-on) a{-webkit-user-drag:none;user-drag:none}
+
+/* Botón de copia: oculto salvo con la copia habilitada */
+.cp-btn{display:none!important}
+html.cp-on .cp-btn{
+  display:inline-block!important;position:absolute;top:.55rem;right:.55rem;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.35);
+  background:#4caf50;color:#fff;border:none;border-radius:6px;
+  padding:.3rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;
+  -webkit-user-select:none;user-select:none;
+}
+html.cp-on pre.prompt{padding-top:2.8rem}
+.pre-box{position:relative}
+html.cp-on .cp-btn:hover{background:#43a047}
+html.cp-on .cp-btn.done{background:#2e7d32}
+@media print{.cp-btn,html.cp-on .cp-btn{display:none!important}}
+
+.tag a.tl{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
+.tag a.tl:hover{text-decoration:underline}
+a.tl{color:#4f46e5;text-decoration:underline;text-underline-offset:2px}
+
+.panel.acc{padding:0;overflow:hidden}
+.panel.acc>h2{margin:0;font-size:1.5rem}
+.acc-btn{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.3rem 1.8rem;cursor:pointer;color:var(--primary);font-weight:700;font-size:1.5rem;line-height:1.3}
+.acc-btn:hover{background:rgba(102,126,234,.07)}
+.acc-btn:focus-visible{outline:3px solid var(--secondary);outline-offset:-3px}
+.acc-ic{flex:none;width:.65em;height:.65em;border-right:3px solid currentColor;border-bottom:3px solid currentColor;transform:rotate(45deg);transition:transform .2s;margin-top:-.25em}
+.acc-btn[aria-expanded="true"] .acc-ic{transform:rotate(-135deg);margin-top:.2em}
+.acc-body{padding:0 1.8rem 1.6rem}
+@media(max-width:700px){.acc-btn{padding:1.1rem;font-size:1.25rem}.acc-body{padding:0 1.1rem 1.2rem}}
+@media print{.acc-body[hidden]{display:block!important}.acc-ic{display:none}.acc-btn{padding:1rem 1.2rem}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="badge">GUÍA PARA EL DOCENTE</span>
+  <h1>🎨 Módulo 4: IA para Presentaciones y Contenido Visual</h1>
+  <p class="sub">Actividades prácticas con textos de ejemplo listos para usar</p>
+  <p class="meta">ISTLC - Instituto Superior Tecnológico Liceo Cristiano<br>Curso "Inteligencia Artificial para el Trabajo" | Carrera: Desarrollo de Software<br>Docente: Ing. Jorge Espinoza, Msc.</p>
+</header>
+
+<nav class="toc"><ul><li><a href="#resumen">Resumen</a></li><li><a href="#preparacion">Preparación</a></li><li><a href="#a1">Act. 1</a></li><li><a href="#a2">Act. 2</a></li><li><a href="#a3">Act. 3</a></li><li><a href="#a4">Act. 4</a></li><li><a href="#a5">Act. 5</a></li><li><a href="#a6">Act. 6</a></li><li><a href="#a7">Act. 7</a></li><li><a href="#evaluacion">Evaluación</a></li><li><a href="#tarea">Tarea</a></li></ul></nav>
+
+<main class="container">
+
+  <div class="stats">
+    <div class="stat"><div class="n">4 h</div><div class="l">Duración del módulo</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">Actividades prácticas</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">Herramientas de IA</div></div>
+    <div class="stat"><div class="n">9</div><div class="l">Textos y prompts listos</div></div>
+  </div>
+
+  <section class="panel acc" id="resumen"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="resumen-body"><span>📋 Resumen de la sesión</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="resumen-body" hidden>
+    <p>Esta guía acompaña el <strong>Módulo 4: IA para Presentaciones y Contenido Visual</strong>. Todo el módulo gira en torno a una misma charla ficticia sobre seguridad digital: los estudiantes estructuran la presentación, desarrollan y diagnostican diapositivas, visualizan datos, generan imágenes con IA, diseñan una pieza en <a class="tl" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva</a> y revisan las implicaciones éticas del contenido visual.</p>
+    <div class="box">
+      <strong class="t">💡 Cómo usar esta guía</strong>
+      Cada bloque oscuro es un <strong>prompt</strong> listo para proyectar en pantalla y mostrar o dictar a los estudiantes. Las secciones <strong>"Solucionario"</strong> son solo para el docente: despliéguelas cuando las necesite. Todos los nombres, empresas y datos de los casos son <strong>ficticios</strong>. El documento está pensado también para imprimirse.
+    </div>
+    <h3>Cronograma sugerido</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Tiempo</th><th>Actividad</th><th>Modalidad</th><th>Herramientas</th></tr></thead>
+      <tbody><tr><td>0:00 – 0:20</td><td>Exposición: comunicación visual, tipos de contenido, principios de diseño y prompts de imagen</td><td>Docente</td><td>Presentación</td></tr><tr><td>0:20 – 0:55</td><td><a href="#a1">1. Estructura de una presentación</a></td><td>Equipos de 3</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://gamma.app/" target="_blank" rel="noopener noreferrer">Gamma AI (demo)</a></span></div></td></tr><tr><td>0:55 – 1:20</td><td><a href="#a2">2. Diapositiva por diapositiva con notas del presentador</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>1:20 – 1:45</td><td><a href="#a3">3. Diagnóstico de una diapositiva</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>1:45 – 2:10</td><td><a href="#a4">4. Visualización de datos</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a></span></div></td></tr><tr><td>2:10 – 2:20</td><td>Descanso</td><td>—</td><td>—</td></tr><tr><td>2:20 – 3:00</td><td><a href="#a5">5. Prompts para generar imágenes</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://designer.microsoft.com/" target="_blank" rel="noopener noreferrer">Microsoft Designer</a></span><span class="tag free"><a class="tl" href="https://ideogram.ai/" target="_blank" rel="noopener noreferrer">Ideogram</a></span><span class="tag free"><a class="tl" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva AI</a></span><span class="tag paid"><a class="tl" href="https://openai.com/index/dall-e-3/" target="_blank" rel="noopener noreferrer">DALL-E 3 (si hay acceso)</a></span></div></td></tr><tr><td>3:00 – 3:40</td><td><a href="#a6">6. Diseño rápido con Canva y su IA</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva AI</a></span></div></td></tr><tr><td>3:40 – 3:55</td><td><a href="#a7">7. Ética de la imagen generada</a></td><td>Grupo</td><td><div class="tags"><span class="tag">Sin herramientas</span><span class="tag">Opcional:</span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>3:55 – 4:00</td><td>Cierre y explicación de la tarea</td><td>Grupo</td><td>—</td></tr></tbody>
+    </table></div>
+    <h3>Alineación con los objetivos del curso</h3>
+    <div class="table-wrap"><table><thead><tr><th>Objetivo del curso</th><th>Actividades que lo desarrollan</th></tr></thead><tbody><tr><td><strong>Desmitificar la IA</strong></td><td>5 (los resultados cambian con cada prompt)</td></tr><tr><td><strong>Aplicar herramientas prácticas</strong></td><td>1, 5, 6</td></tr><tr><td><strong>Aumentar la productividad</strong></td><td>1, 6 (redimensionar formatos)</td></tr><tr><td><strong>Crear contenido profesional</strong></td><td>1, 2, 3, 4, 5, 6</td></tr><tr><td><strong>Tomar mejores decisiones</strong></td><td>4 (elegir el gráfico y el título)</td></tr><tr><td><strong>Uso responsable</strong></td><td>5 (derechos y transparencia), 7</td></tr></tbody></table></div>
+  </div></section>
+
+  <section class="panel acc" id="preparacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="preparacion-body"><span>🧰 Preparación antes de la clase</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="preparacion-body" hidden>
+    <ul class="checklist"><li><strong>Verifique las herramientas visuales hoy mismo.</strong> Los planes gratuitos de <a class="tl" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva</a>, <a class="tl" href="https://designer.microsoft.com/" target="_blank" rel="noopener noreferrer">Microsoft Designer</a>, <a class="tl" href="https://ideogram.ai/" target="_blank" rel="noopener noreferrer">Ideogram</a> y <a class="tl" href="https://gamma.app/" target="_blank" rel="noopener noreferrer">Gamma</a> cambian con frecuencia; <a class="tl" href="https://openai.com/index/dall-e-3/" target="_blank" rel="noopener noreferrer">DALL-E 3</a> y <a class="tl" href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer">Midjourney</a> pueden requerir pago según el directorio. Prepare capturas o una demostración en pantalla de lo que no pueda probar.</li><li><strong>Cuentas:</strong> pida que creen sus cuentas en Canva y en un generador de imágenes antes de la sesión.</li><li><strong>Plan B:</strong> si un generador falla o se agota el cupo, use otro de la lista o muestre ejemplos pregenerados.</li><li><strong>Material:</strong> proyector y la descripción de la diapositiva defectuosa de la actividad 3 lista para mostrar.</li><li><strong>Ensaye los prompts de imagen</strong> con anticipación: los resultados varían entre herramientas y versiones.</li><li><strong>Regla de privacidad:</strong> no deben subir fotos de personas ni datos reales a las herramientas de diseño.</li></ul>
+    <h3>Herramientas del módulo</h3>
+    <div class="tags"><span class="tag"><a class="tl" href="https://gamma.app/" target="_blank" rel="noopener noreferrer">Gamma AI</a></span><span class="tag free"><a class="tl" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva AI</a></span><span class="tag free"><a class="tl" href="https://designer.microsoft.com/" target="_blank" rel="noopener noreferrer">Microsoft Designer</a></span><span class="tag free"><a class="tl" href="https://ideogram.ai/" target="_blank" rel="noopener noreferrer">Ideogram</a></span><span class="tag paid"><a class="tl" href="https://openai.com/index/dall-e-3/" target="_blank" rel="noopener noreferrer">DALL-E 3</a></span><span class="tag paid"><a class="tl" href="https://www.midjourney.com/" target="_blank" rel="noopener noreferrer">Midjourney</a></span><span class="tag"><a class="tl" href="https://leonardo.ai/" target="_blank" rel="noopener noreferrer">Leonardo AI</a></span><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:.6rem">Verde: marcadas como gratuitas en el directorio del curso. Naranja: de pago. Sin color: freemium o plan por confirmar. Los planes cambian con frecuencia: verifíquelos antes de la sesión.</p>
+  </div></section>
+
+<section class="module" id="a1">
+<div class="module-head"><h2>🧭 Actividad 1: Estructura de una presentación</h2><span class="pill">35 min · Equipos de 3</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Diseñar la estructura y la narrativa de una presentación antes de pensar en diseño.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://gamma.app/" target="_blank" rel="noopener noreferrer">Gamma AI (demo)</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional</div></div></div>
+<h3>Caso (ficticio)</h3><div class="table-wrap"><table><tbody><tr><th>Charla</th><td>"Seguridad digital básica para pequeños negocios"</td></tr><tr><th>Audiencia</th><td>Emprendedores de barrio sin formación técnica</td></tr><tr><th>Duración</th><td>10 minutos más 5 de preguntas</td></tr><tr><th>Objetivo</th><td>Que la audiencia adopte tres hábitos: contraseñas seguras, copias de seguridad y desconfianza ante correos sospechosos</td></tr></tbody></table></div><ol><li><strong>(5 min)</strong> Lean el caso y definan el mensaje central en una frase.</li><li><strong>(15 min)</strong> Ejecuten el prompt de estructura e iteren al menos una vez.</li><li><strong>(10 min)</strong> Revisen con la lista de verificación y ajusten.</li><li><strong>(5 min)</strong> Opcional: muestre cómo una herramienta como <a class="tl" href="https://gamma.app/" target="_blank" rel="noopener noreferrer">Gamma</a> genera una estructura similar desde un texto.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de estructura</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Actúa como experto en presentaciones corporativas.
+
+Necesito crear una presentación sobre: seguridad digital básica para pequeños negocios.
+Audiencia: emprendedores de barrio sin formación técnica.
+Objetivo: que adopten tres hábitos de seguridad.
+Duración: 10 minutos.
+Contexto: charla presencial en una cámara de comercio.
+
+Crea una estructura completa con:
+1. Título principal atractivo
+2. Número óptimo de diapositivas
+3. Para cada diapositiva: título, puntos clave y tipo de visual sugerido
+4. Narrativa que conecte todas las diapositivas
+5. Llamado a la acción final</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><h3>Lista de verificación</h3><ul class="checklist"><li>Hay un mensaje central claro.</li><li>Cada diapositiva tiene una sola idea.</li><li>La cantidad de diapositivas es razonable para 10 minutos.</li><li>Hay apertura, desarrollo y cierre con llamado a la acción.</li><li>Los visuales sugeridos apoyan el mensaje.</li></ul><details><summary>Solucionario</summary><div class="inner"><ul><li>Una referencia práctica es una diapositiva por minuto: de 8 a 10 diapositivas para 10 minutos. Si la IA propone 20, pida que la reduzca.</li><li>Estructura esperada: portada, problema (por qué importa), tres hábitos (uno por diapositiva, con ejemplo), recapitulación y llamado a la acción.</li><li>Debe haber una sola idea por diapositiva y los hábitos deben ser concretos (por ejemplo, "una contraseña distinta por cuenta").</li><li>Verifique que no se hayan inventado estadísticas de ataques. Si aparecen cifras, pida la fuente.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a2">
+<div class="module-head"><h2>🖼️ Actividad 2: Diapositiva por diapositiva con notas del presentador</h2><span class="pill">25 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Desarrollar el contenido de una diapositiva con título, puntos, nota del presentador, visual y transición.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional</div></div></div>
+<h3>Modelo desarrollado por el docente</h3><div class="prompt-wrap">
+<div class="prompt-title">📄 Diapositiva 3: "Contraseñas: la primera puerta"</div>
+<div class="sample-text">Título: Contraseñas: la primera puerta.
+Puntos: 1) Una contraseña distinta para cada cuenta. 2) Frases largas mejor que palabras con símbolos. 3) Un gestor de contraseñas las recuerda por usted.
+Nota del presentador: "Imaginen que usan la misma llave para su casa, su negocio y su bodega. Si la pierden, pierden todo. Eso pasa con una sola contraseña repetida."
+Visual sugerido: ilustración sencilla de un llavero con tres llaves distintas.
+Transición: "Pero una buena contraseña no sirve si perdemos la información: veamos las copias de seguridad."</div>
+</div><ol><li><strong>(15 min)</strong> Cada estudiante desarrolla la diapositiva 5 ("Correos sospechosos") con el prompt.</li><li><strong>(10 min)</strong> Intercambian con un compañero que verifica si cumple el modelo.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Desarrolla el contenido completo de la diapositiva 5: "Correos sospechosos".
+Contexto: charla de 10 minutos sobre seguridad digital para emprendedores sin formación técnica.
+Objetivo de la diapositiva: que reconozcan tres señales de un correo falso.
+
+Proporciona:
+1. Título (máximo 8 palabras)
+2. De 3 a 5 puntos concisos
+3. Nota del presentador (50 a 100 palabras)
+4. Descripción del visual recomendado
+5. Transición a la siguiente diapositiva
+
+Principio: menos texto, más impacto visual.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario: señales esperadas</summary><div class="inner"><ul><li>Remitente desconocido o dirección extraña.</li><li>Urgencia exagerada o amenazas.</li><li>Enlaces o archivos adjuntos inesperados.</li><li>Errores de redacción o pedido de datos personales o contraseñas.</li><li>Verifique que la nota del presentador sea conversacional y no repita los puntos.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a3">
+<div class="module-head"><h2>🩺 Actividad 3: Diagnóstico de una diapositiva</h2><span class="pill">25 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Aplicar los principios de diseño visual para detectar errores en una diapositiva y rediseñarla.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional</div></div></div>
+<div class="prompt-wrap">
+<div class="prompt-title">📄 Descripción de la diapositiva defectuosa</div>
+<div class="sample-text">Título: "Importancia de la seguridad informática en el contexto actual de las organizaciones modernas". Contiene 12 viñetas de dos líneas cada una con letra de 14 puntos, texto rojo sobre fondo verde, tres tipos de letra distintos, una imagen prediseñada pequeña en una esquina, un logotipo en cada borde y ningún espacio en blanco.</div>
+</div><ol><li><strong>(10 min)</strong> Evalúen la diapositiva con la tabla de principios.</li><li><strong>(10 min)</strong> Ejecuten el prompt para rediseñarla.</li><li><strong>(5 min)</strong> Comparen las versiones.</li></ol><div class="table-wrap"><table><thead><tr><th>Principio</th><th>Pregunta</th><th>Puntaje (1 a 5)</th></tr></thead><tbody><tr><td>Jerarquía visual</td><td>¿Se sabe qué mirar primero?</td><td class="blank"></td></tr><tr><td>Contraste</td><td>¿El texto se lee sobre el fondo?</td><td class="blank"></td></tr><tr><td>Alineación</td><td>¿Hay orden?</td><td class="blank"></td></tr><tr><td>Repetición</td><td>¿Hay consistencia de fuentes y colores?</td><td class="blank"></td></tr><tr><td>Proximidad</td><td>¿Se agrupan elementos relacionados?</td><td class="blank"></td></tr><tr><td>Espacio en blanco</td><td>¿Respira o está saturada?</td><td class="blank"></td></tr><tr><td>Color</td><td>¿Los colores ayudan al mensaje?</td><td class="blank"></td></tr><tr><td>Tipografía</td><td>¿Es legible y coherente?</td><td class="blank"></td></tr></tbody></table></div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de rediseño</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Esta diapositiva tiene estos problemas: [pegar la descripción].
+Rediséñala para una charla sobre seguridad digital para emprendedores. Indica:
+1. Un título claro de máximo 8 palabras
+2. Máximo 3 puntos
+3. Paleta de colores sugerida (2 colores principales)
+4. Tipografía recomendada
+5. Qué visual usarías
+6. Qué principios de diseño aplicaste</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario</summary><div class="inner"><ul><li><strong>Problemas:</strong> exceso de texto (12 viñetas), poco contraste (rojo sobre verde, difícil de leer incluso para personas sin daltonismo), tres tipografías, elementos decorativos innecesarios y sin espacio en blanco.</li><li><strong>Rediseño esperado:</strong> título corto (por ejemplo, "Protege tu negocio en tres pasos"), tres puntos, una o dos fuentes, dos colores con buen contraste, un visual claro y espacio libre.</li><li>Casi todos los principios deberían puntuar bajo en la diapositiva original; la versión rediseñada debería superar los 4 puntos en la mayoría.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a4">
+<div class="module-head"><h2>📊 Actividad 4: Visualización de datos</h2><span class="pill">25 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Elegir el gráfico adecuado y redactar un título que comunique el mensaje clave.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://workspace.google.com/products/sheets/" target="_blank" rel="noopener noreferrer">Google Sheets</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional · Tomar mejores decisiones</div></div></div>
+<h3>Datos (ficticios)</h3><div class="table-wrap"><table><thead><tr><th>Mes</th><th>Intentos de phishing reportados</th></tr></thead><tbody><tr><td>Junio</td><td>12</td></tr><tr><td>Julio</td><td>18</td></tr><tr><td>Agosto</td><td>27</td></tr><tr><td>Septiembre</td><td>41</td></tr><tr><td>Octubre</td><td>58</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>Tipo de ataque</th><th>Porcentaje de casos</th></tr></thead><tbody><tr><td>Phishing</td><td>52 %</td></tr><tr><td>Contraseñas débiles</td><td>23 %</td></tr><tr><td>Malware</td><td>15 %</td></tr><tr><td>Otros</td><td>10 %</td></tr></tbody></table></div><ol><li><strong>(10 min)</strong> Para cada conjunto de datos, decidan qué gráfico usarían y por qué.</li><li><strong>(10 min)</strong> Ejecuten el prompt y comparen.</li><li><strong>(5 min)</strong> Escriban un título que diga el mensaje, no solo el tema.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Tengo estos datos que necesito presentar: [pegar una de las dos tablas].
+Objetivo: mostrar que el problema crece y por qué importa. Audiencia: emprendedores sin formación técnica.
+
+Ayúdame a:
+1. Elegir el tipo de gráfico más efectivo
+2. Estructurar los datos para máximo impacto
+3. Redactar el título del gráfico para que comunique el mensaje clave
+4. Diseñar etiquetas y leyenda claras
+5. Sugerir cómo narrar el dato
+
+Evita gráficos sobrecargados y colores confusos.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario</summary><div class="inner"><ul><li><strong>Evolución mensual:</strong> gráfico de líneas, porque muestra una tendencia en el tiempo.</li><li><strong>Tipos de ataque:</strong> barras horizontales ordenadas de mayor a menor. Con cuatro categorías también funciona un gráfico circular, pero las barras permiten comparar mejor.</li><li><strong>Título con mensaje:</strong> "Los intentos de phishing se multiplicaron casi por cinco en cinco meses" (de 12 en junio a 58 en octubre, es decir, 4,8 veces).</li><li>Pida que verifiquen que el título del gráfico no exagere lo que muestran los datos.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a5">
+<div class="module-head"><h2>🎨 Actividad 5: Prompts para generar imágenes</h2><span class="pill">40 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Escribir prompts de imagen con los siete elementos, iterar y revisar los aspectos éticos y de derechos.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://designer.microsoft.com/" target="_blank" rel="noopener noreferrer">Microsoft Designer</a></span><span class="tag free"><a class="tl" href="https://ideogram.ai/" target="_blank" rel="noopener noreferrer">Ideogram</a></span><span class="tag free"><a class="tl" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva AI</a></span><span class="tag paid"><a class="tl" href="https://openai.com/index/dall-e-3/" target="_blank" rel="noopener noreferrer">DALL-E 3 (si hay acceso)</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional · Aplicar herramientas prácticas</div></div></div>
+<h3>Los siete elementos del prompt de imagen</h3><div class="table-wrap"><table><thead><tr><th>Elemento</th><th>Ejemplo</th></tr></thead><tbody><tr><td>Sujeto principal</td><td>Un candado dorado sobre un teclado</td></tr><tr><td>Acción o escena</td><td>Protegiendo una computadora portátil abierta</td></tr><tr><td>Entorno</td><td>Escritorio de una oficina pequeña</td></tr><tr><td>Estilo visual</td><td>Ilustración plana moderna</td></tr><tr><td>Iluminación</td><td>Luz natural suave</td></tr><tr><td>Perspectiva</td><td>Vista cenital</td></tr><tr><td>Detalles técnicos</td><td>Alta calidad, formato horizontal</td></tr></tbody></table></div><ol><li><strong>(5 min)</strong> Revisen los elementos y el ejemplo.</li><li><strong>(20 min)</strong> Cada estudiante genera dos imágenes para su presentación con el prompt modelo y una variación.</li><li><strong>(10 min)</strong> Iteran cambiando un elemento a la vez (luz, estilo o perspectiva).</li><li><strong>(5 min)</strong> Revisan la lista ética.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt modelo (en inglés, como en el curso)</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">A flat modern illustration of a golden padlock on top of an open laptop keyboard, small office desk, soft natural light, top-down view, clean and minimal, blue and gold palette, high quality, horizontal format</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt para pedir ayuda al asistente</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Necesito un prompt para generar una imagen que represente: [concepto].
+Contexto: diapositiva de una charla sobre seguridad digital.
+Estilo deseado: [ilustración moderna / fotografía realista].
+Colores: [preferencias].
+Elementos a incluir: [lista]. Elementos a evitar: [lista].
+Crea un prompt detallado para un generador de imágenes con IA.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><h3>Conceptos para practicar</h3><ul><li>Contraseñas seguras</li><li>Un equipo pequeño revisando sus copias de seguridad</li><li>Un correo falso que intenta engañar</li></ul><h3>Lista ética</h3><ul class="checklist"><li>Verifiqué los derechos de uso comercial de la herramienta.</li><li>No generé personas reales específicas sin permiso.</li><li>La imagen no engaña ni suplanta.</li><li>No copié el estilo de un artista concreto.</li><li>Indico que es una imagen generada por IA cuando el contexto lo pide.</li></ul><details><summary>Solucionario</summary><div class="inner"><ul><li>Cuando el texto dentro de la imagen sale deformado, pruebe <a class="tl" href="https://ideogram.ai/" target="_blank" rel="noopener noreferrer">Ideogram</a>, que según el directorio se especializa en texto legible.</li><li>Un buen prompt tiene sujeto, estilo, luz y formato. Si el resultado sale recargado, pida "fondo simple y espacio libre para texto".</li><li>Los planes gratuitos tienen límites y condiciones de uso comercial que cambian: lea los términos antes de usar una imagen en un producto.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a6">
+<div class="module-head"><h2>🧑‍🎨 Actividad 6: Diseño rápido con Canva y su IA</h2><span class="pill">40 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Planificar con la IA y diseñar una pieza para redes sociales, adaptada a distintos formatos.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva AI</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional · Aplicar herramientas prácticas</div></div></div>
+<ol><li><strong>(10 min)</strong> Planifican el texto y el diseño con el prompt.</li><li><strong>(15 min)</strong> Crean el diseño con Magic Design o desde una plantilla.</li><li><strong>(10 min)</strong> Personalizan colores, textos e imagen.</li><li><strong>(5 min)</strong> Usan "Redimensionar" para adaptar a otros formatos (si el plan lo permite).</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de planificación</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Necesito crear un post visual para LinkedIn.
+Contenido: tres hábitos de seguridad digital para pequeños negocios.
+Objetivo: que lo guarden y lo compartan.
+Audiencia: emprendedores de barrio.
+Elementos de marca: colores azul y dorado, estilo limpio.
+
+Dame:
+1. Texto principal (titular)
+2. Texto secundario
+3. Llamado a la acción
+4. Descripción del diseño visual
+5. Paleta de colores
+6. Texto de acompañamiento
+7. Entre 5 y 10 hashtags</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><h3>Formatos para redimensionar</h3><div class="table-wrap"><table><thead><tr><th>Formato</th><th>Medida</th></tr></thead><tbody><tr><td>Publicación de Instagram</td><td>1080 x 1080</td></tr><tr><td>Historia de Instagram</td><td>1080 x 1920</td></tr><tr><td>Publicación de Facebook</td><td>1200 x 630</td></tr><tr><td>Banner de LinkedIn</td><td>1584 x 396</td></tr><tr><td>Publicación de LinkedIn</td><td>1200 x 627</td></tr></tbody></table></div><div class="box warn"><strong class="t">⚠️ Antes de la clase</strong>Algunas funciones de IA y de redimensión de <a class="tl" href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva</a> pueden requerir un plan de pago o una prueba. Verifique qué incluye la cuenta gratuita y prepare una demostración en pantalla si hace falta.</div><details><summary>Solucionario: criterios de revisión</summary><div class="inner"><ul><li>Titular corto y legible (máximo 8 palabras).</li><li>Máximo dos tipografías y dos colores principales con buen contraste.</li><li>Un solo llamado a la acción.</li><li>Hashtags pertinentes, sin exceso de emojis.</li><li>La imagen apoya el mensaje y no tapa el texto.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a7">
+<div class="module-head"><h2>⚖️ Actividad 7: Ética de la imagen generada</h2><span class="pill">15 min · Grupo</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Decidir en qué casos es aceptable usar una imagen generada con IA y con qué condiciones.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">Sin herramientas</span><span class="tag">Opcional:</span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Uso responsable</div></div></div>
+<p>Proyecte los seis casos. Los estudiantes votan "aceptable", "con condiciones" o "no aceptable" y justifican.</p><div class="table-wrap"><table><thead><tr><th>Caso</th><th>Voto</th><th>Justificación</th></tr></thead><tbody><tr><td>1. Generar la imagen de un gerente ficticio para un post de la empresa.</td><td class="blank"></td><td class="blank"></td></tr><tr><td>2. Generar la imagen de un político real "firmando un acuerdo" que nunca firmó.</td><td class="blank"></td><td class="blank"></td></tr><tr><td>3. Pedir una imagen "al estilo exacto" de un artista vivo para vender afiches.</td><td class="blank"></td><td class="blank"></td></tr><tr><td>4. Usar una imagen generada de "cliente satisfecho" como si fuera un testimonio real.</td><td class="blank"></td><td class="blank"></td></tr><tr><td>5. Usar un logotipo generado en un producto comercial sin revisar los términos de licencia.</td><td class="blank"></td><td class="blank"></td></tr><tr><td>6. Ilustrar un manual interno con imágenes generadas e indicar que fueron hechas con IA.</td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div><details><summary>Solucionario</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Caso</th><th>Respuesta</th><th>Razón</th></tr></thead><tbody><tr><td>1</td><td>Con condiciones</td><td>Es aceptable si no se hace pasar por una persona real; indicar el uso de IA si el contexto lo exige.</td></tr><tr><td>2</td><td>No aceptable</td><td>Es contenido engañoso y puede constituir desinformación o suplantación.</td></tr><tr><td>3</td><td>No aceptable</td><td>Copiar el estilo de un artista concreto vulnera el respeto a sus derechos; use estilos genéricos.</td></tr><tr><td>4</td><td>No aceptable</td><td>Un testimonio falso engaña al público.</td></tr><tr><td>5</td><td>Con condiciones</td><td>Hay que verificar los derechos de uso comercial de la herramienta antes de usarlo.</td></tr><tr><td>6</td><td>Aceptable</td><td>Uso interno y transparente.</td></tr></tbody></table></div></div></details>
+</div>
+</section>
+
+  <section class="panel acc" id="evaluacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="evaluacion-body"><span>📊 Rúbrica de evaluación del módulo</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="evaluacion-body" hidden>
+    <p>Puede aplicarla sobre la estructura de la actividad 1, la diapositiva de la actividad 2 y el diseño de la actividad 6. Cada criterio vale 5 puntos (total: 20).</p>
+    <div class="table-wrap"><table><thead><tr><th>Criterio</th><th>Excelente (5)</th><th>Logrado (4)</th><th>En proceso (2-3)</th><th>Inicial (0-1)</th></tr></thead><tbody><tr><td><strong>Estructura y narrativa</strong></td><td>Mensaje central claro, una idea por diapositiva y llamado a la acción.</td><td>Estructura clara con pequeños excesos de texto.</td><td>Estructura confusa o con demasiadas diapositivas.</td><td>Sin hilo conductor.</td></tr><tr><td><strong>Diseño visual</strong></td><td>Aplica contraste, jerarquía, espacio en blanco y coherencia.</td><td>Aplica la mayoría de los principios.</td><td>Aplica pocos principios.</td><td>Diseño saturado y poco legible.</td></tr><tr><td><strong>Uso de la IA</strong></td><td>Prompts con los elementos completos e iteración visible.</td><td>Prompts completos con una iteración.</td><td>Prompts incompletos.</td><td>Primer resultado sin ajustar.</td></tr><tr><td><strong>Ética y verificación</strong></td><td>Revisa derechos, evita engaño y verifica cifras.</td><td>Revisa la mayoría de los puntos.</td><td>Revisa de forma parcial.</td><td>No considera aspectos éticos.</td></tr></tbody></table></div>
+  </div></section>
+
+  <section class="panel acc" id="tarea"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="tarea-body"><span>📝 Tarea para casa</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="tarea-body" hidden>
+    <p>Cada estudiante crea una <strong>serie de tres publicaciones visuales</strong> para su negocio o proyecto, comparte al menos una en redes sociales y observa la respuesta del público.</p>
+    <div class="table-wrap"><table><thead><tr><th>Publicación</th><th>Tema</th><th>Herramienta usada</th><th>Prompt principal</th><th>Ajustes que hice</th><th>Respuesta de la audiencia</th></tr></thead><tbody><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div>
+    <div class="box"><strong class="t">💡 Para la próxima sesión</strong>El Módulo 5 trata sobre análisis de información. Pida que lleven una hoja de cálculo propia con datos reales o, si prefieren, anonimizados.</div>
+  </div></section>
+
+</main>
+
+<footer>
+  <p><strong>Instituto Superior Tecnológico Liceo Cristiano</strong></p>
+  <p>Proyecto: "Inteligencia Artificial para el Trabajo: Herramientas Digitales para la Comunidad"</p>
+  <p>Carrera: Desarrollo de Software | Guía del docente - Módulo 4</p>
+  <p>
+    <a href="https://jorgekabuto78.github.io/curso-ia/" target="_blank" rel="noopener">📚 Curso principal</a>
+    <a href="https://jorgekabuto78.github.io/curso-ia/herramientas.html" target="_blank" rel="noopener">🛠️ Directorio de herramientas</a>
+  </p>
+</footer>
+
+<script>
+(function(){
+  var on = false, root = document.documentElement;
+  function stop(e){ if(!on){ e.preventDefault(); return false; } }
+
+  ['copy','cut'].forEach(function(t){
+    document.addEventListener(t, function(e){
+      if(on) return;
+      if(e.clipboardData){ try { e.clipboardData.setData('text/plain',''); } catch(err){} }
+      e.preventDefault();
+    }, true);
+  });
+  ['selectstart','dragstart','contextmenu'].forEach(function(t){
+    document.addEventListener(t, stop, true);
+  });
+
+  function reset(){
+    document.querySelectorAll('.cp-btn').forEach(function(b){ b.textContent = 'Copiar'; b.classList.remove('done'); });
+  }
+
+  // Botones de copia de los prompts: solo responden con la copia habilitada
+  document.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('.cp-btn') : null;
+    if(!b) return;
+    if(!on){ e.preventDefault(); return; }
+    var pre = b.parentNode.querySelector('pre.prompt');
+    if(!pre) return;
+    var text = pre.textContent;
+    function ok(){
+      b.textContent = '¡Copiado!'; b.classList.add('done');
+      setTimeout(function(){ if(on){ b.textContent = 'Copiar'; b.classList.remove('done'); } }, 1800);
+    }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var done = false;
+      try { done = document.execCommand('copy'); } catch(err){}
+      document.body.removeChild(ta);
+      if(done){ ok(); } else { b.textContent = 'No se pudo'; }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok, fallback);
+    } else { fallback(); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.altKey && !e.ctrlKey && !e.metaKey){
+      if(e.code === 'KeyC'){ e.preventDefault(); on = true; root.classList.add('cp-on'); return; }
+      if(e.code === 'KeyN'){
+        e.preventDefault(); on = false; root.classList.remove('cp-on'); reset();
+        var s = window.getSelection && window.getSelection(); if(s){ s.removeAllRanges(); }
+        return;
+      }
+    }
+    if(on) return;
+    var k = (e.key || '').toLowerCase();
+    if((e.ctrlKey || e.metaKey) && ['c','x','a','s','u'].indexOf(k) !== -1){ e.preventDefault(); }
+  }, true);
+
+  document.addEventListener('selectionchange', function(){
+    if(on) return;
+    var s = window.getSelection && window.getSelection();
+    if(s && s.rangeCount && !s.isCollapsed){ s.removeAllRanges(); }
+  });
+
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details').forEach(function(d){ d.setAttribute('open',''); });
+  });
+})();
+</script>
+<script>
+(function(){
+  var panels = document.querySelectorAll('section.panel.acc');
+  function setOpen(p, open){
+    var b = p.querySelector('.acc-btn'), c = p.querySelector('.acc-body');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(open){ c.removeAttribute('hidden'); } else { c.setAttribute('hidden', ''); }
+  }
+  Array.prototype.forEach.call(panels, function(p){
+    p.querySelector('.acc-btn').addEventListener('click', function(){
+      setOpen(p, p.querySelector('.acc-btn').getAttribute('aria-expanded') !== 'true');
+    });
+  });
+  function openFor(id){
+    var el = id && document.getElementById(id);
+    if(el && el.classList.contains('acc')) setOpen(el, true);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(a) openFor(a.getAttribute('href').slice(1));
+  });
+  window.addEventListener('hashchange', function(){
+    var id = location.hash.slice(1); openFor(id);
+    var el = document.getElementById(id); if(el) el.scrollIntoView();
+  });
+})();
+</script>
+</body>
+</html>

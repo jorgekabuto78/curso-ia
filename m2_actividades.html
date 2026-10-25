@@ -77,9 +77,6 @@ nav.toc a:hover{background:var(--tag-bg);color:var(--primary);text-decoration:no
 .prompt-title{font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:.3rem}
 pre.prompt{background:#1a202c;color:#e2e8f0;border-left:4px solid var(--primary);border-radius:10px;padding:1.1rem 1.2rem;font-family:ui-monospace,'Cascadia Code',Consolas,'Courier New',monospace;font-size:.86rem;line-height:1.6;white-space:pre-wrap;word-wrap:break-word}
 .sample-text{background:#fffdf3;border:1px dashed #ecc94b;border-radius:10px;padding:1.1rem 1.2rem;font-size:.95rem;line-height:1.7}
-button.copy{position:absolute;top:0;right:0;background:var(--primary);color:#fff;border:none;border-radius:8px;padding:.3rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit}
-button.copy:hover{background:var(--secondary)}
-button.copy.done{background:var(--green)}
 
 /* Tablas */
 .table-wrap{overflow-x:auto;margin:.8rem 0 1.2rem}
@@ -111,7 +108,7 @@ footer p{margin:.35rem 0}
   .module-head h2{font-size:1.2rem}
 }
 @media print{
-  nav.toc,button.copy{display:none!important}
+  nav.toc{display:none!important}
   body{background:#fff}
   .module,.panel,.stat{box-shadow:none;border:1px solid var(--border)}
   .module{page-break-inside:auto}
@@ -119,6 +116,44 @@ footer p{margin:.35rem 0}
   header.hero,.module-head,footer{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   pre.prompt{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* Selección controlada */
+html:not(.cp-on) body, html:not(.cp-on) body *{
+  -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+  -webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;
+}
+html:not(.cp-on) ::selection{background:transparent;color:inherit}
+html:not(.cp-on) ::-moz-selection{background:transparent;color:inherit}
+html:not(.cp-on) img, html:not(.cp-on) a{-webkit-user-drag:none;user-drag:none}
+
+/* Botón de copia: oculto salvo con la copia habilitada */
+.cp-btn{display:none!important}
+html.cp-on .cp-btn{
+  display:inline-block!important;position:absolute;top:.55rem;right:.55rem;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.35);
+  background:#4caf50;color:#fff;border:none;border-radius:6px;
+  padding:.3rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;
+  -webkit-user-select:none;user-select:none;
+}
+html.cp-on pre.prompt{padding-top:2.8rem}
+.pre-box{position:relative}
+html.cp-on .cp-btn:hover{background:#43a047}
+html.cp-on .cp-btn.done{background:#2e7d32}
+@media print{.cp-btn,html.cp-on .cp-btn{display:none!important}}
+
+.tag a.tl{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
+.tag a.tl:hover{text-decoration:underline}
+a.tl{color:#4f46e5;text-decoration:underline;text-underline-offset:2px}
+
+.panel.acc{padding:0;overflow:hidden}
+.panel.acc>h2{margin:0;font-size:1.5rem}
+.acc-btn{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.3rem 1.8rem;cursor:pointer;color:var(--primary);font-weight:700;font-size:1.5rem;line-height:1.3}
+.acc-btn:hover{background:rgba(102,126,234,.07)}
+.acc-btn:focus-visible{outline:3px solid var(--secondary);outline-offset:-3px}
+.acc-ic{flex:none;width:.65em;height:.65em;border-right:3px solid currentColor;border-bottom:3px solid currentColor;transform:rotate(45deg);transition:transform .2s;margin-top:-.25em}
+.acc-btn[aria-expanded="true"] .acc-ic{transform:rotate(-135deg);margin-top:.2em}
+.acc-body{padding:0 1.8rem 1.6rem}
+@media(max-width:700px){.acc-btn{padding:1.1rem;font-size:1.25rem}.acc-body{padding:0 1.1rem 1.2rem}}
+@media print{.acc-body[hidden]{display:block!important}.acc-ic{display:none}.acc-btn{padding:1rem 1.2rem}}
 </style>
 </head>
 <body>
@@ -127,7 +162,7 @@ footer p{margin:.35rem 0}
   <span class="badge">GUÍA PARA EL DOCENTE</span>
   <h1>✍️ Módulo 2: IA para Escribir y Comunicar</h1>
   <p class="sub">Actividades prácticas con textos de ejemplo listos para usar</p>
-  <p class="meta">📅 Sábado 24 de octubre de 2026 | ISTLC - Instituto Superior Tecnológico Liceo Cristiano<br>Curso "Inteligencia Artificial para el Trabajo" | Carrera: Desarrollo de Software</p>
+  <p class="meta">📅 Sábado 24 de octubre de 2026 | ISTLC - Instituto Superior Tecnológico Liceo Cristiano<br>Curso "Inteligencia Artificial para el Trabajo" | Carrera: Desarrollo de Software<br>Docente: Ing. Jorge Espinoza, Msc.</p>
 </header>
 
 <nav class="toc">
@@ -156,13 +191,12 @@ footer p{margin:.35rem 0}
     <div class="stat"><div class="n">20+</div><div class="l">Textos y prompts listos</div></div>
   </div>
 
-  <section class="panel" id="resumen">
-    <h2>📋 Resumen de la sesión</h2>
+  <section class="panel acc" id="resumen"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="resumen-body"><span>📋 Resumen de la sesión</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="resumen-body" hidden>
     <p>Esta guía acompaña el <strong>Módulo 2: IA para Escribir y Comunicar</strong> del curso. Cada actividad indica tiempo, modalidad, herramientas, el objetivo del curso que desarrolla y los textos de ejemplo ya redactados. Los casos están adaptados a la carrera de Desarrollo de Software, y todos los nombres, empresas y datos son <strong>ficticios</strong>.</p>
 
     <div class="box">
       <strong class="t">💡 Cómo usar esta guía</strong>
-      Cada bloque oscuro es un <strong>prompt</strong> que puede copiar con el botón "Copiar" y proyectar o compartir con los estudiantes. Las secciones <strong>"Solucionario"</strong> son solo para el docente: despliéguelas cuando las necesite. El documento está pensado también para imprimirse.
+      Cada bloque oscuro es un <strong>prompt</strong> listo para proyectar en pantalla y mostrar o dictar a los estudiantes. Las secciones <strong>"Solucionario"</strong> son solo para el docente: despliéguelas cuando las necesite. El documento está pensado también para imprimirse.
     </div>
 
     <h3>Cronograma sugerido</h3>
@@ -170,14 +204,14 @@ footer p{margin:.35rem 0}
       <table>
         <thead><tr><th>Tiempo</th><th>Actividad</th><th>Modalidad</th><th>Herramientas</th></tr></thead>
         <tbody>
-          <tr><td>0:00 – 0:15</td><td><a href="#a1">1. Duelo de asistentes</a></td><td>Parejas</td><td>ChatGPT, Gemini, Copilot, Claude</td></tr>
+          <tr><td>0:00 – 0:15</td><td><a href="#a1">1. Duelo de asistentes</a></td><td>Parejas</td><td><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a>, <a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a>, <a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a>, <a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></td></tr>
           <tr><td>0:15 – 0:45</td><td><a href="#a2">2. Anatomía del prompt</a></td><td>Individual</td><td>Asistente de preferencia</td></tr>
           <tr><td>0:45 – 1:30</td><td><a href="#a3">3. Laboratorio de correos</a></td><td>Equipos de 3</td><td>Asistente de preferencia</td></tr>
           <tr><td>1:30 – 1:40</td><td>Descanso</td><td>—</td><td>—</td></tr>
-          <tr><td>1:40 – 2:10</td><td><a href="#a4">4. Cirugía de textos</a></td><td>Individual</td><td>Grammarly, QuillBot, asistente</td></tr>
-          <tr><td>2:10 – 2:35</td><td><a href="#a5">5. Prueba de traducción</a></td><td>Parejas</td><td>DeepL, asistente</td></tr>
-          <tr><td>2:35 – 3:15</td><td><a href="#a6">6. Del informe al resumen ejecutivo</a></td><td>Individual</td><td>Notion AI o asistente</td></tr>
-          <tr><td>3:15 – 3:45</td><td><a href="#a7">7. Un mensaje, tres plataformas</a></td><td>Equipos</td><td>Asistente, Copy.ai, Jasper</td></tr>
+          <tr><td>1:40 – 2:10</td><td><a href="#a4">4. Cirugía de textos</a></td><td>Individual</td><td><a class="tl" href="https://www.grammarly.com/" target="_blank" rel="noopener noreferrer">Grammarly</a>, <a class="tl" href="https://quillbot.com/" target="_blank" rel="noopener noreferrer">QuillBot</a>, asistente</td></tr>
+          <tr><td>2:10 – 2:35</td><td><a href="#a5">5. Prueba de traducción</a></td><td>Parejas</td><td><a class="tl" href="https://www.deepl.com/" target="_blank" rel="noopener noreferrer">DeepL</a>, asistente</td></tr>
+          <tr><td>2:35 – 3:15</td><td><a href="#a6">6. Del informe al resumen ejecutivo</a></td><td>Individual</td><td><a class="tl" href="https://www.notion.com/product/ai" target="_blank" rel="noopener noreferrer">Notion AI</a> o asistente</td></tr>
+          <tr><td>3:15 – 3:45</td><td><a href="#a7">7. Un mensaje, tres plataformas</a></td><td>Equipos</td><td>Asistente, <a class="tl" href="https://www.copy.ai/" target="_blank" rel="noopener noreferrer">Copy.ai</a>, <a class="tl" href="https://www.jasper.ai/" target="_blank" rel="noopener noreferrer">Jasper</a></td></tr>
           <tr><td>3:45 – 4:00</td><td><a href="#a8">8. Cierre: plantillas y caza de errores</a></td><td>Individual + grupo</td><td>Documento personal</td></tr>
         </tbody>
       </table>
@@ -197,13 +231,12 @@ footer p{margin:.35rem 0}
         </tbody>
       </table>
     </div>
-  </section>
+  </div></section>
 
-  <section class="panel" id="preparacion">
-    <h2>🧰 Preparación antes de la clase</h2>
+  <section class="panel acc" id="preparacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="preparacion-body"><span>🧰 Preparación antes de la clase</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="preparacion-body" hidden>
     <ul class="checklist">
-      <li><strong>Cuentas listas:</strong> ChatGPT, Gemini, Copilot y Claude (del Módulo 1), más DeepL, QuillBot, Grammarly y Notion.</li>
-      <li><strong>Verifique los planes gratuitos hoy mismo.</strong> El directorio marca varias herramientas como gratuitas, pero Jasper es de pago y QuillBot, Copy.ai, Notion AI y Grammarly tienen funciones limitadas o cambian sus condiciones con frecuencia. Pruebe cada una antes de la sesión.</li>
+      <li><strong>Cuentas listas:</strong> <a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a>, <a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a>, <a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a> y <a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a> (del Módulo 1), más <a class="tl" href="https://www.deepl.com/" target="_blank" rel="noopener noreferrer">DeepL</a>, <a class="tl" href="https://quillbot.com/" target="_blank" rel="noopener noreferrer">QuillBot</a>, <a class="tl" href="https://www.grammarly.com/" target="_blank" rel="noopener noreferrer">Grammarly</a> y Notion.</li>
+      <li><strong>Verifique los planes gratuitos hoy mismo.</strong> El directorio marca varias herramientas como gratuitas, pero <a class="tl" href="https://www.jasper.ai/" target="_blank" rel="noopener noreferrer">Jasper</a> es de pago y QuillBot, <a class="tl" href="https://www.copy.ai/" target="_blank" rel="noopener noreferrer">Copy.ai</a>, <a class="tl" href="https://www.notion.com/product/ai" target="_blank" rel="noopener noreferrer">Notion AI</a> y Grammarly tienen funciones limitadas o cambian sus condiciones con frecuencia. Pruebe cada una antes de la sesión.</li>
       <li><strong>Plan B:</strong> si alguien no puede crear una cuenta, los asistentes ya usados en el Módulo 1 cubren casi todas las actividades. Deje las herramientas de pago (Jasper) como demostración en pantalla.</li>
       <li><strong>Material:</strong> proyector, cronómetro visible y el documento de cada estudiante abierto para pegar resultados.</li>
       <li><strong>Regla de privacidad:</strong> recuerde que no deben pegar datos reales de clientes, contraseñas ni información confidencial. Todos los casos de esta guía son ficticios.</li>
@@ -211,12 +244,12 @@ footer p{margin:.35rem 0}
 
     <h3>Herramientas del módulo</h3>
     <div class="tags">
-      <span class="tag free">ChatGPT</span><span class="tag free">Gemini</span><span class="tag free">Copilot</span><span class="tag free">Claude</span>
-      <span class="tag">DeepL</span><span class="tag">QuillBot</span><span class="tag">Grammarly</span><span class="tag">Notion AI</span>
-      <span class="tag">Copy.ai</span><span class="tag paid">Jasper (de pago)</span>
+      <span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span>
+      <span class="tag"><a class="tl" href="https://www.deepl.com/" target="_blank" rel="noopener noreferrer">DeepL</a></span><span class="tag"><a class="tl" href="https://quillbot.com/" target="_blank" rel="noopener noreferrer">QuillBot</a></span><span class="tag"><a class="tl" href="https://www.grammarly.com/" target="_blank" rel="noopener noreferrer">Grammarly</a></span><span class="tag"><a class="tl" href="https://www.notion.com/product/ai" target="_blank" rel="noopener noreferrer">Notion AI</a></span>
+      <span class="tag"><a class="tl" href="https://www.copy.ai/" target="_blank" rel="noopener noreferrer">Copy.ai</a></span><span class="tag paid"><a class="tl" href="https://www.jasper.ai/" target="_blank" rel="noopener noreferrer">Jasper (de pago)</a></span>
     </div>
     <p style="font-size:.85rem;color:var(--muted);margin-top:.6rem">Verde: gratuitas con cuenta, según el directorio del curso. Naranja: de pago. Sin color de estado: freemium, confirme el plan vigente.</p>
-  </section>
+  </div></section>
 
   <!-- ============ ACTIVIDAD 1 ============ -->
   <section class="module" id="a1">
@@ -224,7 +257,7 @@ footer p{margin:.35rem 0}
     <div class="module-body">
       <div class="meta-grid">
         <div class="meta-card"><div class="k">Objetivo</div><div class="v">Comprobar que el mismo prompt produce respuestas distintas según el asistente y empezar a formar criterio para elegir herramienta.</div></div>
-        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">ChatGPT</span><span class="tag">Gemini</span><span class="tag">Copilot</span><span class="tag">Claude</span></div></div></div>
+        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span></div></div></div>
         <div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Desmitificar la IA · Aplicar herramientas prácticas</div></div>
       </div>
 
@@ -238,12 +271,12 @@ footer p{margin:.35rem 0}
 
       <div class="prompt-wrap">
         <div class="prompt-title">📋 Prompt común (ronda 1)</div>
-<pre class="prompt">Explica en máximo 100 palabras qué es una API a un cliente que no tiene conocimientos técnicos. Usa una analogía cotidiana y evita términos técnicos.</pre>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Explica en máximo 100 palabras qué es una API a un cliente que no tiene conocimientos técnicos. Usa una analogía cotidiana y evita términos técnicos.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <div class="prompt-wrap">
         <div class="prompt-title">📋 Prompt alternativo (ronda 2, si sobra tiempo)</div>
-<pre class="prompt">Explica en máximo 100 palabras qué es una base de datos a un cliente que tiene un negocio pequeño. Usa una analogía cotidiana y evita términos técnicos.</pre>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Explica en máximo 100 palabras qué es una base de datos a un cliente que tiene un negocio pequeño. Usa una analogía cotidiana y evita términos técnicos.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Ficha de comparación</h3>
@@ -281,7 +314,7 @@ footer p{margin:.35rem 0}
     <div class="module-body">
       <div class="meta-grid">
         <div class="meta-card"><div class="k">Objetivo</div><div class="v">Aplicar los cinco elementos de un buen prompt y medir su efecto sobre el resultado.</div></div>
-        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">Asistente de preferencia</span></div></div></div>
+        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div>
         <div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional · Aplicar herramientas prácticas</div></div>
       </div>
 
@@ -309,16 +342,16 @@ footer p{margin:.35rem 0}
 
       <div class="prompt-wrap">
         <div class="prompt-title">📋 Prompt deficiente (punto de partida)</div>
-<pre class="prompt">Escríbeme un correo para un cliente.</pre>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Escríbeme un correo para un cliente.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <div class="prompt-wrap">
         <div class="prompt-title">📋 Prompt mejorado (modelo para el docente)</div>
-<pre class="prompt">Contexto: Soy desarrollador web freelance y mi cliente, dueño de una panadería, lleva dos semanas sin responder la cotización del sitio web que le envié.
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Contexto: Soy desarrollador web freelance y mi cliente, dueño de una panadería, lleva dos semanas sin responder la cotización del sitio web que le envié.
 Tarea: Redacta un correo de seguimiento.
 Formato: Correo con asunto, máximo 120 palabras.
 Tono: Cordial y profesional, sin presionar.
-Restricciones: Incluye una pregunta abierta y ofrece una llamada de 15 minutos. No menciones descuentos.</pre>
+Restricciones: Incluye una pregunta abierta y ofrece una llamada de 15 minutos. No menciones descuentos.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Prompts deficientes adicionales para reescribir</h3>
@@ -333,29 +366,29 @@ Restricciones: Incluye una pregunta abierta y ofrece una llamada de 15 minutos. 
         <div class="inner">
           <div class="prompt-wrap">
             <div class="prompt-title">"Hazme un resumen" →</div>
-<pre class="prompt">Contexto: Soy estudiante de Desarrollo de Software y debo estudiar para un examen de bases de datos.
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Contexto: Soy estudiante de Desarrollo de Software y debo estudiar para un examen de bases de datos.
 Tarea: Resume el texto que pego abajo en 5 ideas clave.
 Formato: Lista numerada, una oración por idea.
 Tono: Claro y sencillo.
 Restricciones: No agregues información que no esté en el texto.
-Texto: [pegar texto]</pre>
+Texto: [pegar texto]</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
           </div>
           <div class="prompt-wrap">
             <div class="prompt-title">"Escribe un post" →</div>
-<pre class="prompt">Contexto: Soy desarrolladora web freelance y acabo de publicar mi portafolio nuevo.
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Contexto: Soy desarrolladora web freelance y acabo de publicar mi portafolio nuevo.
 Tarea: Escribe un post de LinkedIn anunciando mi portafolio.
 Formato: Tres párrafos cortos y tres hashtags.
 Tono: Profesional y cercano.
-Restricciones: Máximo 150 palabras y termina con una pregunta para la audiencia.</pre>
+Restricciones: Máximo 150 palabras y termina con una pregunta para la audiencia.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
           </div>
           <div class="prompt-wrap">
             <div class="prompt-title">"Mejora este texto" →</div>
-<pre class="prompt">Contexto: El texto es un correo para un cliente que reclama por un retraso.
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Contexto: El texto es un correo para un cliente que reclama por un retraso.
 Tarea: Mejora la redacción.
 Formato: Devuelve el texto corregido y, debajo, una lista de los cambios realizados.
 Tono: Empático y profesional.
 Restricciones: Conserva todos los datos y fechas originales.
-Texto: [pegar texto]</pre>
+Texto: [pegar texto]</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
           </div>
           <p><strong>Qué suele pasar en la ablación:</strong> sin <em>contexto</em> el correo es genérico; sin <em>formato</em> se alarga; sin <em>tono</em> suena frío o exagerado; sin <em>restricciones</em> aparecen promesas o datos inventados. Pida que cada estudiante diga cuál ingrediente notó más.</p>
         </div>
@@ -369,7 +402,7 @@ Texto: [pegar texto]</pre>
     <div class="module-body">
       <div class="meta-grid">
         <div class="meta-card"><div class="k">Objetivo</div><div class="v">Redactar correos profesionales para tres situaciones laborales y practicar la iteración y el cambio de tono.</div></div>
-        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">Asistente de preferencia</span></div></div></div>
+        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div>
         <div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional · Aumentar la productividad</div></div>
       </div>
 
@@ -384,46 +417,46 @@ Texto: [pegar texto]</pre>
       <h3>Escenario A: Presentación a un nuevo cliente</h3>
       <div class="prompt-wrap">
         <div class="prompt-title">📋 Prompt listo</div>
-<pre class="prompt">Actúa como experto en comunicación corporativa.
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Actúa como experto en comunicación corporativa.
 
 Contexto: Soy Sofía Ramírez, desarrolladora web freelance. Necesito presentarme a Marco Andrade, dueño de la Ferretería El Tornillo, quien busca un sistema de inventario.
 Tarea: Redacta un correo de presentación profesional.
 Incluir: saludo cordial, breve presentación mía, propósito del contacto, una propuesta de valor clara y una invitación a una llamada de 15 minutos.
 Tono: Profesional y cordial.
 Longitud: Máximo 200 palabras.
-Formato: Correo con asunto atractivo.</pre>
+Formato: Correo con asunto atractivo.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Escenario B: Seguimiento de una cotización</h3>
       <div class="prompt-wrap">
         <div class="prompt-title">📋 Prompt listo</div>
-<pre class="prompt">Redacta un correo de seguimiento para una cotización enviada hace ocho días.
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Redacta un correo de seguimiento para una cotización enviada hace ocho días.
 
 Contexto: Soy Sofía Ramírez, desarrolladora web freelance. Le envié a Marco Andrade (Ferretería El Tornillo) la cotización de un sistema de inventario y no he recibido respuesta.
 Objetivos del correo: recordar amablemente la propuesta, mostrar interés genuino, ofrecer aclarar dudas y crear sentido de urgencia sin presionar.
 Tono: Cordial, profesional, no insistente.
 Longitud: Entre 100 y 150 palabras.
-Incluir: una pregunta abierta que invite a responder.</pre>
+Incluir: una pregunta abierta que invite a responder.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Escenario C: Comunicar una mala noticia</h3>
       <div class="prompt-wrap">
         <div class="prompt-title">📋 Prompt listo</div>
-<pre class="prompt">Ayúdame a redactar un correo para comunicar un retraso en la entrega de un proyecto.
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Ayúdame a redactar un correo para comunicar un retraso en la entrega de un proyecto.
 
 Contexto: Soy Sofía Ramírez. La app móvil de Café Aroma se entregará 10 días después de lo acordado porque falló la integración con la pasarela de pagos. Ofrezco una entrega parcial el viernes (catálogo y pedidos) y la versión completa 10 días después. Para evitar que se repita, haré pruebas de integración al inicio de cada proyecto.
 Estructura requerida: 1) reconocer el problema, 2) explicación breve sin excusas, 3) solución propuesta, 4) medidas preventivas, 5) disculpa sincera, 6) reafirmar el compromiso.
 Tono: Honesto, profesional y responsable.
-Longitud: Máximo 250 palabras.</pre>
+Longitud: Máximo 250 palabras.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Prompts de refinamiento (úselos en cadena)</h3>
       <div class="prompt-wrap">
-<pre class="prompt">1. Hazlo 30 % más breve manteniendo la propuesta de valor.
+<div class="pre-box"><div class="pre-box"><pre class="prompt">1. Hazlo 30 % más breve manteniendo la propuesta de valor.
 2. Cambia el tono a más cercano, sin perder el profesionalismo.
 3. Dame tres opciones de asunto para este correo.
 4. Agrega una frase final que invite a responder con una fecha concreta.
-5. Reescribe el correo en un tono más formal, como si fuera para el gerente de una empresa grande.</pre>
+5. Reescribe el correo en un tono más formal, como si fuera para el gerente de una empresa grande.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Lista de verificación del correo</h3>
@@ -450,14 +483,14 @@ Longitud: Máximo 250 palabras.</pre>
     <div class="module-body">
       <div class="meta-grid">
         <div class="meta-card"><div class="k">Objetivo</div><div class="v">Comparar herramientas de corrección y reescritura, y descubrir que cada una sirve para algo distinto.</div></div>
-        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">Grammarly</span><span class="tag">QuillBot</span><span class="tag">Asistente</span></div></div></div>
+        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag"><a class="tl" href="https://www.grammarly.com/" target="_blank" rel="noopener noreferrer">Grammarly</a></span><span class="tag"><a class="tl" href="https://quillbot.com/" target="_blank" rel="noopener noreferrer">QuillBot</a></span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div>
         <div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional · Tomar mejores decisiones</div></div>
       </div>
 
       <h3>Desarrollo</h3>
       <ol>
         <li><strong>(3 min)</strong> Reparta los dos textos con errores.</li>
-        <li><strong>(15 min)</strong> Cada estudiante pasa el texto en español por QuillBot y por un asistente, y el texto en inglés por Grammarly y por un asistente.</li>
+        <li><strong>(15 min)</strong> Cada estudiante pasa el texto en español por <a class="tl" href="https://quillbot.com/" target="_blank" rel="noopener noreferrer">QuillBot</a> y por un asistente, y el texto en inglés por <a class="tl" href="https://www.grammarly.com/" target="_blank" rel="noopener noreferrer">Grammarly</a> y por un asistente.</li>
         <li><strong>(7 min)</strong> Completan la tabla de comparación.</li>
         <li><strong>(5 min)</strong> Puesta en común: ¿qué herramienta usarían para qué?</li>
       </ol>
@@ -481,14 +514,14 @@ Longitud: Máximo 250 palabras.</pre>
 
       <h3>Prompts para el asistente</h3>
       <div class="prompt-wrap">
-<pre class="prompt">Corrige este texto sin cambiar su significado y enumera cada cambio que hiciste, indicando si fue ortografía, gramática o estilo:
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Corrige este texto sin cambiar su significado y enumera cada cambio que hiciste, indicando si fue ortografía, gramática o estilo:
 
-[pegar texto]</pre>
+[pegar texto]</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
       <div class="prompt-wrap">
-<pre class="prompt">Reescribe este aviso para clientes en un máximo de 80 palabras, con tono claro y cordial, dividido en frases cortas. Conserva todos los datos (fecha, horario, recomendación):
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Reescribe este aviso para clientes en un máximo de 80 palabras, con tono claro y cordial, dividido en frases cortas. Conserva todos los datos (fecha, horario, recomendación):
 
-[pegar texto]</pre>
+[pegar texto]</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Tabla de comparación</h3>
@@ -536,13 +569,13 @@ Longitud: Máximo 250 palabras.</pre>
     <div class="module-body">
       <div class="meta-grid">
         <div class="meta-card"><div class="k">Objetivo</div><div class="v">Evaluar la calidad de una traducción automática y descubrir qué pasa con el sentido figurado.</div></div>
-        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">DeepL</span><span class="tag">Asistente</span></div></div></div>
+        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag"><a class="tl" href="https://www.deepl.com/" target="_blank" rel="noopener noreferrer">DeepL</a></span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div>
         <div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aplicar herramientas prácticas · Uso responsable</div></div>
       </div>
 
       <h3>Desarrollo</h3>
       <ol>
-        <li><strong>(5 min)</strong> Traducen el texto técnico al inglés con DeepL.</li>
+        <li><strong>(5 min)</strong> Traducen el texto técnico al inglés con <a class="tl" href="https://www.deepl.com/" target="_blank" rel="noopener noreferrer">DeepL</a>.</li>
         <li><strong>(5 min)</strong> Traducen las expresiones con modismos con DeepL y con un asistente.</li>
         <li><strong>(8 min)</strong> Hacen la <strong>traducción inversa</strong> (de inglés a español) y comparan con el original.</li>
         <li><strong>(7 min)</strong> Discuten dónde se perdió o cambió el sentido.</li>
@@ -562,9 +595,9 @@ Longitud: Máximo 250 palabras.</pre>
 
       <h3>Prompt para el asistente</h3>
       <div class="prompt-wrap">
-<pre class="prompt">Traduce al inglés el texto que pego abajo manteniendo el sentido figurado y no la traducción literal de cada expresión. Después explica en una línea qué equivalencia elegiste para cada una:
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Traduce al inglés el texto que pego abajo manteniendo el sentido figurado y no la traducción literal de cada expresión. Después explica en una línea qué equivalencia elegiste para cada una:
 
-[pegar texto]</pre>
+[pegar texto]</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <details>
@@ -595,7 +628,7 @@ Longitud: Máximo 250 palabras.</pre>
     <div class="module-body">
       <div class="meta-grid">
         <div class="meta-card"><div class="k">Objetivo</div><div class="v">Generar la estructura de un informe, desarrollar una sección con datos y condensarla en un resumen ejecutivo comprensible.</div></div>
-        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">Notion AI</span><span class="tag">Asistente</span></div></div></div>
+        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag"><a class="tl" href="https://www.notion.com/product/ai" target="_blank" rel="noopener noreferrer">Notion AI</a></span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div>
         <div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional · Aumentar la productividad</div></div>
       </div>
 
@@ -626,7 +659,7 @@ Longitud: Máximo 250 palabras.</pre>
 
       <h3>Paso 1: Estructura del informe</h3>
       <div class="prompt-wrap">
-<pre class="prompt">Necesito crear la estructura de un informe de avance mensual de un proyecto de software.
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Necesito crear la estructura de un informe de avance mensual de un proyecto de software.
 
 Contexto: El proyecto es VetAgenda, una app móvil de reservas para una clínica veterinaria. El informe lo leerá la dueña de la clínica, que no tiene conocimientos técnicos.
 Por favor, genera:
@@ -636,12 +669,12 @@ Por favor, genera:
 4. Formato recomendado
 
 Tipo de informe: Mensual
-Extensión aproximada: 2 páginas</pre>
+Extensión aproximada: 2 páginas</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Paso 2: Desarrollo de una sección</h3>
       <div class="prompt-wrap">
-<pre class="prompt">Desarrolla la sección "Avance técnico" del informe.
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Desarrolla la sección "Avance técnico" del informe.
 
 Información disponible:
 - Avance general: 65 % del plan.
@@ -654,12 +687,12 @@ Requisitos:
 - Longitud: 150 palabras.
 - Tono profesional y claro.
 - Lenguaje accesible, sin jerga técnica.
-- No agregues datos que no estén en la información disponible.</pre>
+- No agregues datos que no estén en la información disponible.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Paso 3: Resumen ejecutivo</h3>
       <div class="prompt-wrap">
-<pre class="prompt">A partir de este informe completo:
+<div class="pre-box"><div class="pre-box"><pre class="prompt">A partir de este informe completo:
 
 [pegar el contenido del informe]
 
@@ -667,7 +700,7 @@ Crea un resumen ejecutivo de máximo 150 palabras que:
 1. Destaque los hallazgos principales
 2. Presente las conclusiones clave
 3. Resuma las recomendaciones
-4. Sea comprensible para alguien que no leyó el informe completo</pre>
+4. Sea comprensible para alguien que no leyó el informe completo</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Prueba de comprensión (para el compañero)</h3>
@@ -700,7 +733,7 @@ Crea un resumen ejecutivo de máximo 150 palabras que:
     <div class="module-body">
       <div class="meta-grid">
         <div class="meta-card"><div class="k">Objetivo</div><div class="v">Adaptar un mismo mensaje a distintas plataformas y distinguir un texto humano de uno genérico.</div></div>
-        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">Asistente</span><span class="tag">Copy.ai</span><span class="tag paid">Jasper (demo)</span></div></div></div>
+        <div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag"><a class="tl" href="https://www.copy.ai/" target="_blank" rel="noopener noreferrer">Copy.ai</a></span><span class="tag paid"><a class="tl" href="https://www.jasper.ai/" target="_blank" rel="noopener noreferrer">Jasper (demo)</a></span></div></div></div>
         <div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Crear contenido profesional · Aplicar herramientas prácticas</div></div>
       </div>
 
@@ -708,7 +741,7 @@ Crea un resumen ejecutivo de máximo 150 palabras que:
       <ol>
         <li><strong>(5 min)</strong> Cada equipo recibe el mensaje base (o escribe uno propio de su proyecto).</li>
         <li><strong>(10 min)</strong> Lo adaptan a LinkedIn, Instagram y Facebook con el prompt.</li>
-        <li><strong>(8 min)</strong> Si hay cuentas disponibles, repiten el ejercicio en Copy.ai y comparan. Jasper puede mostrarse en pantalla como demostración.</li>
+        <li><strong>(8 min)</strong> Si hay cuentas disponibles, repiten el ejercicio en <a class="tl" href="https://www.copy.ai/" target="_blank" rel="noopener noreferrer">Copy.ai</a> y comparan. <a class="tl" href="https://www.jasper.ai/" target="_blank" rel="noopener noreferrer">Jasper</a> puede mostrarse en pantalla como demostración.</li>
         <li><strong>(7 min)</strong> Cada equipo elige su versión más humana y su versión más genérica, y explica por qué.</li>
       </ol>
 
@@ -720,7 +753,7 @@ Crea un resumen ejecutivo de máximo 150 palabras que:
 
       <h3>Prompt de adaptación</h3>
       <div class="prompt-wrap">
-<pre class="prompt">Tengo este mensaje sobre el lanzamiento de una app:
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Tengo este mensaje sobre el lanzamiento de una app:
 
 [pegar el mensaje original]
 
@@ -729,12 +762,12 @@ Adáptalo para:
 2. Instagram (visual, 100 palabras, con sugerencia del tipo de imagen)
 3. Facebook (conversacional, 150 palabras)
 
-Mantén el mensaje central, pero ajusta el tono y el formato para cada plataforma. No inventes cifras ni nombres de clientes.</pre>
+Mantén el mensaje central, pero ajusta el tono y el formato para cada plataforma. No inventes cifras ni nombres de clientes.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Prompt para comparar con otra herramienta</h3>
       <div class="prompt-wrap">
-<pre class="prompt">Escribe un post de LinkedIn de 150 palabras anunciando el lanzamiento de VetAgenda, una app de reservas para clínicas veterinarias desarrollada por un equipo de tres personas en seis semanas. Tono profesional y cercano, con una pregunta final.</pre>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Escribe un post de LinkedIn de 150 palabras anunciando el lanzamiento de VetAgenda, una app de reservas para clínicas veterinarias desarrollada por un equipo de tres personas en seis semanas. Tono profesional y cercano, con una pregunta final.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Pistas para detectar un texto genérico</h3>
@@ -773,24 +806,24 @@ Mantén el mensaje central, pero ajusta el tono y el formato para cada plataform
 
       <div class="prompt-wrap">
         <div class="prompt-title">📋 Ficha de plantilla</div>
-<pre class="prompt">Nombre de la plantilla:
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Nombre de la plantilla:
 Tipo de comunicación: (correo / informe / redes sociales / otro)
 Cuándo usarla:
 Prompt:
 Variables que debo cambiar: [  ]
 Tono recomendado:
-Qué funcionó y qué ajustaría:</pre>
+Qué funcionó y qué ajustaría:</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <div class="prompt-wrap">
         <div class="prompt-title">📋 Ejemplo ya completado</div>
-<pre class="prompt">Nombre de la plantilla: Seguimiento amable de cotización
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Nombre de la plantilla: Seguimiento amable de cotización
 Tipo de comunicación: Correo
 Cuándo usarla: Cuando una propuesta lleva una semana o más sin respuesta.
 Prompt: Redacta un correo de seguimiento para [tipo de propuesta] enviada hace [tiempo]. Contexto: [situación]. Tono cordial y profesional, sin presionar. Entre 100 y 150 palabras. Incluye una pregunta abierta.
 Variables que debo cambiar: [tipo de propuesta], [tiempo], [situación]
 Tono recomendado: Cordial, no insistente.
-Qué funcionó y qué ajustaría: Funcionó al pedir una pregunta abierta; agregaría una fecha propuesta para la llamada.</pre>
+Qué funcionó y qué ajustaría: Funcionó al pedir una pregunta abierta; agregaría una fecha propuesta para la llamada.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
       </div>
 
       <h3>Parte B: Caza de errores (8 min)</h3>
@@ -808,7 +841,7 @@ Qué funcionó y qué ajustaría: Funcionó al pedir una pregunta abierta; agreg
             <table>
               <thead><tr><th>Afirmación</th><th>Estado</th><th>Corrección</th></tr></thead>
               <tbody>
-                <tr><td>ChatGPT lanzado en noviembre de <strong>2021</strong></td><td>❌ Fecha errónea</td><td>Se lanzó en noviembre de 2022.</td></tr>
+                <tr><td><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a> lanzado en noviembre de <strong>2021</strong></td><td>❌ Fecha errónea</td><td>Se lanzó en noviembre de 2022.</td></tr>
                 <tr><td>100 millones de usuarios en <strong>dos días</strong></td><td>❌ Cifra errónea</td><td>Se estimó que alcanzó esa cifra en unos dos meses, no en dos días.</td></tr>
                 <tr><td>Python creado por Guido van Rossum, primera versión pública en 1991</td><td>✅ Correcto</td><td>Dato de control: no todo lo que dice la IA es falso.</td></tr>
                 <tr><td>"Instituto Mundial de Comunicación Digital" y el 97 %</td><td>❌ Fuente y cifra inventadas</td><td>Fuente creada para este ejercicio, no existe. La conclusión alarmista ("quedará fuera del mercado") tampoco está respaldada.</td></tr>
@@ -827,8 +860,7 @@ Qué funcionó y qué ajustaría: Funcionó al pedir una pregunta abierta; agreg
   </section>
 
   <!-- ============ EVALUACIÓN ============ -->
-  <section class="panel" id="evaluacion">
-    <h2>📊 Rúbrica de evaluación del módulo</h2>
+  <section class="panel acc" id="evaluacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="evaluacion-body"><span>📊 Rúbrica de evaluación del módulo</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="evaluacion-body" hidden>
     <p>Puede aplicarla sobre el documento con la biblioteca de plantillas o sobre los entregables de las actividades 3 y 6. Cada criterio vale 5 puntos (total: 20).</p>
     <div class="table-wrap">
       <table>
@@ -865,11 +897,10 @@ Qué funcionó y qué ajustaría: Funcionó al pedir una pregunta abierta; agreg
         </tbody>
       </table>
     </div>
-  </section>
+  </div></section>
 
   <!-- ============ TAREA ============ -->
-  <section class="panel" id="tarea">
-    <h2>📝 Tarea para casa</h2>
+  <section class="panel acc" id="tarea"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="tarea-body"><span>📝 Tarea para casa</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="tarea-body" hidden>
     <p>Durante la próxima semana, los estudiantes deben usar la IA para su comunicación escrita (correos, mensajes, trabajos) y documentar cuánto tiempo ahorran y cómo mejora la calidad. Entréguele esta tabla para registrarlo.</p>
     <div class="table-wrap">
       <table>
@@ -886,7 +917,7 @@ Qué funcionó y qué ajustaría: Funcionó al pedir una pregunta abierta; agreg
       <strong class="t">💡 Para la próxima sesión</strong>
       El Módulo 3 (IA para organizar el trabajo) retoma la idea de medir el tiempo: pida a los estudiantes que traigan esta tabla completa para comparar con su planificación semanal.
     </div>
-  </section>
+  </div></section>
 
 </main>
 
@@ -902,34 +933,99 @@ Qué funcionó y qué ajustaría: Funcionó al pedir una pregunta abierta; agreg
 
 <script>
 (function(){
-  // Botones de copiar
-  document.querySelectorAll('.prompt-wrap').forEach(function(wrap){
-    var src = wrap.querySelector('pre.prompt, .sample-text');
-    if(!src) return;
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'copy';
-    btn.textContent = 'Copiar';
-    btn.addEventListener('click', function(){
-      var text = src.innerText;
-      function ok(){ btn.textContent = '¡Copiado!'; btn.classList.add('done'); setTimeout(function(){ btn.textContent = 'Copiar'; btn.classList.remove('done'); }, 1800); }
-      function fallback(){
-        var ta = document.createElement('textarea');
-        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); ok(); } catch(e) { btn.textContent = 'No se pudo'; }
-        document.body.removeChild(ta);
-      }
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(ok, fallback);
-      } else { fallback(); }
-    });
-    wrap.appendChild(btn);
+  var on = false, root = document.documentElement;
+  function stop(e){ if(!on){ e.preventDefault(); return false; } }
+
+  ['copy','cut'].forEach(function(t){
+    document.addEventListener(t, function(e){
+      if(on) return;
+      if(e.clipboardData){ try { e.clipboardData.setData('text/plain',''); } catch(err){} }
+      e.preventDefault();
+    }, true);
+  });
+  ['selectstart','dragstart','contextmenu'].forEach(function(t){
+    document.addEventListener(t, stop, true);
   });
 
-  // Abrir los solucionarios al imprimir
+  function reset(){
+    document.querySelectorAll('.cp-btn').forEach(function(b){ b.textContent = 'Copiar'; b.classList.remove('done'); });
+  }
+
+  // Botones de copia de los prompts: solo responden con la copia habilitada
+  document.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('.cp-btn') : null;
+    if(!b) return;
+    if(!on){ e.preventDefault(); return; }
+    var pre = b.parentNode.querySelector('pre.prompt');
+    if(!pre) return;
+    var text = pre.textContent;
+    function ok(){
+      b.textContent = '¡Copiado!'; b.classList.add('done');
+      setTimeout(function(){ if(on){ b.textContent = 'Copiar'; b.classList.remove('done'); } }, 1800);
+    }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var done = false;
+      try { done = document.execCommand('copy'); } catch(err){}
+      document.body.removeChild(ta);
+      if(done){ ok(); } else { b.textContent = 'No se pudo'; }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok, fallback);
+    } else { fallback(); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.altKey && !e.ctrlKey && !e.metaKey){
+      if(e.code === 'KeyC'){ e.preventDefault(); on = true; root.classList.add('cp-on'); return; }
+      if(e.code === 'KeyN'){
+        e.preventDefault(); on = false; root.classList.remove('cp-on'); reset();
+        var s = window.getSelection && window.getSelection(); if(s){ s.removeAllRanges(); }
+        return;
+      }
+    }
+    if(on) return;
+    var k = (e.key || '').toLowerCase();
+    if((e.ctrlKey || e.metaKey) && ['c','x','a','s','u'].indexOf(k) !== -1){ e.preventDefault(); }
+  }, true);
+
+  document.addEventListener('selectionchange', function(){
+    if(on) return;
+    var s = window.getSelection && window.getSelection();
+    if(s && s.rangeCount && !s.isCollapsed){ s.removeAllRanges(); }
+  });
+
   window.addEventListener('beforeprint', function(){
     document.querySelectorAll('details').forEach(function(d){ d.setAttribute('open',''); });
+  });
+})();
+</script>
+<script>
+(function(){
+  var panels = document.querySelectorAll('section.panel.acc');
+  function setOpen(p, open){
+    var b = p.querySelector('.acc-btn'), c = p.querySelector('.acc-body');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(open){ c.removeAttribute('hidden'); } else { c.setAttribute('hidden', ''); }
+  }
+  Array.prototype.forEach.call(panels, function(p){
+    p.querySelector('.acc-btn').addEventListener('click', function(){
+      setOpen(p, p.querySelector('.acc-btn').getAttribute('aria-expanded') !== 'true');
+    });
+  });
+  function openFor(id){
+    var el = id && document.getElementById(id);
+    if(el && el.classList.contains('acc')) setOpen(el, true);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(a) openFor(a.getAttribute('href').slice(1));
+  });
+  window.addEventListener('hashchange', function(){
+    var id = location.hash.slice(1); openFor(id);
+    var el = document.getElementById(id); if(el) el.scrollIntoView();
   });
 })();
 </script>

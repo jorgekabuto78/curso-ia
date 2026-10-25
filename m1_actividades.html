@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía del Docente - Módulo 1: IA sin miedo: Fundamentos - ISTLC</title>
+<style>
+:root{
+  --primary:#667eea;--secondary:#764ba2;--bg:#f7fafc;--card:#ffffff;--text:#2d3748;
+  --muted:#718096;--border:#e2e8f0;--green:#10b981;--orange:#ed8936;
+  --info-bg:#ebf4ff;--info:#3b82f6;--warn-bg:#fffaf0;--ok-bg:#f0fff4;--tag-bg:#eef0fd;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Cabecera */
+header.hero{background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);color:#fff;text-align:center;padding:3.4rem 1.2rem 2.8rem}
+header.hero h1{font-size:2.5rem;line-height:1.2;text-shadow:0 2px 6px rgba(0,0,0,.25);margin-bottom:.8rem}
+header.hero .sub{font-size:1.2rem;opacity:.95;margin-bottom:.9rem}
+header.hero .meta{font-size:.95rem;opacity:.9}
+header.hero .badge{display:inline-block;background:rgba(255,255,255,.2);padding:.25rem .9rem;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:1rem;letter-spacing:.03em}
+
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+
+/* Navegación */
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav.toc ul{list-style:none;display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;padding:.6rem 1rem}
+nav.toc a{display:block;padding:.35rem .8rem;border-radius:8px;font-size:.88rem;font-weight:600;color:var(--text)}
+nav.toc a:hover{background:var(--tag-bg);color:var(--primary);text-decoration:none}
+
+/* Tarjetas de resumen */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin:2rem 0}
+.stat{background:var(--card);border-radius:12px;border-top:4px solid var(--primary);padding:1.4rem 1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.stat .n{font-size:2.3rem;font-weight:800;color:var(--primary);line-height:1.1}
+.stat .l{color:var(--muted);font-size:.92rem;margin-top:.3rem}
+
+/* Paneles */
+.panel{background:var(--card);border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);padding:1.6rem 1.8rem;margin:1.6rem 0}
+.panel h2{font-size:1.5rem;color:var(--primary);margin-bottom:.9rem}
+.panel h3{font-size:1.15rem;margin:1.2rem 0 .5rem;color:var(--text)}
+.panel p{margin:.5rem 0}
+.panel ul,.panel ol{margin:.5rem 0 .8rem 1.4rem}
+.panel li{margin:.3rem 0}
+
+/* Módulos / Actividades */
+.module{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);margin:2.2rem 0}
+.module-head{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:1.2rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.module-head h2{font-size:1.5rem}
+.pill{background:rgba(255,255,255,.22);padding:.4rem 1rem;border-radius:999px;font-size:.85rem;font-weight:600;white-space:nowrap}
+.module-body{padding:1.6rem 1.8rem 1.8rem}
+.module-body h3{font-size:1.1rem;color:var(--primary);margin:1.4rem 0 .5rem}
+.module-body p{margin:.5rem 0}
+.module-body ul,.module-body ol{margin:.5rem 0 .8rem 1.4rem}
+.module-body li{margin:.35rem 0}
+
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-bottom:1rem}
+.meta-card{border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;background:#fcfcff}
+.meta-card .k{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin-bottom:.25rem}
+.meta-card .v{font-size:.93rem}
+
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.3rem}
+.tag{background:var(--tag-bg);color:var(--primary);font-size:.78rem;font-weight:600;padding:.2rem .7rem;border-radius:999px}
+.tag.free{background:#d1fae5;color:#047857}
+.tag.paid{background:#feebc8;color:#c05621}
+
+/* Cajas de aviso */
+.box{border-left:4px solid var(--info);background:var(--info-bg);border-radius:8px;padding:.9rem 1.1rem;margin:1rem 0}
+.box.warn{border-color:var(--orange);background:var(--warn-bg)}
+.box.ok{border-color:var(--green);background:var(--ok-bg)}
+.box strong.t{display:block;margin-bottom:.2rem}
+
+/* Prompts y textos */
+.prompt-wrap{position:relative;margin:.8rem 0 1.3rem}
+.prompt-title{font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:.3rem}
+pre.prompt{background:#1a202c;color:#e2e8f0;border-left:4px solid var(--primary);border-radius:10px;padding:1.1rem 1.2rem;font-family:ui-monospace,'Cascadia Code',Consolas,'Courier New',monospace;font-size:.86rem;line-height:1.6;white-space:pre-wrap;word-wrap:break-word}
+.sample-text{background:#fffdf3;border:1px dashed #ecc94b;border-radius:10px;padding:1.1rem 1.2rem;font-size:.95rem;line-height:1.7}
+
+/* Tablas */
+.table-wrap{overflow-x:auto;margin:.8rem 0 1.2rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem;background:#fff}
+th,td{border:1px solid var(--border);padding:.6rem .8rem;text-align:left;vertical-align:top}
+th{background:var(--tag-bg);color:#4c51bf;font-weight:700}
+tbody tr:nth-child(even){background:#fafbff}
+td.blank{height:2.2rem}
+
+/* Solucionario */
+details{border:1px solid var(--border);border-radius:10px;margin:1rem 0;background:#fcfcff}
+details summary{cursor:pointer;padding:.8rem 1.1rem;font-weight:700;color:var(--secondary);list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"🔑 ";}
+details[open] summary{border-bottom:1px solid var(--border)}
+details .inner{padding:.6rem 1.1rem 1rem}
+
+.checklist{list-style:none;margin-left:0!important}
+.checklist li::before{content:"☐ ";color:var(--primary);font-weight:700}
+
+footer{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;text-align:center;padding:2.2rem 1rem;margin-top:3rem;font-size:.92rem}
+footer a{color:#fff;text-decoration:underline;margin:0 .6rem}
+footer p{margin:.35rem 0}
+
+@media (max-width:640px){
+  header.hero h1{font-size:1.8rem}
+  .module-body,.panel{padding:1.2rem 1.1rem}
+  .module-head{padding:1rem 1.1rem}
+  .module-head h2{font-size:1.2rem}
+}
+@media print{
+  nav.toc{display:none!important}
+  body{background:#fff}
+  .module,.panel,.stat{box-shadow:none;border:1px solid var(--border)}
+  .module{page-break-inside:auto}
+  .prompt-wrap,table,details{page-break-inside:avoid}
+  header.hero,.module-head,footer{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  pre.prompt{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* Selección controlada */
+html:not(.cp-on) body, html:not(.cp-on) body *{
+  -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+  -webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;
+}
+html:not(.cp-on) ::selection{background:transparent;color:inherit}
+html:not(.cp-on) ::-moz-selection{background:transparent;color:inherit}
+html:not(.cp-on) img, html:not(.cp-on) a{-webkit-user-drag:none;user-drag:none}
+
+/* Botón de copia: oculto salvo con la copia habilitada */
+.cp-btn{display:none!important}
+html.cp-on .cp-btn{
+  display:inline-block!important;position:absolute;top:.55rem;right:.55rem;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.35);
+  background:#4caf50;color:#fff;border:none;border-radius:6px;
+  padding:.3rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;
+  -webkit-user-select:none;user-select:none;
+}
+html.cp-on pre.prompt{padding-top:2.8rem}
+.pre-box{position:relative}
+html.cp-on .cp-btn:hover{background:#43a047}
+html.cp-on .cp-btn.done{background:#2e7d32}
+@media print{.cp-btn,html.cp-on .cp-btn{display:none!important}}
+
+.tag a.tl{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
+.tag a.tl:hover{text-decoration:underline}
+a.tl{color:#4f46e5;text-decoration:underline;text-underline-offset:2px}
+
+.panel.acc{padding:0;overflow:hidden}
+.panel.acc>h2{margin:0;font-size:1.5rem}
+.acc-btn{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.3rem 1.8rem;cursor:pointer;color:var(--primary);font-weight:700;font-size:1.5rem;line-height:1.3}
+.acc-btn:hover{background:rgba(102,126,234,.07)}
+.acc-btn:focus-visible{outline:3px solid var(--secondary);outline-offset:-3px}
+.acc-ic{flex:none;width:.65em;height:.65em;border-right:3px solid currentColor;border-bottom:3px solid currentColor;transform:rotate(45deg);transition:transform .2s;margin-top:-.25em}
+.acc-btn[aria-expanded="true"] .acc-ic{transform:rotate(-135deg);margin-top:.2em}
+.acc-body{padding:0 1.8rem 1.6rem}
+@media(max-width:700px){.acc-btn{padding:1.1rem;font-size:1.25rem}.acc-body{padding:0 1.1rem 1.2rem}}
+@media print{.acc-body[hidden]{display:block!important}.acc-ic{display:none}.acc-btn{padding:1rem 1.2rem}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="badge">GUÍA PARA EL DOCENTE</span>
+  <h1>📘 Módulo 1: IA sin miedo: Fundamentos</h1>
+  <p class="sub">Actividades prácticas con textos de ejemplo listos para usar</p>
+  <p class="meta">ISTLC - Instituto Superior Tecnológico Liceo Cristiano<br>Curso "Inteligencia Artificial para el Trabajo" | Carrera: Desarrollo de Software<br>Docente: Ing. Jorge Espinoza, Msc.</p>
+</header>
+
+<nav class="toc"><ul><li><a href="#resumen">Resumen</a></li><li><a href="#preparacion">Preparación</a></li><li><a href="#a1">Act. 1</a></li><li><a href="#a2">Act. 2</a></li><li><a href="#a3">Act. 3</a></li><li><a href="#a4">Act. 4</a></li><li><a href="#a5">Act. 5</a></li><li><a href="#a6">Act. 6</a></li><li><a href="#a7">Act. 7</a></li><li><a href="#evaluacion">Evaluación</a></li><li><a href="#tarea">Tarea</a></li></ul></nav>
+
+<main class="container">
+
+  <div class="stats">
+    <div class="stat"><div class="n">4 h</div><div class="l">Duración del módulo</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">Actividades prácticas</div></div>
+    <div class="stat"><div class="n">6</div><div class="l">Herramientas de IA</div></div>
+    <div class="stat"><div class="n">11</div><div class="l">Textos y prompts listos</div></div>
+  </div>
+
+  <section class="panel acc" id="resumen"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="resumen-body"><span>📋 Resumen de la sesión</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="resumen-body" hidden>
+    <p>Esta guía acompaña el <strong>Módulo 1: IA sin miedo - Fundamentos</strong> del curso. El módulo combina una exposición breve con prácticas guiadas: crear la cuenta en un asistente, resolver una primera tarea, comparar asistentes y aprender a mejorar y verificar las respuestas. Los casos están adaptados a la carrera de Desarrollo de Software.</p>
+    <div class="box">
+      <strong class="t">💡 Cómo usar esta guía</strong>
+      Cada bloque oscuro es un <strong>prompt</strong> listo para proyectar en pantalla y mostrar o dictar a los estudiantes. Las secciones <strong>"Solucionario"</strong> son solo para el docente: despliéguelas cuando las necesite. Todos los nombres, empresas y datos de los casos son <strong>ficticios</strong>. El documento está pensado también para imprimirse.
+    </div>
+    <h3>Cronograma sugerido</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Tiempo</th><th>Actividad</th><th>Modalidad</th><th>Herramientas</th></tr></thead>
+      <tbody><tr><td>0:00 – 0:25</td><td>Exposición: ¿qué es la IA?, tipos de IA, mitos y cómo ayuda en el trabajo</td><td>Docente</td><td>Presentación</td></tr><tr><td>0:25 – 0:45</td><td><a href="#a1">1. Mitos y realidades de la IA</a></td><td>Grupos de 4</td><td><div class="tags"><span class="tag">Sin herramientas</span><span class="tag">Opcional:</span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>0:45 – 1:05</td><td><a href="#a2">2. Clasificador de tipos de IA</a></td><td>Parejas</td><td><div class="tags"><span class="tag">Sin herramientas</span><span class="tag">Opcional:</span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>1:05 – 1:50</td><td><a href="#a3">3. Primeros pasos con un asistente</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>1:50 – 2:00</td><td>Descanso</td><td>—</td><td>—</td></tr><tr><td>2:00 – 2:30</td><td><a href="#a4">4. Explorando otros asistentes</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://www.deepseek.com/" target="_blank" rel="noopener noreferrer">DeepSeek</a></span></div></td></tr><tr><td>2:30 – 3:00</td><td><a href="#a5">5. Iterar para mejorar la respuesta</a></td><td>Individual</td><td><div class="tags"><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>3:00 – 3:25</td><td><a href="#a6">6. Prueba de alucinaciones</a></td><td>Equipos de 3</td><td><div class="tags"><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>3:25 – 3:45</td><td><a href="#a7">7. Mi mapa de uso de la IA</a></td><td>Individual</td><td><div class="tags"><span class="tag">Documento personal</span></div></td></tr><tr><td>3:45 – 4:00</td><td>Preguntas, tolerancia de tiempo y explicación de la tarea</td><td>Grupo</td><td>—</td></tr></tbody>
+    </table></div>
+    <h3>Alineación con los objetivos del curso</h3>
+    <div class="table-wrap"><table><thead><tr><th>Objetivo del curso</th><th>Actividades que lo desarrollan</th></tr></thead><tbody><tr><td><strong>Desmitificar la IA</strong></td><td>Exposición, 1, 2, 6</td></tr><tr><td><strong>Aplicar herramientas prácticas</strong></td><td>2, 3, 4, 5, 7</td></tr><tr><td><strong>Aumentar la productividad</strong></td><td>5, 7</td></tr><tr><td><strong>Crear contenido profesional</strong></td><td>3, 5</td></tr><tr><td><strong>Tomar mejores decisiones</strong></td><td>4 (elegir asistente según la tarea), 7</td></tr><tr><td><strong>Uso responsable</strong></td><td>3 (privacidad), 6 (verificación)</td></tr></tbody></table></div>
+  </div></section>
+
+  <section class="panel acc" id="preparacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="preparacion-body"><span>🧰 Preparación antes de la clase</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="preparacion-body" hidden>
+    <ul class="checklist"><li><strong>Cuentas:</strong> pida con antelación que cada estudiante tenga un correo activo. Durante la clase crearán la cuenta en <a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a> y, si hay tiempo, en <a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a>, <a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a> y otros.</li><li><strong>Verifique los planes gratuitos hoy mismo.</strong> El directorio marca varios asistentes como gratuitos, pero los límites y requisitos de registro cambian con frecuencia. Pruebe cada cuenta y cada prompt antes de la sesión.</li><li><strong>Plan B:</strong> si alguien no puede registrarse, trabaje en pareja con otro estudiante, o use una cuenta de demostración proyectada.</li><li><strong>Prompts trampa (actividad 6):</strong> ejecútelos usted antes para saber cómo responden los asistentes disponibles ese día.</li><li><strong>Material:</strong> proyector, cronómetro visible y copias de las tablas, o un documento compartido.</li><li><strong>Regla de privacidad:</strong> recuerde que no deben pegar contraseñas ni datos de terceros. Todos los casos de esta guía son ficticios.</li></ul>
+    <h3>Herramientas del módulo</h3>
+    <div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Microsoft Copilot</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Google Gemini</a></span><span class="tag free"><a class="tl" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a></span><span class="tag free"><a class="tl" href="https://www.deepseek.com/" target="_blank" rel="noopener noreferrer">DeepSeek</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span></div>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:.6rem">Verde: marcadas como gratuitas en el directorio del curso. Naranja: de pago. Sin color: freemium o plan por confirmar. Los planes cambian con frecuencia: verifíquelos antes de la sesión.</p>
+  </div></section>
+
+<section class="module" id="a1">
+<div class="module-head"><h2>🧱 Actividad 1: Mitos y realidades de la IA</h2><span class="pill">20 min · Grupos de 4</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Contrastar ideas previas sobre la IA con lo que realmente puede y no puede hacer.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">Sin herramientas</span><span class="tag">Opcional:</span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Desmitificar la IA</div></div></div>
+<ol><li><strong>(3 min)</strong> Reparta las ocho afirmaciones, impresas o proyectadas.</li><li><strong>(10 min)</strong> Cada grupo decide si cada una es mito o realidad y escribe una justificación de una línea.</li><li><strong>(7 min)</strong> Puesta en común: gana un punto el grupo que justifique mejor, no el que acierte más.</li></ol><div class="table-wrap"><table><thead><tr><th>N.º</th><th>Afirmación</th><th>Mito o realidad</th><th>Justificación</th></tr></thead><tbody><tr><td>1</td><td>"La IA reemplazará mi trabajo."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>2</td><td>"Necesito ser experto en tecnología para usar un asistente de IA."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>3</td><td>"La IA siempre tiene razón."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>4</td><td>"Existen muchas herramientas de IA gratuitas y accesibles."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>5</td><td>"La IA generativa puede crear texto, imágenes y código nuevo."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>6</td><td>"Una regla que mueve a Contabilidad todo correo con la palabra factura es IA generativa."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>7</td><td>"Lo que escribo en un asistente puede almacenarse, así que no debo pegar datos confidenciales."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>8</td><td>"Si la primera respuesta no es buena, no hay nada que hacer."</td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div><details><summary>Solucionario</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>N.º</th><th>Respuesta</th><th>Idea clave</th></tr></thead><tbody><tr><td>1</td><td>Mito</td><td>La IA es una herramienta que potencia y transforma tareas; el criterio humano sigue siendo necesario.</td></tr><tr><td>2</td><td>Mito</td><td>Las herramientas actuales se manejan con lenguaje natural, sin programar.</td></tr><tr><td>3</td><td>Mito</td><td>Puede equivocarse con total seguridad (alucinaciones): hay que verificar.</td></tr><tr><td>4</td><td>Realidad</td><td>Hay versiones gratuitas útiles, aunque con límites que conviene comprobar.</td></tr><tr><td>5</td><td>Realidad</td><td>Es la definición de IA generativa.</td></tr><tr><td>6</td><td>Mito</td><td>Es automatización simple: sigue una regla fija y no crea contenido nuevo.</td></tr><tr><td>7</td><td>Realidad</td><td>Los datos pueden guardarse según la política de cada servicio: no se comparte información sensible.</td></tr><tr><td>8</td><td>Mito</td><td>Se mejora iterando: más específico, variaciones, ajustes de tono o longitud.</td></tr></tbody></table></div></div></details>
+</div>
+</section>
+
+<section class="module" id="a2">
+<div class="module-head"><h2>🗂️ Actividad 2: Clasificador de tipos de IA</h2><span class="pill">20 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Distinguir los cuatro tipos de IA relevantes para el trabajo y la diferencia entre IA generativa y automatización simple.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">Sin herramientas</span><span class="tag">Opcional:</span><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Desmitificar la IA · Aplicar herramientas prácticas</div></div></div>
+<ol><li><strong>(2 min)</strong> Recuerde los cuatro tipos: generativa, conversacional, de análisis y de automatización.</li><li><strong>(10 min)</strong> Cada pareja clasifica los ocho casos y marca los que le generen duda.</li><li><strong>(8 min)</strong> Discusión de los casos dudosos.</li></ol><div class="table-wrap"><table><thead><tr><th>Caso</th><th>Tipo de IA</th></tr></thead><tbody><tr><td>A. Un sistema mueve a la carpeta "Contabilidad" todo correo que contenga la palabra "factura".</td><td class="blank"></td></tr><tr><td>B. Una herramienta redacta un correo profesional para responder la consulta de un cliente.</td><td class="blank"></td></tr><tr><td>C. El chat de una tienda en línea responde preguntas frecuentes de los compradores.</td><td class="blank"></td></tr><tr><td>D. Un programa analiza tres años de ventas y proyecta la demanda del próximo trimestre.</td><td class="blank"></td></tr><tr><td>E. Un asistente crea una ilustración a partir de una descripción escrita.</td><td class="blank"></td></tr><tr><td>F. Un flujo envía un recordatorio de reunión todos los lunes a las 8:00.</td><td class="blank"></td></tr><tr><td>G. Un asistente virtual dialoga con el usuario para agendar una cita.</td><td class="blank"></td></tr><tr><td>H. Un modelo detecta patrones sospechosos en miles de transacciones.</td><td class="blank"></td></tr></tbody></table></div><details><summary>Solucionario</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Caso</th><th>Tipo</th><th>Comentario</th></tr></thead><tbody><tr><td>A</td><td>Automatización simple</td><td>Regla fija, sin contenido nuevo.</td></tr><tr><td>B</td><td>Generativa</td><td>Crea texto nuevo a partir de una instrucción.</td></tr><tr><td>C</td><td>Conversacional</td><td>Mantiene un diálogo y responde preguntas.</td></tr><tr><td>D</td><td>De análisis</td><td>Procesa grandes volúmenes de datos y predice.</td></tr><tr><td>E</td><td>Generativa</td><td>Crea una imagen nueva.</td></tr><tr><td>F</td><td>Automatización simple</td><td>Tarea repetitiva con una regla de tiempo.</td></tr><tr><td>G</td><td>Conversacional</td><td>Diálogo orientado a una tarea.</td></tr><tr><td>H</td><td>De análisis</td><td>Detecta patrones en datos.</td></tr></tbody></table></div><p><strong>Para discutir:</strong> un asistente como <a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a> es a la vez conversacional y generativo. Los tipos no son excluyentes; sirven para pensar qué se necesita en cada tarea.</p></div></details>
+</div>
+</section>
+
+<section class="module" id="a3">
+<div class="module-head"><h2>🚀 Actividad 3: Primeros pasos con un asistente</h2><span class="pill">45 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Crear la cuenta, reconocer la interfaz y resolver una primera tarea real con un asistente.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aplicar herramientas prácticas</div></div></div>
+<h3>Desarrollo</h3><ol><li><strong>(10 min)</strong> Crear la cuenta (correo, Google o Microsoft) y confirmar el correo si hace falta.</li><li><strong>(5 min)</strong> Reconocer la interfaz: cuadro de chat, historial, nueva conversación y configuración.</li><li><strong>(5 min)</strong> Primera interacción: el prompt de presentación.</li><li><strong>(15 min)</strong> Resolver una tarea real o la tarea modelo.</li><li><strong>(10 min)</strong> Guardar y organizar: copiar lo útil a un documento y renombrar la conversación.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de presentación</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Hola, soy [tu nombre] y trabajo en [tu sector o profesión]. Estoy aprendiendo a usar IA para mejorar mi trabajo. ¿Podrías explicarme brevemente cómo puedes ayudarme?</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><h3>Tarea modelo (si el estudiante no tiene una tarea real)</h3><div class="prompt-wrap">
+<div class="prompt-title">📄 Situación</div>
+<div class="sample-text">Soy estudiante de Desarrollo de Software. Debo pedirle a mi profesor de Base de Datos una prórroga de tres días para entregar el proyecto final porque mi conexión a internet falló durante toda la semana.</div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de la tarea</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Necesito escribir un correo profesional para pedir una prórroga de entrega. El contexto es: [pegar la situación]. ¿Puedes ayudarme a redactarlo?</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><h3>Lista de verificación de la interfaz</h3><ul class="checklist"><li>Encuentro el cuadro de chat y envío un mensaje.</li><li>Inicio una conversación nueva.</li><li>Encuentro el historial y renombro una conversación.</li><li>Localizo la configuración.</li><li>Guardé en mi documento el resultado que más me sirvió.</li></ul><div class="box warn"><strong class="t">⚠️ Recordatorio de privacidad</strong>Pida que no usen datos reales de terceros ni información confidencial en esta primera práctica.</div>
+</div>
+</section>
+
+<section class="module" id="a4">
+<div class="module-head"><h2>🔍 Actividad 4: Explorando otros asistentes</h2><span class="pill">30 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Comparar asistentes con las mismas consultas y reconocer cuándo conviene uno que busque en internet.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://www.deepseek.com/" target="_blank" rel="noopener noreferrer">DeepSeek</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aplicar herramientas prácticas · Tomar mejores decisiones</div></div></div>
+<ol><li><strong>(3 min)</strong> Cada integrante elige un asistente distinto.</li><li><strong>(10 min)</strong> Ejecutan el prompt A y completan la tabla.</li><li><strong>(7 min)</strong> Ejecutan el prompt B, que exige información actual, y comparan.</li><li><strong>(10 min)</strong> Puesta en común: ¿para qué tarea usaría cada asistente?</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt A (explicación)</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Explica qué es la inteligencia artificial generativa en 120 palabras, para alguien que trabaja en una oficina y nunca la ha usado. Incluye un ejemplo de uso en el trabajo.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt B (información actual)</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">¿Cuáles son las tres noticias más recientes sobre inteligencia artificial? Para cada una indica la fecha y la fuente.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="table-wrap"><table><thead><tr><th>Criterio</th><th>Asistente 1: ______</th><th>Asistente 2: ______</th></tr></thead><tbody><tr><td>Claridad de la respuesta (1 a 5)</td><td class="blank"></td><td class="blank"></td></tr><tr><td>Tono y estilo</td><td class="blank"></td><td class="blank"></td></tr><tr><td>Respeta las 120 palabras</td><td class="blank"></td><td class="blank"></td></tr><tr><td>¿Citó fuentes en el prompt B?</td><td class="blank"></td><td class="blank"></td></tr><tr><td>¿Las fechas parecen actuales?</td><td class="blank"></td><td class="blank"></td></tr><tr><td>Característica única que noté</td><td class="blank"></td><td class="blank"></td></tr><tr><td>Lo usaría para…</td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div><details><summary>Solucionario: qué esperar</summary><div class="inner"><ul><li>Los asistentes con búsqueda en internet (según el curso, <a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a> y <a class="tl" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a>) suelen citar fuentes en el prompt B; otros pueden decir que no tienen acceso a información reciente o responder con datos desactualizados.</li><li><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a> destaca por su integración con los servicios de Google; <a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a>, por conversaciones largas y análisis de documentos, según el directorio.</li><li>Los resultados dependen de la versión y de las funciones activas de cada cuenta, y cambian con el tiempo. Pruebe los prompts antes de la clase.</li><li>Idea para cerrar: no existe un asistente mejor en todo; se elige según la tarea.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a5">
+<div class="module-head"><h2>🔁 Actividad 5: Iterar para mejorar la respuesta</h2><span class="pill">30 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Practicar las cuatro estrategias del curso para mejorar un resultado: especificar, pedir variaciones, ajustar e iterar.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aplicar herramientas prácticas · Crear contenido profesional</div></div></div>
+<h3>Punto de partida</h3><div class="prompt-wrap">
+<div class="prompt-title">📄 Mensaje original (flojo)</div>
+<div class="sample-text">Hola, quería saber si ya vio mi propuesta. Avíseme cualquier cosa. Saludos.</div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Primer prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Mejora este mensaje que le envío a un cliente después de enviarle una propuesta de desarrollo web: [pegar mensaje]</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><h3>Cadena de refinamiento (úsela en este orden)</h3><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompts de ajuste</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">1. Sé más específico: menciona que la propuesta fue enviada hace una semana y ofrece resolver dudas.
+2. Dame tres opciones diferentes de redacción.
+3. Haz el tono más formal.
+4. Hazlo más breve: máximo 60 palabras.
+5. Agrega una pregunta final que invite a responder.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="table-wrap"><table><thead><tr><th>Estrategia</th><th>Prompt que usé</th><th>¿Mejoró el resultado? ¿Por qué?</th></tr></thead><tbody><tr><td>Ser más específico</td><td class="blank"></td><td class="blank"></td></tr><tr><td>Pedir variaciones</td><td class="blank"></td><td class="blank"></td></tr><tr><td>Solicitar ajustes (tono o longitud)</td><td class="blank"></td><td class="blank"></td></tr><tr><td>Iterar (refinar la mejor versión)</td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div><details><summary>Solucionario: criterios</summary><div class="inner"><ul><li>El resultado final debe mencionar el contexto (propuesta enviada), mostrar interés y tener un llamado a la acción.</li><li>La mayor mejora suele venir del primer ajuste: dar contexto.</li><li>Pida a dos o tres estudiantes que lean su versión inicial y la final para notar la diferencia.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a6">
+<div class="module-head"><h2>🎭 Actividad 6: Prueba de alucinaciones</h2><span class="pill">25 min · Equipos de 3</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Comprobar con ejemplos que un asistente puede responder con seguridad datos falsos y ejercitar la verificación.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Desmitificar la IA · Uso responsable</div></div></div>
+<ol><li><strong>(10 min)</strong> Cada equipo ejecuta los tres prompts trampa y anota qué respondió el asistente.</li><li><strong>(10 min)</strong> Verifican cada respuesta en una fuente confiable (el prompt 3 se verifica en el sitio oficial de Python).</li><li><strong>(5 min)</strong> Cada equipo cuenta si su asistente dudó, rechazó o inventó.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt trampa 1</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Resume en 5 líneas el libro «Algoritmos del Quinto Sol» de Rodrigo Valdivieso, publicado en 2014, y cita dos de sus capítulos.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt trampa 2</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Muéstrame un ejemplo de uso de la función pandas.auto_clean_everything().</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt trampa 3</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">¿Cuál es la última versión estable de Python? Indica la fecha de lanzamiento.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="table-wrap"><table><thead><tr><th>Prompt</th><th>Qué respondió el asistente</th><th>¿Dudó, rechazó o inventó?</th><th>Cómo lo verifiqué</th></tr></thead><tbody><tr><td>1</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td>2</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td>3</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div><details><summary>Solucionario</summary><div class="inner"><ul><li><strong>Prompt 1:</strong> el libro y el autor fueron inventados para este ejercicio. Antes de la clase, haga una búsqueda rápida para confirmar que no coincide con una obra real.</li><li><strong>Prompt 2:</strong> la biblioteca pandas no incluye una función con ese nombre; se comprueba en su documentación oficial. Un asistente que inventa un ejemplo de código "funcionando" ilustra bien el riesgo.</li><li><strong>Prompt 3:</strong> compare con la página oficial de Python. Si la respuesta difiere, es un caso de información desactualizada.</li><li>Según el asistente y su versión, puede reconocer que no conoce el libro o la función. Es un buen resultado y también vale la pena comentarlo.</li><li>Idea para cerrar: la IA puede equivocarse con total seguridad; el responsable de verificar es quien la usa.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a7">
+<div class="module-head"><h2>🗺️ Actividad 7: Mi mapa de uso de la IA</h2><span class="pill">20 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Identificar tareas propias donde la IA ayuda, con el asistente y la precaución adecuados.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag">Documento personal</span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aplicar herramientas prácticas · Aumentar la productividad</div></div></div>
+<p>Cada estudiante completa una tabla con cinco tareas reales de su estudio o trabajo. Sirve de base para el resto del curso.</p><div class="table-wrap"><table><thead><tr><th>Tarea de mi trabajo o estudio</th><th>Asistente que probaría</th><th>Tipo de IA</th><th>Precaución</th></tr></thead><tbody><tr><td><em>Ejemplo:</em> Redactar un correo a un cliente</td><td><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></td><td>Generativa</td><td>Revisar datos y no incluir información confidencial</td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div><h3>Preguntas de reflexión</h3><ul><li>¿Qué tarea me ahorraría más tiempo?</li><li>¿En cuál no usaría IA y por qué?</li><li>¿Qué dato nunca pegaría en un asistente?</li></ul><div class="box ok"><strong class="t">✅ Cómo cerrar el módulo</strong>La IA es una herramienta que potencia el trabajo; el criterio sigue siendo humano. Anuncie que el Módulo 2 usará lo aprendido hoy para escribir y comunicar mejor.</div>
+</div>
+</section>
+
+  <section class="panel acc" id="evaluacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="evaluacion-body"><span>📊 Rúbrica de evaluación del módulo</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="evaluacion-body" hidden>
+    <p>Puede aplicarla sobre las tablas de las actividades 4, 5 y 7 y sobre la tarea para casa. Cada criterio vale 5 puntos (total: 20).</p>
+    <div class="table-wrap"><table><thead><tr><th>Criterio</th><th>Excelente (5)</th><th>Logrado (4)</th><th>En proceso (2-3)</th><th>Inicial (0-1)</th></tr></thead><tbody><tr><td><strong>Uso del asistente</strong></td><td>Crea la cuenta, usa la interfaz con soltura y organiza sus conversaciones.</td><td>Usa la interfaz con ayuda mínima.</td><td>Necesita ayuda en varios pasos.</td><td>No logra completar una tarea con el asistente.</td></tr><tr><td><strong>Calidad de las instrucciones</strong></td><td>Da contexto, objetivo y condiciones claras.</td><td>Da contexto y objetivo.</td><td>Instrucciones breves y poco específicas.</td><td>Instrucciones vagas de una línea.</td></tr><tr><td><strong>Iteración</strong></td><td>Mejora el resultado con tres o más ajustes visibles.</td><td>Dos ajustes con mejora.</td><td>Un solo ajuste.</td><td>Acepta la primera respuesta.</td></tr><tr><td><strong>Criterio y verificación</strong></td><td>Detecta respuestas dudosas y las verifica en una fuente.</td><td>Verifica la mayoría.</td><td>Verifica de forma parcial.</td><td>No verifica.</td></tr></tbody></table></div>
+  </div></section>
+
+  <section class="panel acc" id="tarea"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="tarea-body"><span>📝 Tarea para casa</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="tarea-body" hidden>
+    <p>Durante la semana, los estudiantes deben usar el asistente de IA <strong>al menos una vez al día</strong> para una tarea real y anotar qué funcionó y qué podrían mejorar.</p>
+    <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Tarea</th><th>Asistente usado</th><th>Mi prompt</th><th>¿Qué funcionó?</th><th>¿Qué mejoraría?</th></tr></thead><tbody><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div>
+    <div class="box"><strong class="t">💡 Para la próxima sesión</strong>En el Módulo 2 se trabaja en la redacción de correos, informes y redes sociales. Pida que lleven la tabla completa y dos textos propios para mejorar.</div>
+  </div></section>
+
+</main>
+
+<footer>
+  <p><strong>Instituto Superior Tecnológico Liceo Cristiano</strong></p>
+  <p>Proyecto: "Inteligencia Artificial para el Trabajo: Herramientas Digitales para la Comunidad"</p>
+  <p>Carrera: Desarrollo de Software | Guía del docente - Módulo 1</p>
+  <p>
+    <a href="https://jorgekabuto78.github.io/curso-ia/" target="_blank" rel="noopener">📚 Curso principal</a>
+    <a href="https://jorgekabuto78.github.io/curso-ia/herramientas.html" target="_blank" rel="noopener">🛠️ Directorio de herramientas</a>
+  </p>
+</footer>
+
+<script>
+(function(){
+  var on = false, root = document.documentElement;
+  function stop(e){ if(!on){ e.preventDefault(); return false; } }
+
+  ['copy','cut'].forEach(function(t){
+    document.addEventListener(t, function(e){
+      if(on) return;
+      if(e.clipboardData){ try { e.clipboardData.setData('text/plain',''); } catch(err){} }
+      e.preventDefault();
+    }, true);
+  });
+  ['selectstart','dragstart','contextmenu'].forEach(function(t){
+    document.addEventListener(t, stop, true);
+  });
+
+  function reset(){
+    document.querySelectorAll('.cp-btn').forEach(function(b){ b.textContent = 'Copiar'; b.classList.remove('done'); });
+  }
+
+  // Botones de copia de los prompts: solo responden con la copia habilitada
+  document.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('.cp-btn') : null;
+    if(!b) return;
+    if(!on){ e.preventDefault(); return; }
+    var pre = b.parentNode.querySelector('pre.prompt');
+    if(!pre) return;
+    var text = pre.textContent;
+    function ok(){
+      b.textContent = '¡Copiado!'; b.classList.add('done');
+      setTimeout(function(){ if(on){ b.textContent = 'Copiar'; b.classList.remove('done'); } }, 1800);
+    }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var done = false;
+      try { done = document.execCommand('copy'); } catch(err){}
+      document.body.removeChild(ta);
+      if(done){ ok(); } else { b.textContent = 'No se pudo'; }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok, fallback);
+    } else { fallback(); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.altKey && !e.ctrlKey && !e.metaKey){
+      if(e.code === 'KeyC'){ e.preventDefault(); on = true; root.classList.add('cp-on'); return; }
+      if(e.code === 'KeyN'){
+        e.preventDefault(); on = false; root.classList.remove('cp-on'); reset();
+        var s = window.getSelection && window.getSelection(); if(s){ s.removeAllRanges(); }
+        return;
+      }
+    }
+    if(on) return;
+    var k = (e.key || '').toLowerCase();
+    if((e.ctrlKey || e.metaKey) && ['c','x','a','s','u'].indexOf(k) !== -1){ e.preventDefault(); }
+  }, true);
+
+  document.addEventListener('selectionchange', function(){
+    if(on) return;
+    var s = window.getSelection && window.getSelection();
+    if(s && s.rangeCount && !s.isCollapsed){ s.removeAllRanges(); }
+  });
+
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details').forEach(function(d){ d.setAttribute('open',''); });
+  });
+})();
+</script>
+<script>
+(function(){
+  var panels = document.querySelectorAll('section.panel.acc');
+  function setOpen(p, open){
+    var b = p.querySelector('.acc-btn'), c = p.querySelector('.acc-body');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(open){ c.removeAttribute('hidden'); } else { c.setAttribute('hidden', ''); }
+  }
+  Array.prototype.forEach.call(panels, function(p){
+    p.querySelector('.acc-btn').addEventListener('click', function(){
+      setOpen(p, p.querySelector('.acc-btn').getAttribute('aria-expanded') !== 'true');
+    });
+  });
+  function openFor(id){
+    var el = id && document.getElementById(id);
+    if(el && el.classList.contains('acc')) setOpen(el, true);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(a) openFor(a.getAttribute('href').slice(1));
+  });
+  window.addEventListener('hashchange', function(){
+    var id = location.hash.slice(1); openFor(id);
+    var el = document.getElementById(id); if(el) el.scrollIntoView();
+  });
+})();
+</script>
+</body>
+</html>

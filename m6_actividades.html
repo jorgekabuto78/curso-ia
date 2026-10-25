@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía del Docente - Módulo 6: Uso Responsable de la IA y Cierre - ISTLC</title>
+<style>
+:root{
+  --primary:#667eea;--secondary:#764ba2;--bg:#f7fafc;--card:#ffffff;--text:#2d3748;
+  --muted:#718096;--border:#e2e8f0;--green:#10b981;--orange:#ed8936;
+  --info-bg:#ebf4ff;--info:#3b82f6;--warn-bg:#fffaf0;--ok-bg:#f0fff4;--tag-bg:#eef0fd;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Cabecera */
+header.hero{background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);color:#fff;text-align:center;padding:3.4rem 1.2rem 2.8rem}
+header.hero h1{font-size:2.5rem;line-height:1.2;text-shadow:0 2px 6px rgba(0,0,0,.25);margin-bottom:.8rem}
+header.hero .sub{font-size:1.2rem;opacity:.95;margin-bottom:.9rem}
+header.hero .meta{font-size:.95rem;opacity:.9}
+header.hero .badge{display:inline-block;background:rgba(255,255,255,.2);padding:.25rem .9rem;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:1rem;letter-spacing:.03em}
+
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+
+/* Navegación */
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav.toc ul{list-style:none;display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center;padding:.6rem 1rem}
+nav.toc a{display:block;padding:.35rem .8rem;border-radius:8px;font-size:.88rem;font-weight:600;color:var(--text)}
+nav.toc a:hover{background:var(--tag-bg);color:var(--primary);text-decoration:none}
+
+/* Tarjetas de resumen */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin:2rem 0}
+.stat{background:var(--card);border-radius:12px;border-top:4px solid var(--primary);padding:1.4rem 1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.stat .n{font-size:2.3rem;font-weight:800;color:var(--primary);line-height:1.1}
+.stat .l{color:var(--muted);font-size:.92rem;margin-top:.3rem}
+
+/* Paneles */
+.panel{background:var(--card);border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);padding:1.6rem 1.8rem;margin:1.6rem 0}
+.panel h2{font-size:1.5rem;color:var(--primary);margin-bottom:.9rem}
+.panel h3{font-size:1.15rem;margin:1.2rem 0 .5rem;color:var(--text)}
+.panel p{margin:.5rem 0}
+.panel ul,.panel ol{margin:.5rem 0 .8rem 1.4rem}
+.panel li{margin:.3rem 0}
+
+/* Módulos / Actividades */
+.module{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);margin:2.2rem 0}
+.module-head{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:1.2rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.module-head h2{font-size:1.5rem}
+.pill{background:rgba(255,255,255,.22);padding:.4rem 1rem;border-radius:999px;font-size:.85rem;font-weight:600;white-space:nowrap}
+.module-body{padding:1.6rem 1.8rem 1.8rem}
+.module-body h3{font-size:1.1rem;color:var(--primary);margin:1.4rem 0 .5rem}
+.module-body p{margin:.5rem 0}
+.module-body ul,.module-body ol{margin:.5rem 0 .8rem 1.4rem}
+.module-body li{margin:.35rem 0}
+
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-bottom:1rem}
+.meta-card{border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;background:#fcfcff}
+.meta-card .k{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;margin-bottom:.25rem}
+.meta-card .v{font-size:.93rem}
+
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.3rem}
+.tag{background:var(--tag-bg);color:var(--primary);font-size:.78rem;font-weight:600;padding:.2rem .7rem;border-radius:999px}
+.tag.free{background:#d1fae5;color:#047857}
+.tag.paid{background:#feebc8;color:#c05621}
+
+/* Cajas de aviso */
+.box{border-left:4px solid var(--info);background:var(--info-bg);border-radius:8px;padding:.9rem 1.1rem;margin:1rem 0}
+.box.warn{border-color:var(--orange);background:var(--warn-bg)}
+.box.ok{border-color:var(--green);background:var(--ok-bg)}
+.box strong.t{display:block;margin-bottom:.2rem}
+
+/* Prompts y textos */
+.prompt-wrap{position:relative;margin:.8rem 0 1.3rem}
+.prompt-title{font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:.3rem}
+pre.prompt{background:#1a202c;color:#e2e8f0;border-left:4px solid var(--primary);border-radius:10px;padding:1.1rem 1.2rem;font-family:ui-monospace,'Cascadia Code',Consolas,'Courier New',monospace;font-size:.86rem;line-height:1.6;white-space:pre-wrap;word-wrap:break-word}
+.sample-text{background:#fffdf3;border:1px dashed #ecc94b;border-radius:10px;padding:1.1rem 1.2rem;font-size:.95rem;line-height:1.7}
+
+/* Tablas */
+.table-wrap{overflow-x:auto;margin:.8rem 0 1.2rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem;background:#fff}
+th,td{border:1px solid var(--border);padding:.6rem .8rem;text-align:left;vertical-align:top}
+th{background:var(--tag-bg);color:#4c51bf;font-weight:700}
+tbody tr:nth-child(even){background:#fafbff}
+td.blank{height:2.2rem}
+
+/* Solucionario */
+details{border:1px solid var(--border);border-radius:10px;margin:1rem 0;background:#fcfcff}
+details summary{cursor:pointer;padding:.8rem 1.1rem;font-weight:700;color:var(--secondary);list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"🔑 ";}
+details[open] summary{border-bottom:1px solid var(--border)}
+details .inner{padding:.6rem 1.1rem 1rem}
+
+.checklist{list-style:none;margin-left:0!important}
+.checklist li::before{content:"☐ ";color:var(--primary);font-weight:700}
+
+footer{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;text-align:center;padding:2.2rem 1rem;margin-top:3rem;font-size:.92rem}
+footer a{color:#fff;text-decoration:underline;margin:0 .6rem}
+footer p{margin:.35rem 0}
+
+@media (max-width:640px){
+  header.hero h1{font-size:1.8rem}
+  .module-body,.panel{padding:1.2rem 1.1rem}
+  .module-head{padding:1rem 1.1rem}
+  .module-head h2{font-size:1.2rem}
+}
+@media print{
+  nav.toc{display:none!important}
+  body{background:#fff}
+  .module,.panel,.stat{box-shadow:none;border:1px solid var(--border)}
+  .module{page-break-inside:auto}
+  .prompt-wrap,table,details{page-break-inside:avoid}
+  header.hero,.module-head,footer{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  pre.prompt{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* Selección controlada */
+html:not(.cp-on) body, html:not(.cp-on) body *{
+  -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+  -webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;
+}
+html:not(.cp-on) ::selection{background:transparent;color:inherit}
+html:not(.cp-on) ::-moz-selection{background:transparent;color:inherit}
+html:not(.cp-on) img, html:not(.cp-on) a{-webkit-user-drag:none;user-drag:none}
+
+/* Botón de copia: oculto salvo con la copia habilitada */
+.cp-btn{display:none!important}
+html.cp-on .cp-btn{
+  display:inline-block!important;position:absolute;top:.55rem;right:.55rem;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.35);
+  background:#4caf50;color:#fff;border:none;border-radius:6px;
+  padding:.3rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;
+  -webkit-user-select:none;user-select:none;
+}
+html.cp-on pre.prompt{padding-top:2.8rem}
+.pre-box{position:relative}
+html.cp-on .cp-btn:hover{background:#43a047}
+html.cp-on .cp-btn.done{background:#2e7d32}
+@media print{.cp-btn,html.cp-on .cp-btn{display:none!important}}
+
+.tag a.tl{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
+.tag a.tl:hover{text-decoration:underline}
+a.tl{color:#4f46e5;text-decoration:underline;text-underline-offset:2px}
+
+.panel.acc{padding:0;overflow:hidden}
+.panel.acc>h2{margin:0;font-size:1.5rem}
+.acc-btn{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.3rem 1.8rem;cursor:pointer;color:var(--primary);font-weight:700;font-size:1.5rem;line-height:1.3}
+.acc-btn:hover{background:rgba(102,126,234,.07)}
+.acc-btn:focus-visible{outline:3px solid var(--secondary);outline-offset:-3px}
+.acc-ic{flex:none;width:.65em;height:.65em;border-right:3px solid currentColor;border-bottom:3px solid currentColor;transform:rotate(45deg);transition:transform .2s;margin-top:-.25em}
+.acc-btn[aria-expanded="true"] .acc-ic{transform:rotate(-135deg);margin-top:.2em}
+.acc-body{padding:0 1.8rem 1.6rem}
+@media(max-width:700px){.acc-btn{padding:1.1rem;font-size:1.25rem}.acc-body{padding:0 1.1rem 1.2rem}}
+@media print{.acc-body[hidden]{display:block!important}.acc-ic{display:none}.acc-btn{padding:1rem 1.2rem}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="badge">GUÍA PARA EL DOCENTE</span>
+  <h1>⚖️ Módulo 6: Uso Responsable de la IA y Cierre</h1>
+  <p class="sub">Actividades prácticas con textos de ejemplo listos para usar</p>
+  <p class="meta">ISTLC - Instituto Superior Tecnológico Liceo Cristiano<br>Curso "Inteligencia Artificial para el Trabajo" | Carrera: Desarrollo de Software<br>Docente: Ing. Jorge Espinoza, Msc.</p>
+</header>
+
+<nav class="toc"><ul><li><a href="#resumen">Resumen</a></li><li><a href="#preparacion">Preparación</a></li><li><a href="#a1">Act. 1</a></li><li><a href="#a2">Act. 2</a></li><li><a href="#a3">Act. 3</a></li><li><a href="#a4">Act. 4</a></li><li><a href="#a5">Act. 5</a></li><li><a href="#a6">Act. 6</a></li><li><a href="#a7">Act. 7</a></li><li><a href="#evaluacion">Evaluación</a></li><li><a href="#tarea">Tarea</a></li></ul></nav>
+
+<main class="container">
+
+  <div class="stats">
+    <div class="stat"><div class="n">4 h</div><div class="l">Duración del módulo</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">Actividades prácticas</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">Herramientas de IA</div></div>
+    <div class="stat"><div class="n">12</div><div class="l">Textos y prompts listos</div></div>
+  </div>
+
+  <section class="panel acc" id="resumen"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="resumen-body"><span>📋 Resumen de la sesión</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="resumen-body" hidden>
+    <p>Esta guía acompaña el <strong>Módulo 6: Uso Responsable de la IA y Cierre</strong>, la última sesión del curso. Los estudiantes practican qué información compartir, evalúan usos de IA con criterios éticos, corrigen sesgos en sus instrucciones, verifican fuentes, redactan su propio código de ética, planean su aprendizaje y presentan un proyecto integrador. El cierre incluye una reflexión final y compromisos personales.</p>
+    <div class="box">
+      <strong class="t">💡 Cómo usar esta guía</strong>
+      Cada bloque oscuro es un <strong>prompt</strong> listo para proyectar en pantalla y mostrar o dictar a los estudiantes. Las secciones <strong>"Solucionario"</strong> son solo para el docente: despliéguelas cuando las necesite. Todos los nombres, empresas y datos de los casos son <strong>ficticios</strong>. El documento está pensado también para imprimirse.
+    </div>
+    <h3>Cronograma sugerido</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Tiempo</th><th>Actividad</th><th>Modalidad</th><th>Herramientas</th></tr></thead>
+      <tbody><tr><td>0:00 – 0:25</td><td>Exposición: ética, limitaciones y riesgos, protección de datos, marco ético y futuro del trabajo</td><td>Docente</td><td>Presentación</td></tr><tr><td>0:25 – 0:45</td><td><a href="#a1">1. Semáforo de datos y anonimización</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>0:45 – 1:15</td><td><a href="#a2">2. Auditoría ética de usos de IA</a></td><td>Equipos de 3</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>1:15 – 1:40</td><td><a href="#a3">3. Detectar y corregir sesgos en los prompts</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>1:40 – 2:00</td><td><a href="#a4">4. Verificación de citas y fuentes</a></td><td>Parejas</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a></span><span class="tag"><a class="tl" href="https://consensus.app/" target="_blank" rel="noopener noreferrer">Consensus</a></span><span class="tag"><a class="tl" href="https://elicit.com/" target="_blank" rel="noopener noreferrer">Elicit</a></span><span class="tag"><a class="tl" href="https://www.snopes.com/" target="_blank" rel="noopener noreferrer">Snopes</a></span></div></td></tr><tr><td>2:00 – 2:10</td><td>Descanso</td><td>—</td><td>—</td></tr><tr><td>2:10 – 2:35</td><td><a href="#a5">5. Mi código de ética personal</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag">Documento personal</span></div></td></tr><tr><td>2:35 – 3:05</td><td><a href="#a6">6. Plan de aprendizaje y primeros 30 días</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></td></tr><tr><td>3:05 – 3:45</td><td><a href="#a7">7. Proyecto integrador final</a></td><td>Individual</td><td><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag">Herramientas de los módulos anteriores</span></div></td></tr><tr><td>3:45 – 4:00</td><td>Evaluación final, reflexión y compromisos</td><td>Grupo</td><td>Documento personal</td></tr></tbody>
+    </table></div>
+    <h3>Alineación con los objetivos del curso</h3>
+    <div class="table-wrap"><table><thead><tr><th>Objetivo del curso</th><th>Actividades que lo desarrollan</th></tr></thead><tbody><tr><td><strong>Desmitificar la IA</strong></td><td>4 (citas inventadas)</td></tr><tr><td><strong>Aplicar herramientas prácticas</strong></td><td>6, 7</td></tr><tr><td><strong>Aumentar la productividad</strong></td><td>6, 7</td></tr><tr><td><strong>Crear contenido profesional</strong></td><td>7</td></tr><tr><td><strong>Tomar mejores decisiones</strong></td><td>2, 4</td></tr><tr><td><strong>Uso responsable</strong></td><td>1, 2, 3, 4, 5</td></tr></tbody></table></div>
+  </div></section>
+
+  <section class="panel acc" id="preparacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="preparacion-body"><span>🧰 Preparación antes de la clase</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="preparacion-body" hidden>
+    <ul class="checklist"><li><strong>Anuncie el proyecto integrador con antelación.</strong> Pida en la sesión anterior que cada estudiante venga con un desafío real en mente.</li><li><strong>Verifique las herramientas de verificación.</strong> <a class="tl" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a>, <a class="tl" href="https://consensus.app/" target="_blank" rel="noopener noreferrer">Consensus</a>, <a class="tl" href="https://elicit.com/" target="_blank" rel="noopener noreferrer">Elicit</a> y <a class="tl" href="https://www.snopes.com/" target="_blank" rel="noopener noreferrer">Snopes</a> pueden tener límites; los detectores (<a class="tl" href="https://gptzero.me/" target="_blank" rel="noopener noreferrer">GPTZero</a>, <a class="tl" href="https://originality.ai/" target="_blank" rel="noopener noreferrer">Originality AI</a>, <a class="tl" href="https://gowinston.ai/" target="_blank" rel="noopener noreferrer">Winston AI</a>) pueden requerir pago o cuenta. Presente los que no pueda probar como demostración.</li><li><strong>Confirme que las fuentes inventadas de la actividad 4 no existan.</strong> Haga una búsqueda rápida del nombre de la universidad y de la consultora antes de la clase.</li><li><strong>Plan B:</strong> las actividades 1 a 3, 5 y 6 se hacen con un asistente conversacional o incluso sin herramientas.</li><li><strong>Tiempo de presentaciones:</strong> calcule 5 minutos por estudiante y divida el grupo si hace falta.</li><li><strong>Cierre del curso:</strong> prepare un breve momento de felicitación y, si lo desea, un certificado o constancia según la institución.</li></ul>
+    <h3>Herramientas del módulo</h3>
+    <div class="tags"><span class="tag free"><a class="tl" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a></span><span class="tag"><a class="tl" href="https://consensus.app/" target="_blank" rel="noopener noreferrer">Consensus</a></span><span class="tag"><a class="tl" href="https://elicit.com/" target="_blank" rel="noopener noreferrer">Elicit</a></span><span class="tag"><a class="tl" href="https://www.snopes.com/" target="_blank" rel="noopener noreferrer">Snopes</a></span><span class="tag"><a class="tl" href="https://gptzero.me/" target="_blank" rel="noopener noreferrer">GPTZero</a></span><span class="tag paid"><a class="tl" href="https://originality.ai/" target="_blank" rel="noopener noreferrer">Originality AI</a></span><span class="tag"><a class="tl" href="https://gowinston.ai/" target="_blank" rel="noopener noreferrer">Winston AI</a></span><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:.6rem">Verde: marcadas como gratuitas en el directorio del curso. Naranja: de pago. Sin color: freemium o plan por confirmar. Los planes cambian con frecuencia: verifíquelos antes de la sesión.</p>
+  </div></section>
+
+<section class="module" id="a1">
+<div class="module-head"><h2>🚦 Actividad 1: Semáforo de datos y anonimización</h2><span class="pill">20 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Decidir qué información puede compartirse con un asistente de IA y practicar cómo anonimizar un texto.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Uso responsable</div></div></div>
+<h3>Parte A: clasifique con el semáforo (10 min)</h3><p>Rojo: nunca se comparte. Amarillo: depende de la política de la organización. Verde: puede compartirse sin riesgo evidente.</p><div class="table-wrap"><table><thead><tr><th>N.º</th><th>Información</th><th>Rojo, amarillo o verde</th></tr></thead><tbody><tr><td>1</td><td>La contraseña de la cuenta de la empresa.</td><td class="blank"></td></tr><tr><td>2</td><td>Un correo interno sin nombres ni datos personales.</td><td class="blank"></td></tr><tr><td>3</td><td>La cédula y la dirección de un cliente.</td><td class="blank"></td></tr><tr><td>4</td><td>Nombres de clientes junto con sus saldos pendientes.</td><td class="blank"></td></tr><tr><td>5</td><td>Una lista de tareas de un proyecto con nombres genéricos.</td><td class="blank"></td></tr><tr><td>6</td><td>Un contrato firmado con cláusulas confidenciales.</td><td class="blank"></td></tr><tr><td>7</td><td>Un párrafo de su propio blog para mejorar la redacción.</td><td class="blank"></td></tr><tr><td>8</td><td>Ventas totales por producto, sin datos de clientes.</td><td class="blank"></td></tr><tr><td>9</td><td>Resultados médicos de un empleado.</td><td class="blank"></td></tr><tr><td>10</td><td>Código fuente privado de la empresa.</td><td class="blank"></td></tr><tr><td>11</td><td>La foto de la pizarra de una clase pública.</td><td class="blank"></td></tr><tr><td>12</td><td>La queja de un cliente con su nombre y teléfono.</td><td class="blank"></td></tr></tbody></table></div><h3>Parte B: anonimice este texto (10 min)</h3><div class="prompt-wrap">
+<div class="prompt-title">📄 Texto con datos personales (ficticios)</div>
+<div class="sample-text">Hola, soy Carla Mendoza (cédula 1234567890). Mi pedido n.º 4587 llegó incompleto. Pueden llamarme al 0990000000 o escribir a carla.mendoza@correo.example. Vivo en Av. Los Ríos 123, Guayaquil.</div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Reemplaza en este texto todos los datos personales por etiquetas entre corchetes como [NOMBRE], [CÉDULA], [TELÉFONO], [CORREO] y [DIRECCIÓN], y conserva todo lo demás igual:
+[pegar el texto]</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>N.º</th><th>Color</th><th>Razón</th></tr></thead><tbody><tr><td>1</td><td>Rojo</td><td>Nunca se comparten credenciales.</td></tr><tr><td>2</td><td>Verde</td><td>Sin datos personales ni confidenciales.</td></tr><tr><td>3</td><td>Rojo</td><td>Datos personales identificables.</td></tr><tr><td>4</td><td>Rojo</td><td>Datos personales y financieros de terceros.</td></tr><tr><td>5</td><td>Verde</td><td>Información genérica.</td></tr><tr><td>6</td><td>Rojo</td><td>Documento legal con información confidencial.</td></tr><tr><td>7</td><td>Verde</td><td>Contenido propio y público.</td></tr><tr><td>8</td><td>Amarillo</td><td>Es información de la empresa; depende de su política.</td></tr><tr><td>9</td><td>Rojo</td><td>Datos médicos sensibles.</td></tr><tr><td>10</td><td>Rojo</td><td>Propiedad intelectual no pública (puede aceptarse con una versión empresarial y autorización).</td></tr><tr><td>11</td><td>Verde</td><td>Contenido público.</td></tr><tr><td>12</td><td>Rojo</td><td>Se vuelve verde si se anonimiza.</td></tr></tbody></table></div><p><strong>Resultado esperado de la parte B:</strong> "Hola, soy [NOMBRE] (cédula [CÉDULA]). Mi pedido n.º 4587 llegó incompleto. Pueden llamarme al [TELÉFONO] o escribir a [CORREO]. Vivo en [DIRECCIÓN]." Pida que verifiquen que no queden datos sin reemplazar: la IA puede pasar alguno por alto, de modo que revisar a mano es parte de la anonimización.</p></div></details>
+</div>
+</section>
+
+<section class="module" id="a2">
+<div class="module-head"><h2>🔎 Actividad 2: Auditoría ética de usos de IA</h2><span class="pill">30 min · Equipos de 3</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Evaluar usos concretos de IA según transparencia, privacidad, precisión e impacto.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Uso responsable</div></div></div>
+<h3>Cuatro casos (ficticios)</h3><div class="table-wrap"><table><thead><tr><th>Caso</th><th>Descripción</th></tr></thead><tbody><tr><th>A</th><td>Un estudiante usa IA para redactar el informe de su pasantía y lo entrega sin mencionar el uso ni revisar las cifras.</td></tr><tr><th>B</th><td>Un gerente pega en un asistente gratuito la lista de empleados con sus salarios para pedir un análisis.</td></tr><tr><th>C</th><td>Una freelance usa IA para generar descripciones de productos, corrige los datos y avisa en su contrato que usa IA como apoyo.</td></tr><tr><th>D</th><td>Una empresa usa IA para filtrar hojas de vida y escribe como criterio: "candidato ideal: joven y con mucha energía".</td></tr></tbody></table></div><ol><li><strong>(5 min)</strong> Cada equipo recibe un caso (o dos si hay tiempo).</li><li><strong>(15 min)</strong> Lo evalúan con el prompt y deciden su calificación.</li><li><strong>(10 min)</strong> Presentan: calificación, riesgo principal y una recomendación.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de evaluación</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Actúa como consultor de ética en IA. Uso de IA que quiero evaluar: [pegar el caso].
+
+Evalúalo según:
+1. Transparencia: ¿fue claro que se usó IA?
+2. Privacidad: ¿se compartió información que no debía?
+3. Precisión: ¿se verificó la información?
+4. Impacto: ¿quién se beneficia y quién puede resultar perjudicado?
+
+Da una calificación (Apropiado / Requiere ajustes / Problemático) y recomendaciones.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><details><summary>Solucionario</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Caso</th><th>Calificación</th><th>Razones</th></tr></thead><tbody><tr><td>A</td><td>Requiere ajustes</td><td>Falta transparencia (según las reglas de la institución) y verificación de cifras; el responsable del informe es el estudiante.</td></tr><tr><td>B</td><td>Problemático</td><td>Se comparten datos personales y salariales con un servicio externo sin autorización; el riesgo es de privacidad.</td></tr><tr><td>C</td><td>Apropiado</td><td>Revisa los datos, informa el uso de IA y asume la responsabilidad del resultado.</td></tr><tr><td>D</td><td>Problemático</td><td>El criterio discrimina por edad y puede sesgar la selección; debe basarse en competencias demostrables.</td></tr></tbody></table></div><p>Acepte calificaciones distintas si están bien argumentadas. Ayuda preguntar: "¿qué cambiaría para pasar el caso a Apropiado?".</p></div></details>
+</div>
+</section>
+
+<section class="module" id="a3">
+<div class="module-head"><h2>🪞 Actividad 3: Detectar y corregir sesgos en los prompts</h2><span class="pill">25 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Reconocer supuestos problemáticos en las instrucciones y reformularlas de forma inclusiva.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Uso responsable</div></div></div>
+<p>Reformulen estos cuatro prompts y expliquen qué supuesto eliminaron.</p><div class="table-wrap"><table><thead><tr><th>Prompt original</th><th>Supuesto problemático</th><th>Versión mejorada</th></tr></thead><tbody><tr><td>1. "Describe a un CEO exitoso."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>2. "Crea un perfil de candidato ideal para desarrollador."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>3. "Escribe sobre cómo manejar empleados difíciles."</td><td class="blank"></td><td class="blank"></td></tr><tr><td>4. "Genera ideas para atraer clientes millennials."</td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div><ol><li><strong>(10 min)</strong> Identifican los supuestos y escriben su versión.</li><li><strong>(10 min)</strong> Comparan con la versión que propone el asistente.</li><li><strong>(5 min)</strong> Completan la lista de verificación.</li></ol><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt de apoyo</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Mejora estos prompts para hacerlos más inclusivos y menos sesgados: [pegar los 4].
+Para cada uno identifica los supuestos problemáticos, propón una versión inclusiva y explica por qué es mejor.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><ul class="checklist"><li>¿Mi prompt usa lenguaje inclusivo?</li><li>¿Evita estereotipos de edad, género u origen?</li><li>¿Pide perspectivas diversas?</li><li>¿Se centra en conductas o competencias y no en etiquetas?</li></ul><details><summary>Solucionario: versiones de referencia</summary><div class="inner"><div class="table-wrap"><table><thead><tr><th>Original</th><th>Supuesto</th><th>Versión mejorada</th></tr></thead><tbody><tr><td>1</td><td>Supone un perfil único (por ejemplo, hombre y mayor).</td><td>Describe tres perfiles distintos de CEO exitosos, con trayectorias, géneros y edades variados, y las prácticas de liderazgo que comparten.</td></tr><tr><td>2</td><td>Idealiza un candidato sin criterios medibles.</td><td>Define las competencias técnicas y blandas necesarias para el puesto de desarrollador, centradas en habilidades demostrables, sin requisitos de edad, género o apariencia.</td></tr><tr><td>3</td><td>Etiqueta a las personas como "difíciles".</td><td>Escribe sobre cómo manejar conflictos de desempeño en el equipo, centrándote en conductas observables y conversaciones respetuosas.</td></tr><tr><td>4</td><td>Generaliza a toda una generación.</td><td>Genera ideas para atraer clientes de distintas edades interesados en [producto], basadas en sus necesidades y hábitos de consumo y no en estereotipos generacionales.</td></tr></tbody></table></div></div></details>
+</div>
+</section>
+
+<section class="module" id="a4">
+<div class="module-head"><h2>🔗 Actividad 4: Verificación de citas y fuentes</h2><span class="pill">20 min · Parejas</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Aprender a comprobar si las afirmaciones y las citas de un texto generado por IA existen y dicen lo que se afirma.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a></span><span class="tag"><a class="tl" href="https://consensus.app/" target="_blank" rel="noopener noreferrer">Consensus</a></span><span class="tag"><a class="tl" href="https://elicit.com/" target="_blank" rel="noopener noreferrer">Elicit</a></span><span class="tag"><a class="tl" href="https://www.snopes.com/" target="_blank" rel="noopener noreferrer">Snopes</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Uso responsable · Desmitificar la IA</div></div></div>
+<div class="prompt-wrap">
+<div class="prompt-title">📄 Respuesta de una IA (con citas dudosas)</div>
+<div class="sample-text">Según un estudio de la Universidad Andina del Pacífico (2023), publicado en la «Revista Latinoamericana de Productividad Digital», los equipos que usan IA reducen en un 43 % sus tiempos de redacción. Además, un informe de la consultora «Nexo Analytics» (2024) concluye que el 80 % de las pymes ya usa IA. Por último, Andrew Ng afirma en su curso «AI For Everyone» que la IA es «la nueva electricidad».</div>
+</div><ol><li><strong>(5 min)</strong> Subrayen cada afirmación verificable (estudio, cifra, institución, cita).</li><li><strong>(10 min)</strong> Busquen cada una con un buscador, <a class="tl" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Perplexity</a> o <a class="tl" href="https://consensus.app/" target="_blank" rel="noopener noreferrer">Consensus</a> y anoten el resultado.</li><li><strong>(5 min)</strong> Concluyan qué confianza merece el texto.</li></ol><div class="table-wrap"><table><thead><tr><th>Afirmación</th><th>¿La encontré? ¿Dónde?</th><th>¿Dice lo que afirma la IA?</th><th>Confianza (alta, media, baja)</th></tr></thead><tbody><tr><td>Estudio de la Universidad Andina del Pacífico (43 %)</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td>Informe de Nexo Analytics (80 %)</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td>Frase de Andrew Ng en «AI For Everyone»</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt para pedir fuentes verificables</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Responde con información que puedas respaldar. Para cada dato indica la fuente con enlace. Si no estás seguro de un dato o no existe una fuente, dilo explícitamente en vez de inventarla.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="box warn"><strong class="t">⚠️ Sobre los detectores de texto de IA</strong>Herramientas como <a class="tl" href="https://gptzero.me/" target="_blank" rel="noopener noreferrer">GPTZero</a>, <a class="tl" href="https://originality.ai/" target="_blank" rel="noopener noreferrer">Originality AI</a> o <a class="tl" href="https://gowinston.ai/" target="_blank" rel="noopener noreferrer">Winston AI</a> pueden orientar, pero no son pruebas concluyentes y pueden dar falsos positivos. No se deben usar para acusar a alguien. Una verificación de hechos con fuentes es más fiable que adivinar quién escribió un texto.</div><details><summary>Solucionario</summary><div class="inner"><ul><li><strong>Estudio de la "Universidad Andina del Pacífico" y "Nexo Analytics":</strong> fueron inventados para este ejercicio, igual que las cifras. Antes de la clase, haga una búsqueda para confirmar que no coinciden con una institución o un informe reales.</li><li><strong>Frase de Andrew Ng:</strong> "la IA es la nueva electricidad" se le atribuye ampliamente, y el curso «AI For Everyone» aparece en los recursos del curso. Aun así, enseñe a confirmar la cita exacta en una fuente primaria. Es un buen caso de "dato probablemente cierto que igual se verifica".</li><li>Conclusión: citas con apariencia seria pueden no existir. Una cifra precisa sin fuente localizable es una señal de alerta.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a5">
+<div class="module-head"><h2>📜 Actividad 5: Mi código de ética personal</h2><span class="pill">25 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Redactar un código breve y accionable para el uso personal de la IA en el trabajo.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag">Documento personal</span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Uso responsable</div></div></div>
+<div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Ayúdame a crear un código de ética personal para mi uso de IA en el trabajo.
+Mi contexto: profesión [tu rol]; sector [tu sector]; usos principales [lista].
+
+Crea un código conciso con:
+1. De 3 a 5 principios guía
+2. Líneas rojas (qué nunca haré con IA)
+3. Mejores prácticas
+4. Un proceso de verificación
+5. Cómo me mantendré actualizado
+Debe ser práctico y fácil de recordar.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><h3>Ejemplo ya redactado (para mostrar)</h3><div class="prompt-wrap">
+<div class="prompt-title">📄 Código de ejemplo</div>
+<div class="sample-text">Principios: 1) Yo respondo por lo que envío. 2) Verifico antes de compartir. 3) Protejo los datos de otras personas. 4) Aviso cuando uso IA si el contexto lo exige. 5) Reviso mis prompts para evitar estereotipos.
+Líneas rojas: no pego contraseñas ni datos personales de terceros; no presento como totalmente mío un trabajo evaluado hecho con IA; no genero imágenes de personas reales sin permiso; no uso IA para engañar.
+Verificación: antes de enviar, reviso cifras, fechas, nombres, fuentes, tono y privacidad.</div>
+</div><ol><li><strong>(10 min)</strong> Cada estudiante ejecuta el prompt.</li><li><strong>(10 min)</strong> Edita el resultado hasta que sea realmente suyo.</li><li><strong>(5 min)</strong> Lee una línea roja a su pareja.</li></ol><details><summary>Solucionario: criterios</summary><div class="inner"><ul><li>Máximo 5 principios, redactados en primera persona y sin vaguedades.</li><li>Al menos tres líneas rojas concretas, no genéricas.</li><li>Un proceso de verificación con pasos que se puedan realizar.</li><li>El texto final debe sonar a la persona, no a un manual genérico.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a6">
+<div class="module-head"><h2>🌱 Actividad 6: Plan de aprendizaje y primeros 30 días</h2><span class="pill">30 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Evaluar las habilidades adquiridas y planear cómo seguir aprendiendo después del curso.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Aumentar la productividad · Aplicar herramientas prácticas</div></div></div>
+<div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt: autoevaluación y objetivos</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Ayúdame a evaluar mis habilidades con IA.
+Herramientas que domino: [lista]. Herramientas que conozco pero no domino: [lista]. Áreas donde tengo dificultades: [lista].
+
+1. Identifica mis fortalezas
+2. Señala los vacíos importantes
+3. Prioriza 3 áreas de desarrollo
+4. Crea 3 objetivos SMART para los próximos 3 meses, con hitos y un proyecto práctico para cada uno
+Mi disponibilidad: [horas por semana].</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><div class="prompt-wrap">
+<div class="prompt-title">📋 Prompt: primeros 30 días</div>
+<div class="pre-box"><div class="pre-box"><pre class="prompt">Crea un plan para mis primeros 30 días después del curso, con el objetivo de consolidar lo aprendido. Semana 1: consolidación. Semana 2: aplicación en proyectos reales. Semana 3: expansión con una herramienta nueva. Semana 4: evaluación y planificación. Para cada semana indica objetivos, actividades concretas, tiempo requerido y criterios de éxito.</pre><button type="button" class="cp-btn" tabindex="-1">Copiar</button></div></div>
+</div><h3>Ejemplo de objetivo SMART</h3><div class="prompt-wrap">
+<div class="prompt-title">📄 Ejemplo</div>
+<div class="sample-text">En 12 semanas construiré una biblioteca de 15 prompts probados para mi trabajo y la usaré al menos tres veces por semana; lo mediré con un registro semanal de tiempo ahorrado.</div>
+</div><h3>Recursos del curso para seguir aprendiendo</h3><ul><li>Cursos gratuitos: Elements of AI, AI For Everyone (Coursera) y Learn Prompting.</li><li>Newsletters: The Batch, TLDR AI, AI Breakfast e Import AI.</li><li>Comunidades: grupos de LinkedIn de su industria y foros de IA.</li></ul><ol><li><strong>(10 min)</strong> Autoevaluación y objetivos.</li><li><strong>(15 min)</strong> Plan de 30 días.</li><li><strong>(5 min)</strong> Se comprometen con un compañero que les pedirá cuentas.</li></ol><details><summary>Solucionario: criterios</summary><div class="inner"><ul><li>Los objetivos cumplen los cinco criterios SMART y tienen un entregable verificable.</li><li>El plan de 30 días es realista para el tiempo disponible: pocas actividades bien definidas.</li><li>Incluye una forma de medir el progreso y un compañero de seguimiento.</li></ul></div></details>
+</div>
+</section>
+
+<section class="module" id="a7">
+<div class="module-head"><h2>🏆 Actividad 7: Proyecto integrador final</h2><span class="pill">40 min · Individual</span></div>
+<div class="module-body">
+<div class="meta-grid"><div class="meta-card"><div class="k">Objetivo</div><div class="v">Resolver un desafío real combinando al menos tres técnicas del curso y presentarlo en cinco minutos.</div></div><div class="meta-card"><div class="k">Herramientas</div><div class="v"><div class="tags"><span class="tag free"><a class="tl" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a></span><span class="tag free"><a class="tl" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Gemini</a></span><span class="tag free"><a class="tl" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Claude</a></span><span class="tag free"><a class="tl" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Copilot</a></span><span class="tag">Herramientas de los módulos anteriores</span></div></div></div><div class="meta-card"><div class="k">Objetivo del curso</div><div class="v">Todos los objetivos del curso</div></div></div>
+<div class="table-wrap"><table><tbody><tr><th>Consigna</th><td>Identificar un desafío real de su trabajo, aplicar al menos tres técnicas del curso, documentar el proceso y los resultados, y presentarlo en 5 minutos.</td></tr><tr><th>Formato</th><td>Documento breve o presentación corta.</td></tr><tr><th>Preparación (15 min)</th><td>Elegir el desafío, aplicar las técnicas y preparar la exposición.</td></tr><tr><th>Presentaciones (25 min)</th><td>5 minutos por estudiante. Si el grupo es grande, divida en subgrupos o programe las presentaciones restantes para otra sesión.</td></tr></tbody></table></div><h3>Estructura de la presentación de 5 minutos</h3><div class="table-wrap"><table><thead><tr><th>Minuto</th><th>Contenido</th></tr></thead><tbody><tr><td>1</td><td>El problema real y por qué importa.</td></tr><tr><td>2 a 3</td><td>Qué técnicas aplicó (por ejemplo, redacción de plantillas, plan semanal, análisis de datos) y cómo.</td></tr><tr><td>4</td><td>Resultados: tiempo ahorrado o mejora lograda, con una evidencia.</td></tr><tr><td>5</td><td>Aprendizajes, riesgos éticos detectados y cómo los manejó.</td></tr></tbody></table></div><h3>Ejemplo de proyecto</h3><div class="prompt-wrap">
+<div class="prompt-title">📄 Ejemplo</div>
+<div class="sample-text">Reducir el tiempo de respuesta a consultas de clientes en un emprendimiento. Técnicas: plantillas de correo (Módulo 2), automatización de respuestas frecuentes (Módulo 3) y análisis de los comentarios recibidos (Módulo 5). Resultado: el tiempo de respuesta bajó de 24 a 6 horas. Riesgo ético: se anonimizaron los comentarios antes de analizarlos.</div>
+</div><h3>Lista de evaluación de la presentación</h3><ul class="checklist"><li>El problema es real y está claro.</li><li>Aplica al menos tres técnicas del curso.</li><li>Muestra evidencia de resultados.</li><li>Menciona verificación y uso responsable.</li><li>Respeta los 5 minutos.</li></ul><details><summary>Solucionario</summary><div class="inner"><ul><li>El ejemplo de arriba es ficticio: pida a los estudiantes que usen resultados reales o, si aún no los tienen, que los describan como estimados y lo digan.</li><li>Valore más la honestidad sobre los límites que los resultados espectaculares.</li><li>Aproveche para felicitar y registrar los compromisos finales.</li></ul></div></details>
+</div>
+</section>
+
+  <section class="panel acc" id="evaluacion"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="evaluacion-body"><span>📊 Rúbrica de evaluación del módulo</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="evaluacion-body" hidden>
+    <p>Puede aplicarla sobre el proyecto integrador de la actividad 7, junto con el código de ética de la actividad 5. Cada criterio vale 5 puntos (total: 20).</p>
+    <div class="table-wrap"><table><thead><tr><th>Criterio</th><th>Excelente (5)</th><th>Logrado (4)</th><th>En proceso (2-3)</th><th>Inicial (0-1)</th></tr></thead><tbody><tr><td><strong>Aplicación de técnicas</strong></td><td>Aplica tres o más técnicas del curso con claridad.</td><td>Aplica tres técnicas con algunas imprecisiones.</td><td>Aplica dos técnicas.</td><td>Aplica una o ninguna.</td></tr><tr><td><strong>Evidencia de resultados</strong></td><td>Muestra resultados medibles y honestos.</td><td>Muestra resultados con evidencia parcial.</td><td>Describe resultados sin evidencia.</td><td>No presenta resultados.</td></tr><tr><td><strong>Uso responsable</strong></td><td>Identifica riesgos éticos, protege datos y verifica.</td><td>Identifica la mayoría de los riesgos.</td><td>Menciona la ética de forma superficial.</td><td>No considera la ética.</td></tr><tr><td><strong>Comunicación</strong></td><td>Presenta con claridad dentro de los 5 minutos.</td><td>Presenta con claridad con pequeños desajustes de tiempo.</td><td>Presentación confusa o fuera de tiempo.</td><td>No presenta.</td></tr></tbody></table></div>
+  </div></section>
+
+  <section class="panel acc" id="tarea"><h2><button type="button" class="acc-btn" aria-expanded="false" aria-controls="tarea-body"><span>📝 Tarea para casa</span><span class="acc-ic" aria-hidden="true"></span></button></h2><div class="acc-body" id="tarea-body" hidden>
+    <p>El curso termina, pero el aprendizaje sigue. Los estudiantes siguen su <strong>plan de 30 días</strong> y registran cada semana lo que hicieron, lo que aprendieron y qué ajustes harán. <strong>Preguntas de reflexión final:</strong></p><ul><li>¿Cuál fue tu aprendizaje más importante del curso?</li><li>¿Qué herramienta o técnica vas a implementar de inmediato?</li><li>¿Cómo puede la IA transformar tu trabajo en los próximos seis meses?</li><li>¿Qué obstáculos anticipas y cómo los superarás?</li><li>¿A quién más podrías ayudar compartiendo estos conocimientos?</li></ul>
+    <div class="table-wrap"><table><thead><tr><th>Semana</th><th>Qué hice con IA</th><th>Qué aprendí</th><th>Riesgo ético que detecté</th><th>Ajuste que haré</th><th>Compromiso cumplido (sí o no)</th></tr></thead><tbody><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr></tbody></table></div>
+    <div class="box ok"><strong class="t">🎉 Mensaje de cierre</strong>La IA es una herramienta poderosa, pero el criterio y la creatividad siguen siendo insustituibles. Usarla con responsabilidad beneficia a todos, y compartir lo aprendido multiplica ese beneficio.</div>
+  </div></section>
+
+</main>
+
+<footer>
+  <p><strong>Instituto Superior Tecnológico Liceo Cristiano</strong></p>
+  <p>Proyecto: "Inteligencia Artificial para el Trabajo: Herramientas Digitales para la Comunidad"</p>
+  <p>Carrera: Desarrollo de Software | Guía del docente - Módulo 6</p>
+  <p>
+    <a href="https://jorgekabuto78.github.io/curso-ia/" target="_blank" rel="noopener">📚 Curso principal</a>
+    <a href="https://jorgekabuto78.github.io/curso-ia/herramientas.html" target="_blank" rel="noopener">🛠️ Directorio de herramientas</a>
+  </p>
+</footer>
+
+<script>
+(function(){
+  var on = false, root = document.documentElement;
+  function stop(e){ if(!on){ e.preventDefault(); return false; } }
+
+  ['copy','cut'].forEach(function(t){
+    document.addEventListener(t, function(e){
+      if(on) return;
+      if(e.clipboardData){ try { e.clipboardData.setData('text/plain',''); } catch(err){} }
+      e.preventDefault();
+    }, true);
+  });
+  ['selectstart','dragstart','contextmenu'].forEach(function(t){
+    document.addEventListener(t, stop, true);
+  });
+
+  function reset(){
+    document.querySelectorAll('.cp-btn').forEach(function(b){ b.textContent = 'Copiar'; b.classList.remove('done'); });
+  }
+
+  // Botones de copia de los prompts: solo responden con la copia habilitada
+  document.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('.cp-btn') : null;
+    if(!b) return;
+    if(!on){ e.preventDefault(); return; }
+    var pre = b.parentNode.querySelector('pre.prompt');
+    if(!pre) return;
+    var text = pre.textContent;
+    function ok(){
+      b.textContent = '¡Copiado!'; b.classList.add('done');
+      setTimeout(function(){ if(on){ b.textContent = 'Copiar'; b.classList.remove('done'); } }, 1800);
+    }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var done = false;
+      try { done = document.execCommand('copy'); } catch(err){}
+      document.body.removeChild(ta);
+      if(done){ ok(); } else { b.textContent = 'No se pudo'; }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok, fallback);
+    } else { fallback(); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.altKey && !e.ctrlKey && !e.metaKey){
+      if(e.code === 'KeyC'){ e.preventDefault(); on = true; root.classList.add('cp-on'); return; }
+      if(e.code === 'KeyN'){
+        e.preventDefault(); on = false; root.classList.remove('cp-on'); reset();
+        var s = window.getSelection && window.getSelection(); if(s){ s.removeAllRanges(); }
+        return;
+      }
+    }
+    if(on) return;
+    var k = (e.key || '').toLowerCase();
+    if((e.ctrlKey || e.metaKey) && ['c','x','a','s','u'].indexOf(k) !== -1){ e.preventDefault(); }
+  }, true);
+
+  document.addEventListener('selectionchange', function(){
+    if(on) return;
+    var s = window.getSelection && window.getSelection();
+    if(s && s.rangeCount && !s.isCollapsed){ s.removeAllRanges(); }
+  });
+
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details').forEach(function(d){ d.setAttribute('open',''); });
+  });
+})();
+</script>
+<script>
+(function(){
+  var panels = document.querySelectorAll('section.panel.acc');
+  function setOpen(p, open){
+    var b = p.querySelector('.acc-btn'), c = p.querySelector('.acc-body');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(open){ c.removeAttribute('hidden'); } else { c.setAttribute('hidden', ''); }
+  }
+  Array.prototype.forEach.call(panels, function(p){
+    p.querySelector('.acc-btn').addEventListener('click', function(){
+      setOpen(p, p.querySelector('.acc-btn').getAttribute('aria-expanded') !== 'true');
+    });
+  });
+  function openFor(id){
+    var el = id && document.getElementById(id);
+    if(el && el.classList.contains('acc')) setOpen(el, true);
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(a) openFor(a.getAttribute('href').slice(1));
+  });
+  window.addEventListener('hashchange', function(){
+    var id = location.hash.slice(1); openFor(id);
+    var el = document.getElementById(id); if(el) el.scrollIntoView();
+  });
+})();
+</script>
+</body>
+</html>
