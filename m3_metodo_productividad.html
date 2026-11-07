@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía Práctica de Metodologías de Productividad</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --border: #e2e8f0;
+      --gtd: #2563eb;
+      --gtd-soft: #eff6ff;
+      --eisenhower: #7c3aed;
+      --eisenhower-soft: #f5f3ff;
+      --pomodoro: #dc2626;
+      --pomodoro-soft: #fef2f2;
+      --timeblock: #059669;
+      --timeblock-soft: #ecfdf5;
+      --radius: 16px;
+      --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.65;
+      padding-bottom: 4rem;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 3.5rem 1.5rem 3rem;
+      text-align: center;
+    }
+
+    header .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+
+    header h1 {
+      font-size: clamp(1.85rem, 4vw, 2.75rem);
+      font-weight: 800;
+      max-width: 800px;
+      margin: 0 auto 1rem;
+      line-height: 1.2;
+    }
+
+    header p {
+      color: #cbd5e1;
+      max-width: 680px;
+      margin: 0 auto;
+      font-size: 1.08rem;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: -2rem auto 0;
+      padding: 0 1.25rem;
+    }
+
+    .nav-pills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .nav-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1.1rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .nav-pill:hover {
+      transform: translateY(-2px);
+      border-color: #94a3b8;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .method-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 2.25rem;
+      overflow: hidden;
+    }
+
+    .method-header {
+      padding: 1.75rem 2rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .method-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .method-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .method-title-group h2 {
+      font-size: 1.45rem;
+      font-weight: 700;
+    }
+
+    .method-tag {
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+    }
+
+    .method-body {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem;
+      padding: 2rem;
+      align-items: center;
+    }
+
+    @media (max-width: 840px) {
+      .method-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .method-content h3 {
+      font-size: 1.05rem;
+      margin: 1.1rem 0 0.45rem;
+      color: var(--text-primary);
+    }
+
+    .method-content h3:first-child {
+      margin-top: 0;
+    }
+
+    .method-content p {
+      color: var(--text-secondary);
+      margin-bottom: 0.85rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin: 0.75rem 0 1.25rem;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .feature-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 0.96rem;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-weight: 800;
+      color: var(--accent, #2563eb);
+    }
+
+    .example-box {
+      background: var(--soft-bg, #f1f5f9);
+      border-left: 4px solid var(--accent, #2563eb);
+      padding: 1rem 1.15rem;
+      border-radius: 0 10px 10px 0;
+      margin-top: 1rem;
+    }
+
+    .example-box strong {
+      display: block;
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.35rem;
+      color: var(--accent, #2563eb);
+    }
+
+    .example-box p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .method-visual {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .method-visual img {
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 8px;
+    }
+
+    .method-visual figcaption {
+      margin-top: 0.65rem;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* Summary Table */
+    .summary-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-top: 2.5rem;
+    }
+
+    .summary-section h2 {
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-section p {
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="badge">Guía Didáctica para la Comunidad</span>
+    <h1>4 Metodologías Esenciales de Productividad y Planificación</h1>
+    <p>Aprende de forma clara y sencilla cómo organizar tus tareas, priorizar lo importante y aprovechar mejor tu tiempo sin estrés.</p>
+  </header>
+
+  <main class="container">
+    <!-- Navegación rápida -->
+    <nav class="nav-pills" aria-label="Metodologías de productividad">
+      <a class="nav-pill" href="#gtd">
+        <span class="dot" style="background: var(--gtd)"></span>
+        1. GTD (Getting Things Done)
+      </a>
+      <a class="nav-pill" href="#eisenhower">
+        <span class="dot" style="background: var(--eisenhower)"></span>
+        2. Matriz de Eisenhower
+      </a>
+      <a class="nav-pill" href="#pomodoro">
+        <span class="dot" style="background: var(--pomodoro)"></span>
+        3. Técnica Pomodoro
+      </a>
+      <a class="nav-pill" href="#timeblocking">
+        <span class="dot" style="background: var(--timeblock)"></span>
+        4. Time Blocking
+      </a>
+    </nav>
+
+    <!-- 1. GTD -->
+    <section id="gtd" class="method-card" style="--accent: var(--gtd); --soft-bg: var(--gtd-soft);">
+      <div class="method-header">
+        <div class="method-title-group">
+          <div class="method-number" style="background: var(--gtd);">1</div>
+          <div>
+            <h2>GTD (Getting Things Done)</h2>
+          </div>
+        </div>
+        <span class="method-tag" style="background: var(--gtd-soft); color: var(--gtd);">Ideal para liberar la mente</span>
+      </div>
+
+      <div class="method-body">
+        <div class="method-content">
+          <h3>¿En qué consiste?</h3>
+          <p>
+            Creada por David Allen, esta metodología parte de una idea muy simple: <strong>tu mente está hecha para tener ideas, no para guardarlas</strong>. Cuando intentas recordar decenas de pendientes a la vez, sientes agotamiento mental. GTD propone vaciar todo en un sistema externo confiable siguiendo 5 pasos.
+          </p>
+
+          <h3>Características principales y uso</h3>
+          <ul class="feature-list">
+            <li><strong>1. Capturar:</strong> Anota todo lo que llame tu atención (tareas, ideas, recados) en una bandeja de entrada.</li>
+            <li><strong>2. Aclarar:</strong> Decide qué significa cada nota. Si toma menos de 2 minutos, ¡hazlo de inmediato!</li>
+            <li><strong>3. Organizar:</strong> Clasifica según corresponda: lista de próximas acciones, proyectos, calendario o "algún día".</li>
+            <li><strong>4. Reflexionar:</strong> Revisa tus listas una vez por semana para mantenerlas al día.</li>
+            <li><strong>5. Ejecutar:</strong> Elige qué hacer con tranquilidad según tu contexto, tiempo y energía disponible.</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Ejemplo cotidiano</strong>
+            <p>
+              Mientras trabajas recuerdas: <em>"Comprar regalo de cumpleaños para mamá, responder correo del banco y arreglar la lámpara"</em>. En vez de preocuparte, anotas las 3 cosas en tu libreta (<strong>Capturar</strong>). Luego ves que responder al banco toma 1 minuto, así que lo haces al instante (<strong>Regla de los 2 minutos</strong>), agendas comprar el regalo para el viernes por la tarde y pones "arreglar lámpara" en tu lista de tareas de casa para el fin de semana.
+            </p>
+          </div>
+        </div>
+
+        <figure class="method-visual">
+          <img
+            alt="Diagrama visual de los 5 pasos del método GTD: Capturar, Aclarar, Organizar, Reflexionar y Ejecutar"
+            src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 320'%3E%3Crect width='420' height='320' rx='12' fill='%23eff6ff'/%3E%3Ctext x='210' y='32' font-family='sans-serif' font-size='15' font-weight='bold' fill='%231e3a8a' text-anchor='middle'%3EFLUJO DE 5 PASOS EN GTD%3C/text%3E%3Cg transform='translate(35,52)'%3E%3Crect x='0' y='0' width='350' height='42' rx='8' fill='%232563eb'/%3E%3Ctext x='175' y='26' font-family='sans-serif' font-size='13' font-weight='bold' fill='white' text-anchor='middle'%3E1. CAPTURAR (Anotar todo fuera de tu mente)%3C/text%3E%3Cpath d='M175 42 L175 54' stroke='%232563eb' stroke-width='3'/%3E%3Crect x='0' y='54' width='350' height='42' rx='8' fill='%233b82f6'/%3E%3Ctext x='175' y='80' font-family='sans-serif' font-size='13' font-weight='bold' fill='white' text-anchor='middle'%3E2. ACLARAR (¿Requiere acción? Regla &lt; 2 min)%3C/text%3E%3Cpath d='M175 96 L175 108' stroke='%232563eb' stroke-width='3'/%3E%3Crect x='0' y='108' width='350' height='42' rx='8' fill='%232563eb'/%3E%3Ctext x='175' y='134' font-family='sans-serif' font-size='13' font-weight='bold' fill='white' text-anchor='middle'%3E3. ORGANIZAR (Calendario, Proyectos, Listas)%3C/text%3E%3Cpath d='M175 150 L175 162' stroke='%232563eb' stroke-width='3'/%3E%3Crect x='0' y='162' width='350' height='42' rx='8' fill='%233b82f6'/%3E%3Ctext x='175' y='188' font-family='sans-serif' font-size='13' font-weight='bold' fill='white' text-anchor='middle'%3E4. REFLEXIONAR (Revisión semanal del sistema)%3C/text%3E%3Cpath d='M175 204 L175 216' stroke='%232563eb' stroke-width='3'/%3E%3Crect x='0' y='216' width='350' height='42' rx='8' fill='%231d4ed8'/%3E%3Ctext x='175' y='242' font-family='sans-serif' font-size='13' font-weight='bold' fill='white' text-anchor='middle'%3E5. EJECUTAR (Actuar con foco y claridad)%3C/text%3E%3C/g%3E%3C/svg%3E"
+          />
+          <figcaption>Ilustración 1: El flujo continuo de 5 etapas de GTD para mantener la mente despejada.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 2. Matriz de Eisenhower -->
+    <section id="eisenhower" class="method-card" style="--accent: var(--eisenhower); --soft-bg: var(--eisenhower-soft);">
+      <div class="method-header">
+        <div class="method-title-group">
+          <div class="method-number" style="background: var(--eisenhower);">2</div>
+          <div>
+            <h2>Matriz de Eisenhower</h2>
+          </div>
+        </div>
+        <span class="method-tag" style="background: var(--eisenhower-soft); color: var(--eisenhower);">Ideal para priorizar decisiones</span>
+      </div>
+
+      <div class="method-body">
+        <div class="method-content">
+          <h3>¿En qué consiste?</h3>
+          <p>
+            Inspirada en el expresidente Dwight D. Eisenhower, esta herramienta visual nos ayuda a distinguir entre lo que es <strong>Urgente</strong> (requiere atención inmediata) y lo que es <strong>Importante</strong> (aporta a nuestras metas y bienestar a largo plazo).
+          </p>
+
+          <h3>Características principales y uso</h3>
+          <ul class="feature-list">
+            <li><strong>Cuadrante 1 — Hacer ahora (Urgente + Importante):</strong> Crisis, entregas con fecha límite hoy o problemas de salud.</li>
+            <li><strong>Cuadrante 2 — Planificar (No urgente + Importante):</strong> Estudio, ejercicio, planificación y prevención. ¡Aquí está el verdadero crecimiento!</li>
+            <li><strong>Cuadrante 3 — Delegar (Urgente + No importante):</strong> Interrupciones o tareas operativas donde puedes pedir apoyo.</li>
+            <li><strong>Cuadrante 4 — Eliminar (No urgente + No importante):</strong> Distracciones excesivas, redes sociales sin propósito.</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Ejemplo cotidiano</strong>
+            <p>
+              Tienes 4 actividades hoy: (1) Pagar el recibo de luz que vence hoy (<strong>Hacer ahora</strong>), (2) Estudiar para un curso del próximo mes (<strong>Planificar</strong> para el jueves a las 6:00 p. m.), (3) Recoger un paquete en recepción que otro familiar también puede recibir (<strong>Delegar</strong>) y (4) Ver videos sin rumbo durante una hora (<strong>Eliminar/Reducir</strong>).
+            </p>
+          </div>
+        </div>
+
+        <figure class="method-visual">
+          <img
+            alt="Cuadrícula de la Matriz de Eisenhower con sus cuatro cuadrantes: Hacer, Planificar, Delegar y Eliminar"
+            src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 320'%3E%3Crect width='420' height='320' rx='12' fill='%23f5f3ff'/%3E%3Ctext x='225' y='28' font-family='sans-serif' font-size='14' font-weight='bold' fill='%234c1d95' text-anchor='middle'%3EMATRIZ DE PRIORIDADES DE EISENHOWER%3C/text%3E%3Ctext x='135' y='52' font-family='sans-serif' font-size='12' font-weight='bold' fill='%23334155' text-anchor='middle'%3EURGENTE%3C/text%3E%3Ctext x='315' y='52' font-family='sans-serif' font-size='12' font-weight='bold' fill='%23334155' text-anchor='middle'%3ENO URGENTE%3C/text%3E%3Ctext x='22' y='125' font-family='sans-serif' font-size='11' font-weight='bold' fill='%23334155' text-anchor='middle' transform='rotate(-90 22 125)'%3EIMPORTANTE%3C/text%3E%3Ctext x='22' y='245' font-family='sans-serif' font-size='11' font-weight='bold' fill='%23334155' text-anchor='middle' transform='rotate(-90 22 245)'%3ENO IMPORTANTE%3C/text%3E%3Cg transform='translate(45,62)'%3E%3Crect x='0' y='0' width='170' height='112' rx='10' fill='%23ef4444'/%3E%3Ctext x='85' y='38' font-family='sans-serif' font-size='15' font-weight='bold' fill='white' text-anchor='middle'%3E1. HACER AHORA%3C/text%3E%3Ctext x='85' y='62' font-family='sans-serif' font-size='11' fill='%23fee2e2' text-anchor='middle'%3EEntregas de hoy,%3C/text%3E%3Ctext x='85' y='78' font-family='sans-serif' font-size='11' fill='%23fee2e2' text-anchor='middle'%3Eemergencias, crisis%3C/text%3E%3Crect x='180' y='0' width='170' height='112' rx='10' fill='%232563eb'/%3E%3Ctext x='265' y='38' font-family='sans-serif' font-size='15' font-weight='bold' fill='white' text-anchor='middle'%3E2. PLANIFICAR%3C/text%3E%3Ctext x='265' y='62' font-family='sans-serif' font-size='11' fill='%23dbeafe' text-anchor='middle'%3ESalud, aprender,%3C/text%3E%3Ctext x='265' y='78' font-family='sans-serif' font-size='11' fill='%23dbeafe' text-anchor='middle'%3Emetas a largo plazo%3C/text%3E%3Crect x='0' y='122' width='170' height='112' rx='10' fill='%23f59e0b'/%3E%3Ctext x='85' y='160' font-family='sans-serif' font-size='15' font-weight='bold' fill='white' text-anchor='middle'%3E3. DELEGAR%3C/text%3E%3Ctext x='85' y='184' font-family='sans-serif' font-size='11' fill='%23fef3c7' text-anchor='middle'%3EInterrupciones,%3C/text%3E%3Ctext x='85' y='200' font-family='sans-serif' font-size='11' fill='%23fef3c7' text-anchor='middle'%3Epedidos de terceros%3C/text%3E%3Crect x='180' y='122' width='170' height='112' rx='10' fill='%2364748b'/%3E%3Ctext x='265' y='160' font-family='sans-serif' font-size='15' font-weight='bold' fill='white' text-anchor='middle'%3E4. ELIMINAR%3C/text%3E%3Ctext x='265' y='184' font-family='sans-serif' font-size='11' fill='%23e2e8f0' text-anchor='middle'%3EDistracciones,%3C/text%3E%3Ctext x='265' y='200' font-family='sans-serif' font-size='11' fill='%23e2e8f0' text-anchor='middle'%3Eocio sin propósito%3C/text%3E%3C/g%3E%3C/svg%3E"
+          />
+          <figcaption>Ilustración 2: Los 4 cuadrantes para decidir qué hacer, agendar, delegar o descartar.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 3. Técnica Pomodoro -->
+    <section id="pomodoro" class="method-card" style="--accent: var(--pomodoro); --soft-bg: var(--pomodoro-soft);">
+      <div class="method-header">
+        <div class="method-title-group">
+          <div class="method-number" style="background: var(--pomodoro);">3</div>
+          <div>
+            <h2>Técnica Pomodoro</h2>
+          </div>
+        </div>
+        <span class="method-tag" style="background: var(--pomodoro-soft); color: var(--pomodoro);">Ideal para vencer la procrastinación</span>
+      </div>
+
+      <div class="method-body">
+        <div class="method-content">
+          <h3>¿En qué consiste?</h3>
+          <p>
+            Desarrollada por Francesco Cirillo a finales de los años 80 (usando un temporizador de cocina con forma de tomate), esta técnica divide el tiempo en intervalos cortos de concentración total seguidos de breves descansos para mantener la mente fresca.
+          </p>
+
+          <h3>Características principales y uso</h3>
+          <ul class="feature-list">
+            <li><strong>Bloque de foco (25 minutos):</strong> Elige una sola tarea, silencia notificaciones y trabaja sin interrupciones durante 25 minutos (1 Pomodoro).</li>
+            <li><strong>Descanso corto (5 minutos):</strong> Al sonar la alarma, detente. Levántate, toma agua o estira las piernas durante 5 minutos.</li>
+            <li><strong>Descanso largo (15 a 30 minutos):</strong> Cada 4 Pomodoros completados, tómate una pausa más larga para recargar energía.</li>
+            <li><strong>Cero multitarea:</strong> Si surge una distracción, anótala rápido en un papel y vuelve al foco hasta que termine el reloj.</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Ejemplo cotidiano</strong>
+            <p>
+              Necesitas redactar un informe largo o estudiar para un examen y te cuesta empezar. Te propones hacer <strong>solo 1 Pomodoro de 25 minutos</strong> sin mirar el celular. Al terminar el primer bloque te das cuenta de que ya avanzaste la mitad del documento, descansas 5 minutos tomando un café y haces un segundo Pomodoro para terminarlo sin cansancio.
+            </p>
+          </div>
+        </div>
+
+        <figure class="method-visual">
+          <img
+            alt="Diagrama del ciclo Pomodoro mostrando 25 minutos de concentración, 5 minutos de pausa y descanso largo tras 4 ciclos"
+            src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 320'%3E%3Crect width='420' height='320' rx='12' fill='%23fef2f2'/%3E%3Ctext x='210' y='30' font-family='sans-serif' font-size='15' font-weight='bold' fill='%23991b1b' text-anchor='middle'%3ECICLO DE LA TÉCNICA POMODORO%3C/text%3E%3Ccircle cx='210' cy='145' r='82' fill='white' stroke='%23ef4444' stroke-width='14' stroke-dasharray='430 85' transform='rotate(-90 210 145)'/%3E%3Ccircle cx='210' cy='145' r='82' fill='none' stroke='%2310b981' stroke-width='14' stroke-dasharray='85 430' stroke-dashoffset='-430' transform='rotate(-90 210 145)'/%3E%3Ctext x='210' y='138' font-family='sans-serif' font-size='28' font-weight='bold' fill='%23dc2626' text-anchor='middle'%3E25 min%3C/text%3E%3Ctext x='210' y='162' font-family='sans-serif' font-size='13' font-weight='bold' fill='%23475569' text-anchor='middle'%3EFOCO TOTAL%3C/text%3E%3Ctext x='210' y='182' font-family='sans-serif' font-size='12' font-weight='bold' fill='%23059669' text-anchor='middle'%3E+ 5 min descanso%3C/text%3E%3Cg transform='translate(38,250)'%3E%3Crect x='0' y='0' width='344' height='46' rx='10' fill='%23fee2e2' stroke='%23fca5a5'/%3E%3Ctext x='172' y='20' font-family='sans-serif' font-size='12' font-weight='bold' fill='%23991b1b' text-anchor='middle'%3E🍅 🍅 🍅 🍅 = 4 Pomodoros completados%3C/text%3E%3Ctext x='172' y='37' font-family='sans-serif' font-size='12' fill='%23065f46' font-weight='bold' text-anchor='middle'%3E→ Descanso largo de 15 a 30 minutos%3C/text%3E%3C/g%3E%3C/svg%3E"
+          />
+          <figcaption>Ilustración 3: Reloj Pomodoro con ciclos de 25 minutos de atención plena y 5 minutos de pausa.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 4. Time Blocking -->
+    <section id="timeblocking" class="method-card" style="--accent: var(--timeblock); --soft-bg: var(--timeblock-soft);">
+      <div class="method-header">
+        <div class="method-title-group">
+          <div class="method-number" style="background: var(--timeblock);">4</div>
+          <div>
+            <h2>Time Blocking (Bloques de Tiempo)</h2>
+          </div>
+        </div>
+        <span class="method-tag" style="background: var(--timeblock-soft); color: var(--timeblock);">Ideal para estructurar tu día</span>
+      </div>
+
+      <div class="method-body">
+        <div class="method-content">
+          <h3>¿En qué consiste?</h3>
+          <p>
+            Una lista de tareas te dice <em>qué</em> tienes que hacer, pero no <em>cuándo</em> lo harás. El <strong>Time Blocking</strong> consiste en asignar a cada actividad un bloque específico de inicio y fin en tu calendario, como si fuera una cita médica contigo mismo.
+          </p>
+
+          <h3>Características principales y uso</h3>
+          <ul class="feature-list">
+            <li><strong>Todo tiene un horario:</strong> Si una tarea es importante, debe tener un espacio reservado en tu agenda.</li>
+            <li><strong>Agrupación de tareas (Task Batching):</strong> Reúne tareas pequeñas similares (como responder correos o mensajes) en un solo bloque del día.</li>
+            <li><strong>Bloques de margen (Buffers):</strong> Deja espacios libres de 15 a 30 minutos entre bloques grandes para imprevistos o descanso.</li>
+            <li><strong>Realismo frente al tiempo:</strong> Te permite ver de un vistazo si estás intentando meter 12 horas de trabajo en un día de 8 horas.</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Ejemplo cotidiano</strong>
+            <p>
+              Al planificar tu martes en lugar de tener una lista suelta, organizas tu mañana en el calendario: de <strong>09:00 a 10:30</strong> (Trabajo profundo: preparar propuesta), de <strong>10:30 a 11:00</strong> (Descanso e imprevistos), de <strong>11:00 a 12:00</strong> (Responder todos los correos y llamadas pendientes) y de <strong>12:00 a 13:00</strong> (Reunión de equipo).
+            </p>
+          </div>
+        </div>
+
+        <figure class="method-visual">
+          <img
+            alt="Agenda diaria con bloques de tiempo asignados por horas para trabajo profundo, correos, almuerzo y reuniones"
+            src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 320'%3E%3Crect width='420' height='320' rx='12' fill='%23ecfdf5'/%3E%3Ctext x='210' y='28' font-family='sans-serif' font-size='15' font-weight='bold' fill='%23065f46' text-anchor='middle'%3EAGENDA POR BLOQUES DE TIEMPO%3C/text%3E%3Cg transform='translate(35,44)'%3E%3Crect x='0' y='0' width='350' height='252' rx='10' fill='white' stroke='%23a7f3d0' stroke-width='2'/%3E%3Ctext x='18' y='34' font-family='monospace' font-size='12' font-weight='bold' fill='%23475569'%3E09:00%3C/text%3E%3Crect x='68' y='14' width='265' height='46' rx='6' fill='%23059669'/%3E%3Ctext x='82' y='35' font-family='sans-serif' font-size='12' font-weight='bold' fill='white'%3ETrabajo Profundo (Sin distracciones)%3C/text%3E%3Ctext x='82' y='51' font-family='sans-serif' font-size='11' fill='%23d1fae5'%3ERedacción de proyecto principal%3C/text%3E%3Ctext x='18' y='84' font-family='monospace' font-size='12' font-weight='bold' fill='%23475569'%3E10:30%3C/text%3E%3Crect x='68' y='68' width='265' height='32' rx='6' fill='%23fef3c7' stroke='%23f59e0b'/%3E%3Ctext x='82' y='88' font-family='sans-serif' font-size='12' font-weight='bold' fill='%2392400e'%3EPausa activa + Margen de imprevistos%3C/text%3E%3Ctext x='18' y='126' font-family='monospace' font-size='12' font-weight='bold' fill='%23475569'%3E11:00%3C/text%3E%3Crect x='68' y='108' width='265' height='42' rx='6' fill='%232563eb'/%3E%3Ctext x='82' y='127' font-family='sans-serif' font-size='12' font-weight='bold' fill='white'%3EBloque de Comunicación (Batching)%3C/text%3E%3Ctext x='82' y='142' font-family='sans-serif' font-size='11' fill='%23dbeafe'%3EResponder correos y mensajes%3C/text%3E%3Ctext x='18' y='176' font-family='monospace' font-size='12' font-weight='bold' fill='%23475569'%3E12:00%3C/text%3E%3Crect x='68' y='158' width='265' height='40' rx='6' fill='%237c3aed'/%3E%3Ctext x='82' y='182' font-family='sans-serif' font-size='12' font-weight='bold' fill='white'%3EReunión de seguimiento y acuerdos%3C/text%3E%3Ctext x='18' y='224' font-family='monospace' font-size='12' font-weight='bold' fill='%23475569'%3E13:00%3C/text%3E%3Crect x='68' y='206' width='265' height='34' rx='6' fill='%2310b981'/%3E%3Ctext x='82' y='228' font-family='sans-serif' font-size='12' font-weight='bold' fill='white'%3EAlmuerzo y desconexión%3C/text%3E%3C/g%3E%3C/svg%3E"
+          />
+          <figcaption>Ilustración 4: Ejemplo de calendario diario organizado mediante bloques de tiempo dedicados.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Resumen comparativo y combinación -->
+    <section class="summary-section">
+      <h2>¿Cuál elegir? ¡Puedes combinarlas!</h2>
+      <p>
+        No necesitas elegir solo una. De hecho, estas cuatro herramientas funcionan de maravilla cuando trabajan juntas en tu día a día:
+      </p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Metodología</th>
+              <th>Pregunta que responde</th>
+              <th>Cuándo usarla</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. GTD</strong></td>
+              <td><em>"¿Qué cosas tengo pendientes?"</em></td>
+              <td>Cuando tienes muchas ideas, recados y compromisos dando vueltas en la cabeza.</td>
+            </tr>
+            <tr>
+              <td><strong>2. Matriz de Eisenhower</strong></td>
+              <td><em>"¿Qué es lo más importante hoy?"</em></td>
+              <td>Cuando todo parece urgente y no sabes a qué darle prioridad primero.</td>
+            </tr>
+            <tr>
+              <td><strong>3. Time Blocking</strong></td>
+              <td><em>"¿A qué hora del día lo voy a hacer?"</em></td>
+              <td>Al planificar tu jornada o semana en el calendario para proteger tu tiempo.</td>
+            </tr>
+            <tr>
+              <td><strong>4. Técnica Pomodoro</strong></td>
+              <td><em>"¿Cómo me concentro ahora mismo?"</em></td>
+              <td>En el momento de sentarte a realizar una tarea sin distraerte ni agotarte.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <p>Documento HTML autocontenido — Diseñado con un enfoque claro, práctico y accesible para toda la comunidad.</p>
+    </footer>
+  </main>
+
+</body>
+</html>
+
