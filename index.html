@@ -740,6 +740,46 @@
                 gap: 14px;
             }
         }
+
+        /* Selección controlada */
+        html:not(.cp-on) body, html:not(.cp-on) body * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html:not(.cp-on) ::selection { background: transparent; color: inherit; }
+        html:not(.cp-on) ::-moz-selection { background: transparent; color: inherit; }
+        html:not(.cp-on) img, html:not(.cp-on) a { -webkit-user-drag: none; user-drag: none; }
+
+        /* Botón de copia: oculto salvo con la copia habilitada */
+        .cp-btn { display: none !important; }
+        html.cp-on .cp-btn {
+            display: inline-block !important;
+            position: absolute;
+            top: .55rem;
+            right: .55rem;
+            z-index: 2;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .35);
+            background: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: .3rem .8rem;
+            font-size: .78rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        html.cp-on pre { padding-top: 2.8rem; }
+        .pre-box { position: relative; }
+        html.cp-on .cp-btn:hover { background: #43a047; }
+        html.cp-on .cp-btn.done { background: #2e7d32; }
+        @media print { .cp-btn, html.cp-on .cp-btn { display: none !important; } }
     </style>
 </head>
 
@@ -3591,24 +3631,91 @@ Para cada semana: Objetivos, actividades concretas, tiempo requerido, criterios 
             document.querySelectorAll('nav').forEach(nav => nav.style.display = 'block');
         });
 
-        // Add copy button to code blocks
-        document.querySelectorAll('pre code').forEach((block) => {
-            const button = document.createElement('button');
-            button.innerText = 'Copiar';
-            button.style.cssText = 'position:absolute;right:10px;top:10px;padding:5px 10px;background:#4CAF50;color:white;border:none;border-radius:3px;cursor:pointer;font-size:12px;';
+        (function () {
+            var on = false, root = document.documentElement;
+            function stop(e) { if (!on) { e.preventDefault(); return false; } }
 
-            const pre = block.parentElement;
-            pre.style.position = 'relative';
-            pre.appendChild(button);
-
-            button.addEventListener('click', async () => {
-                await navigator.clipboard.writeText(block.textContent);
-                button.innerText = '✓ Copiado';
-                setTimeout(() => {
-                    button.innerText = 'Copiar';
-                }, 2000);
+            // Envolver bloques <pre> con contenedor .pre-box y botón .cp-btn (oculto por defecto)
+            document.querySelectorAll('pre').forEach(function (pre) {
+                var box = pre.parentElement;
+                if (!box || !box.classList.contains('pre-box')) {
+                    box = document.createElement('div');
+                    box.className = 'pre-box';
+                    pre.parentNode.insertBefore(box, pre);
+                    box.appendChild(pre);
+                }
+                if (!box.querySelector('.cp-btn')) {
+                    var btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'cp-btn';
+                    btn.tabIndex = -1;
+                    btn.textContent = 'Copiar';
+                    box.appendChild(btn);
+                }
             });
-        });
+
+            ['copy', 'cut'].forEach(function (t) {
+                document.addEventListener(t, function (e) {
+                    if (on) return;
+                    if (e.clipboardData) { try { e.clipboardData.setData('text/plain', ''); } catch (err) { } }
+                    e.preventDefault();
+                }, true);
+            });
+            ['selectstart', 'dragstart', 'contextmenu'].forEach(function (t) {
+                document.addEventListener(t, stop, true);
+            });
+
+            function reset() {
+                document.querySelectorAll('.cp-btn').forEach(function (b) { b.textContent = 'Copiar'; b.classList.remove('done'); });
+            }
+
+            // Botones de copia de los prompts: solo responden con la copia habilitada
+            document.addEventListener('click', function (e) {
+                var b = e.target && e.target.closest ? e.target.closest('.cp-btn') : null;
+                if (!b) return;
+                if (!on) { e.preventDefault(); return; }
+                var pre = b.parentNode.querySelector('pre');
+                if (!pre) return;
+                var code = pre.querySelector('code');
+                var text = (code || pre).textContent;
+                function ok() {
+                    b.textContent = '¡Copiado!'; b.classList.add('done');
+                    setTimeout(function () { if (on) { b.textContent = 'Copiar'; b.classList.remove('done'); } }, 1800);
+                }
+                function fallback() {
+                    var ta = document.createElement('textarea');
+                    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta); ta.select();
+                    var done = false;
+                    try { done = document.execCommand('copy'); } catch (err) { }
+                    document.body.removeChild(ta);
+                    if (done) { ok(); } else { b.textContent = 'No se pudo'; }
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(ok, fallback);
+                } else { fallback(); }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.altKey && !e.ctrlKey && !e.metaKey) {
+                    if (e.code === 'KeyC') { e.preventDefault(); on = true; root.classList.add('cp-on'); return; }
+                    if (e.code === 'KeyN') {
+                        e.preventDefault(); on = false; root.classList.remove('cp-on'); reset();
+                        var s = window.getSelection && window.getSelection(); if (s) { s.removeAllRanges(); }
+                        return;
+                    }
+                }
+                if (on) return;
+                var k = (e.key || '').toLowerCase();
+                if ((e.ctrlKey || e.metaKey) && ['c', 'x', 'a', 's', 'u'].indexOf(k) !== -1) { e.preventDefault(); }
+            }, true);
+
+            document.addEventListener('selectionchange', function () {
+                if (on) return;
+                var s = window.getSelection && window.getSelection();
+                if (s && s.rangeCount && !s.isCollapsed) { s.removeAllRanges(); }
+            });
+        })();
 
         console.log('Curso de IA - ISTLC - Versión 1.0');
         console.log('¡Bienvenido al curso! Usa este documento como guía de referencia.');
